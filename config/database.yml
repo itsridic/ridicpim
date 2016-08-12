@@ -1,0 +1,23 @@
+default: &default
+  host: localhost
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: ridicpim_development
+  username: pguser
+  password: ridicpim
+
+test:
+  <<: *default
+  database: ridicpim_test
+  username: pguser
+  password: ridicpim
+
+production:
+  <<: *default
+  database: ridicpim_production
+  username: ridicpim
+  password: <%= ENV['RIDICPIM_DATABASE_PASSWORD'] %>
