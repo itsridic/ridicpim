@@ -9,6 +9,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
 gem 'devise', '~> 4.2'
+gem 'devise_invitable', '~> 1.7'
 gem 'apartment', '~> 1.2'
 gem 'simple_form', '~> 3.2', '>= 3.2.1'
 
@@ -21,6 +22,8 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.7'
   gem 'database_cleaner', '~> 1.5', '>= 1.5.3'
   gem 'shoulda-matchers', '~> 3.1', '>= 3.1.1'
+  gem 'letter_opener', '~> 1.4', '>= 1.4.1'
+  gem 'email_spec', '~> 2.1'
 end
 
 group :development do
