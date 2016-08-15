@@ -7,8 +7,11 @@ require 'database_cleaner'
 require 'capybara/rspec'
 require 'shoulda/matchers'
 require 'pry'
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
+
+Capybara.app_host = 'http://example.com/'
 
 RSpec.configure do |config|
   config.include Rails.application.routes.url_helpers
@@ -27,6 +30,9 @@ RSpec.configure do |config|
 
   config.after(:each) do
     DatabaseCleaner.clean
+    Apartment::Tenant.reset
+    drop_schemas
+    Capybara.app_host = 'http://example.com'
   end
   
   config.include(Shoulda::Matchers::ActiveModel, type: :model)
