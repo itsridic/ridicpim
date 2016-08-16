@@ -12,6 +12,7 @@ gem 'devise', '~> 4.2'
 gem 'devise_invitable', '~> 1.7'
 gem 'apartment', '~> 1.2'
 gem 'simple_form', '~> 3.2', '>= 3.2.1'
+gem 'font-awesome-rails', '~> 4.6', '>= 4.6.3.1'
 
 group :development, :test do
   gem 'guard', '~> 2.14'
@@ -24,6 +25,8 @@ group :development, :test do
   gem 'shoulda-matchers', '~> 3.1', '>= 3.1.1'
   gem 'letter_opener', '~> 1.4', '>= 1.4.1'
   gem 'email_spec', '~> 2.1'
+  gem 'capybara-webkit', '~> 1.11', '>= 1.11.1'
+  gem 'selenium-webdriver', '~> 2.53', '>= 2.53.4'
 end
 
 group :development do
@@ -33,4 +36,5 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'pry'
   gem 'pry-rails'
+  gem 'better_errors', '~> 2.1', '>= 2.1.1'
 end

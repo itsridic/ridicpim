@@ -12,7 +12,7 @@
     <header class="container">
       <nav class="navbar navbar-default">
         <div class="navbar-header">
-          <%= link_to 'Time Tracker', root_path, class: 'navbar-brand' %>
+          <%= link_to "It's Ridic! PIM", root_path, class: 'navbar-brand' %>
         </div>
         <% if user_signed_in? %>
           <div class="pull-right right-buttons">
@@ -31,6 +31,7 @@
       <div class="row">
         <%= yield %>
       </div>
+      <div id="remote-container"></div>
     </div>
   </body>
 </html>
