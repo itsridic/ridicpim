@@ -15,7 +15,8 @@ Rails.application.routes.draw do
     root 'dashboard#show', as: :subdomain_root
     devise_for :users
     resources :users, only: [:index]
-    resources :products
+    resources :products #check unused routes
+    resources :contacts
   end
   
   constraints(SubdomainBlank) do
