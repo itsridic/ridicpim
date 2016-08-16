@@ -14,6 +14,7 @@ gem 'apartment', '~> 1.2'
 gem 'simple_form', '~> 3.2', '>= 3.2.1'
 gem 'font-awesome-rails', '~> 4.6', '>= 4.6.3.1'
 gem 'country_select', '~> 2.5', '>= 2.5.2'
+gem 'quickbooks-ruby', '~> 0.4.4'
 
 group :development, :test do
   gem 'guard', '~> 2.14'
