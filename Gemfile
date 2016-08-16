@@ -15,6 +15,7 @@ gem 'simple_form', '~> 3.2', '>= 3.2.1'
 gem 'font-awesome-rails', '~> 4.6', '>= 4.6.3.1'
 gem 'country_select', '~> 2.5', '>= 2.5.2'
 gem 'quickbooks-ruby', '~> 0.4.4'
+gem 'oauth-plugin', '~> 0.5.1'
 gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
 
 group :development, :test do

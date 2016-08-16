@@ -9,6 +9,13 @@
   </head>
 
   <body>
+    <% unless QboConfig.exists? %>
+      <ipp:connectToIntuit></ipp:connectToIntuit>
+    <% end %>
+    <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
+    <script>
+      intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '<%= authenticate_quick_books_url %>'});
+    </script>  
     <header class="container">
       <nav class="navbar navbar-default">
         <div class="navbar-header">

@@ -15,8 +15,19 @@ Rails.application.routes.draw do
     root 'dashboard#show', as: :subdomain_root
     devise_for :users
     resources :users, only: [:index]
-    resources :products #check unused routes
+    resources :products
     resources :contacts
+    resources :amazon_statements, only: [:index, :show] do
+      collection do
+        get :fetch
+      end
+    end
+    resources :quick_books, only: [] do
+      collection do
+        get :authenticate
+        get :oauth_callback
+      end
+    end
   end
   
   constraints(SubdomainBlank) do
