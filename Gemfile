@@ -7,6 +7,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
+gem 'turbolinks'
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
 gem 'devise', '~> 4.2'
 gem 'devise_invitable', '~> 1.7'
@@ -15,8 +16,16 @@ gem 'simple_form', '~> 3.2', '>= 3.2.1'
 gem 'font-awesome-rails', '~> 4.6', '>= 4.6.3.1'
 gem 'country_select', '~> 2.5', '>= 2.5.2'
 gem 'quickbooks-ruby', '~> 0.4.4'
+gem 'quickbooks-ruby-base', '~> 1.6'
+gem 'qbo_rails', git: 'git://github.com/minimul/qbo_rails.git'
 gem 'oauth-plugin', '~> 0.5.1'
 gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
+gem 'client_side_validations',
+     github: 'DavyJonesLocker/client_side_validations',
+     branch: 'rails5'
+gem 'client_side_validations-simple_form',
+     github: 'DavyJonesLocker/client_side_validations-simple_form',
+     branch: 'rails5'
 
 group :development, :test do
   gem 'guard', '~> 2.14'

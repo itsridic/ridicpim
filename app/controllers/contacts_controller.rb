@@ -10,11 +10,29 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       if @contact.save
+        qbo_rails = QboRails.new(QboConfig.last, :customer)
+        qb_customer = qbo_rails.base.qr_model(:customer)
+        qb_customer.display_name = @contact.name
+
+        phone = qbo_rails.base.qr_model(:telephone_number)
+        phone.free_form_number = @contact.phone_number
+
+        address = qbo_rails.base.qr_model(:physical_address)
+        address.line1 = @contact.address
+        address.city =  @contact.city
+        address.country_sub_division_code = @contact.state
+        address.postal_code = @contact.postal_code
+
+        qb_customer.billing_address = address
+        qb_customer.primary_phone = phone
+        qbo_rails.create_or_update(@contact, qb_customer)
+
         format.html { redirect_to @contact, flash: { success: 'Contact was successfully created.' } }
         format.js {}
         format.json { render :show, status: :created, location: @contact }
       else
         format.html { render :new }
+        format.js {}
         format.json { render json: @contact.errors, status: :unprocessable_entity }
       end
     end
@@ -27,6 +45,23 @@ class ContactsController < ApplicationController
   def update
     respond_to do |format|
       if @contact.update(contact_params)
+        qbo_rails = QboRails.new(QboConfig.last, :customer)
+        qb_customer = qbo_rails.base.qr_model(:customer)
+        qb_customer.display_name = @contact.name
+
+        phone = qbo_rails.base.qr_model(:telephone_number)
+        phone.free_form_number = @contact.phone_number
+
+        address = qbo_rails.base.qr_model(:physical_address)
+        address.line1 = @contact.address
+        address.city =  @contact.city
+        address.country_sub_division_code = @contact.state
+        address.postal_code = @contact.postal_code
+
+        qb_customer.billing_address = address
+        qb_customer.primary_phone = phone
+        qbo_rails.create_or_update(@contact, qb_customer)
+
         format.html { redirect_to contacts_path, flash: { success: 'Contact was successfully updated.' } }
         format.js {}
         format.json { render :show, status: :ok, location: @contact }
