@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :order do
     name "MyString"
-    contact nil
+    contact
   end
 end
