@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :users, only: [:index]
     resources :products
     resources :contacts
+    resources :orders
     resources :amazon_statements, only: [:index, :show] do
       collection do
         get :fetch
