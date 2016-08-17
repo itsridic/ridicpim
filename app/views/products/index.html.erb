@@ -15,7 +15,7 @@
 </div>
 
 <div class="modal fade" id="new_product">
-  <%= simple_form_for Product.new, remote: true do |f| %>
+  <%= simple_form_for Product.new, remote: true, validate: true do |f| %>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -37,3 +37,11 @@
   </div>
   <% end %>
 </div>
+<script>
+  $(document).ready(function() {
+    $(".modal").on("shown.bs.modal", function(e) {
+      $(':input','#new_product').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
+      $('form[data-validate]').enableClientSideValidations();
+    });
+  });
+</script>
