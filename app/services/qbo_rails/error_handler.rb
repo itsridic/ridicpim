@@ -6,7 +6,7 @@ class QboRails
         display_name = Nokogiri::XML(exception.request_xml).at('DisplayName').content
         result = @base.find_by_display_name(display_name)
         if result.entries.size == 1
-          @record.update_column(foreign_key, result.entries.first.id)
+          @record.update_column(:qbo_id, result.entries.first.id)
           @only_run_once = true
           @record.reload
           create_or_update(@record, @qb_record)

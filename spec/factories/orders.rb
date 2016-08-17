@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :order do
-    name "MyString"
+    name "PO Number 12345"
     contact
   end
 end
