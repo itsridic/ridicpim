@@ -2,6 +2,9 @@ class Sale < ApplicationRecord
   belongs_to :product
   belongs_to :sales_receipt
   after_save :set_rate
+
+  validates :quantity, presence: true
+  validates :amount, presence: true
   
   private
 

@@ -6,7 +6,6 @@ describe "Average Cost" do
     product = FactoryGirl.create(:product)
     order = FactoryGirl.create(:order)
     order_item = FactoryGirl.create(:order_item, order: order, product: product, quantity: 500, cost: 500.00)
-    p order_item.reload
     expect(order_item.reload.average_cost).to eq(1.00)
   end
 
@@ -104,7 +103,7 @@ describe "Average Cost" do
     @order3 = FactoryGirl.create(:order, user_date: 2.days.ago)
     @order_item3 = FactoryGirl.create(:order_item, order: @order3, product: @product, quantity: 100, cost: 150.00)
 
-    expect(@order_item2.reload.average_cost).to eq(1.125)
+    expect(@order_item2.reload.average_cost).to be_within(0.001).of(1.125)
     expect(@order_item3.reload.average_cost).to be_within(0.005).of(1.08)
   end
 
