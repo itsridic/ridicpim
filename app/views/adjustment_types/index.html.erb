@@ -1,0 +1,44 @@
+<div class="col-md-10 col-md-offset-1">
+  <h1>Adjustment Types<small>&nbsp;<%= link_to "Back to Adjustments", adjustments_path %></small></h1>
+  <%= link_to "New Adjustment Type", "#new_adjustment_type", data: { toggle: "modal" }, class: "btn btn-sm btn-primary" %>
+  <table class="table table-striped">
+    <thead>
+      <th></th>
+      <th>Name</th>
+    </thead>
+    <tbody id="adjustment_types">
+      <%= render @adjustment_types %>
+    </tbody>
+  </table>
+</div>
+<%# will_paginate(@orders) %>
+
+<div class="modal fade" id="new_adjustment_type">
+  <%= simple_form_for AdjustmentType.new, remote: true, validate: true do |f| %>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">New Adjustment Type</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-inputs">
+          <%= f.input :name, autofocus: true %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= f.button :submit, class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>
+<script>
+  $(document).ready(function() {
+    $(".modal").on("shown.bs.modal", function(e) {
+      $(':input','#new_adjustment_type').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
+      $('form[data-validate]').enableClientSideValidations();
+    });
+  });
+</script>

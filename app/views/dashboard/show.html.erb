@@ -51,3 +51,27 @@
     </div> 
   </div>
 </div>
+<div class="col-md-2">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Sales</h3> 
+    </div> 
+    <div class="panel-body">
+      <%= link_to sales_receipts_path, class: "btn btn-default" do %>
+        <%= fa_icon "shopping-cart", text: "Sales" %>
+      <% end %>
+    </div> 
+  </div>
+</div>
+<div class="col-md-2">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Adjustments</h3> 
+    </div> 
+    <div class="panel-body">
+      <%= link_to adjustments_path, class: "btn btn-default" do %>
+        <%= fa_icon "balance-scale", text: "Adjustments" %>
+      <% end %>
+    </div> 
+  </div>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160817203521) do
+ActiveRecord::Schema.define(version: 20160818153517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,22 @@ ActiveRecord::Schema.define(version: 20160817203521) do
     t.integer  "owner_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "adjustment_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "adjustments", force: :cascade do |t|
+    t.integer  "adjustment_type_id"
+    t.integer  "product_id"
+    t.integer  "adjusted_quantity"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["adjustment_type_id"], name: "index_adjustments_on_adjustment_type_id", using: :btree
+    t.index ["product_id"], name: "index_adjustments_on_product_id", using: :btree
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -89,6 +105,30 @@ ActiveRecord::Schema.define(version: 20160817203521) do
     t.datetime "updated_at",                null: false
   end
 
+  create_table "sales", force: :cascade do |t|
+    t.integer  "sales_receipt_id"
+    t.integer  "product_id"
+    t.integer  "quantity"
+    t.decimal  "amount"
+    t.decimal  "rate"
+    t.string   "description"
+    t.integer  "qbo_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["product_id"], name: "index_sales_on_product_id", using: :btree
+    t.index ["sales_receipt_id"], name: "index_sales_on_sales_receipt_id", using: :btree
+  end
+
+  create_table "sales_receipts", force: :cascade do |t|
+    t.integer  "contact_id"
+    t.integer  "payment_id"
+    t.datetime "user_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contact_id"], name: "index_sales_receipts_on_contact_id", using: :btree
+    t.index ["payment_id"], name: "index_sales_receipts_on_payment_id", using: :btree
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email",                  default: "", null: false
@@ -113,7 +153,13 @@ ActiveRecord::Schema.define(version: 20160817203521) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "adjustments", "adjustment_types"
+  add_foreign_key "adjustments", "products"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "contacts"
+  add_foreign_key "sales", "products"
+  add_foreign_key "sales", "sales_receipts"
+  add_foreign_key "sales_receipts", "contacts"
+  add_foreign_key "sales_receipts", "payments"
 end
