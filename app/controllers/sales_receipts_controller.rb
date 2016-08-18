@@ -2,7 +2,7 @@ class SalesReceiptsController < ApplicationController
   before_action :set_receipt, only: [:show, :edit, :update, :destroy]
 
   def index
-    @sales_receipts = SalesReceipt.order(user_date: :desc).paginate(page: params[:page], per_page: 5).includes(:contact, :sales => :product)
+    @sales_receipts = SalesReceipt.order(user_date: :desc).paginate(page: params[:page], per_page: 10).includes(:contact, :sales => :product)
   end
 
   def show

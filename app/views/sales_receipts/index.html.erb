@@ -3,7 +3,7 @@
     <div class="panel-body">
       <div class="page-header">
         <h1>Sales Receipts</h1>
-        <%= link_to(fa_icon("shopping-cart", text: "New Sales Receipt"), new_sales_receipt_path, class: "btn btn-sm btn-primary") %>
+        <%= link_to(fa_icon("file-text-o", text: "New Sales Receipt"), new_sales_receipt_path, class: "btn btn-sm btn-primary") %>
         <div id="all-sales_receipts">
           <%= render @sales_receipts %>
         </div>
