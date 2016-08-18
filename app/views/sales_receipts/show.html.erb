@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="col-md-10 col-md-offset-1 panel panel-default">
+    <div class="panel-body new-order-form">
+      <%= link_to(fa_icon("pencil", text: "Edit"), edit_sales_receipt_path(@sales_receipt), class: "btn btn-primary btn-sm") %>
+      <%= link_to(fa_icon("trash", text: "Delete"), @sales_receipt, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm") %>
+      <%= link_to(fa_icon("book", text: "All Sales"), sales_receipts_path, class: "btn btn-success btn-sm") %>
+      <div class="page-header">
+        <h1><%= @sales_receipt.contact.name %> <small><%= local_time(@sales_receipt.user_date) %></small></h1>
+      </div>
+      <div>
+        <h4>
+          <%= @sales_receipt.payment.name %>
+        </h4>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <th>Product</th>
+          <th>Description</th>
+          <th>Quantity</th>
+          <th>Rate</th>
+          <th>Amount</th>
+        </thead>
+        <tbody>
+          <%= render @sales_receipt.sales %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

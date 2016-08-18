@@ -22,6 +22,7 @@ gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
 gem 'cocoon', '~> 1.2', '>= 1.2.9'
 gem 'local_time', '~> 1.0', '>= 1.0.3'
 gem 'will_paginate', '~> 3.1'
+gem 'goldiloader'
 gem 'client_side_validations',
      github: 'DavyJonesLocker/client_side_validations',
      branch: 'rails5'

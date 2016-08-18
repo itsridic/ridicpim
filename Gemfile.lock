@@ -153,6 +153,9 @@ GEM
     formatador (0.2.5)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
+    goldiloader (0.0.10)
+      activerecord (>= 3.2, < 5.1)
+      activesupport (>= 3.2, < 5.1)
     guard (2.14.0)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -380,6 +383,7 @@ DEPENDENCIES
   email_spec (~> 2.1)
   factory_girl_rails (~> 4.7)
   font-awesome-rails (~> 4.6, >= 4.6.3.1)
+  goldiloader
   guard (~> 2.14)
   guard-livereload (~> 2.5, >= 2.5.2)
   guard-rspec (~> 4.7, >= 4.7.3)
