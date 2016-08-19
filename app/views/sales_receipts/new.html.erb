@@ -13,5 +13,17 @@
 <script>
   $(document).ready(function() {
     $(".add_fields").click();
+    $(document).on('change', '.choose-product', function() {
+      var text = $(".choose-product option:selected").text();
+      if(text) {
+        if(text.match(/Choose/)) {
+          if(text.match(/Choose/g).length === 1) {
+            $(".add_fields").click();
+          }
+        } else {
+          $(".add_fields").click();
+        }
+      }
+     });
   });
 </script>
