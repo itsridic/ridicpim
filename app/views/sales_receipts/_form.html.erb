@@ -1,4 +1,7 @@
 <%= simple_form_for(@sales_receipt) do |f| %>
+  <% if @sales_receipt.errors.any? %>
+    <p><% p @sales_receipt.errors %></p>
+  <% end %>
   <%= f.error_notification %>
   <%= link_to "Add Date", "#", id: "adduserdate" %>
   <%= f.input :user_date, include_blank: true %>

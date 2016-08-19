@@ -1,5 +1,3 @@
-<%= javascript_include_tag "order-user-date" %>
-
 <div class="container">
   <div class="col-md-10 col-md-offset-1 panel panel-default">
     <div class="panel-body new-order-form">
@@ -13,5 +11,17 @@
 <script>
   $(document).ready(function() {
     $(".add_fields").click();
+    $(document).on('change', '.order-product', function() {
+      var text = $(".order-product option:selected").text();
+      if(text) {
+        if(text.match(/Choose/)) {
+          if(text.match(/Choose/g).length === 1) {
+            $(".add_fields").click();
+          }
+        } else {
+          $(".add_fields").click();
+        }
+      }
+     });
   });
 </script>

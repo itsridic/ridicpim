@@ -3,7 +3,6 @@ class OrderItem < ApplicationRecord
   belongs_to :product
   before_save :set_average_cost
 
-  validates :order, presence: true
   validates :product, presence: true
 
   def last_order_average_cost

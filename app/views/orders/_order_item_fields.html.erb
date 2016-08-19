@@ -14,7 +14,7 @@
       <div class="col-md-4">
         <div class="form-group inline">
           <%= f.label :product %>
-          <%= f.collection_select :product_id, Product.all.order("name"), :id, :name, { prompt: "Choose a Product..." }, { class: "form-control" } %>
+          <%= f.collection_select :product_id, Product.all.order("name"), :id, :name, { prompt: "Choose a Product..." }, { class: "form-control order-product" } %>
         </div>
       </div>
       <div class="col-md-4">
