@@ -1,0 +1,52 @@
+.col-md-12
+  .well
+    |  Welcome to the It's Ridic PIM! 
+.col-md-2.col-xs-4
+  .panel.panel-default
+    .panel-heading
+      h3.panel-title
+        | Products
+    .panel-body
+      = link_to products_path, class: "btn btn-default" do
+        i.glyphicon.glyphicon-barcode
+          |  Products
+.col-md-2.col-xs-4
+  .panel.panel-default
+    .panel-heading
+      h3.panel-title
+        | Contacts
+    .panel-body
+      = link_to contacts_path, class: "btn btn-default" do
+        = fa_icon "users", text: "Contacts"
+.col-md-2.col-xs-4
+  .panel.panel-default
+    .panel-heading
+      h3.panel-title
+        | Orders
+    .panel-body
+      = link_to orders_path, class: "btn btn-default" do
+        = fa_icon "book", text: "Orders"
+.col-md-2.col-xs-4
+  .panel.panel-default
+    .panel-heading
+      h3.panel-title
+        | Payments
+    .panel-body
+      = link_to payments_path, class: "btn btn-default" do
+        = fa_icon "money", text: "Payments"
+.col-md-2.col-xs-4
+  .panel.panel-default
+    .panel-heading
+      h3.panel-title
+        | Sales
+    .panel-body
+      = link_to sales_receipts_path, class: "btn btn-default" do
+        = fa_icon "shopping-cart", text: "Sales"
+.col-md-2.col-xs-4
+  .panel.panel-default
+    .panel-heading
+      h3.panel-title
+        | Adjustments
+    .panel-body
+      = link_to adjustments_path, class: "btn btn-default" do
+        = fa_icon "balance-scale", text: "Adjustments"

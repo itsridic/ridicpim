@@ -1,0 +1,36 @@
+.container
+  .col-md-10.col-md-offset-1.panel.panel-default
+    .panel-body.new-order-form
+      = link_to(fa_icon("plus-circle", text: "New Order"), new_order_path, class: "btn btn-default btn-sm")
+      = link_to(fa_icon("pencil", text: "Edit"), edit_order_path(@order), class: "btn btn-primary btn-sm")
+      = link_to(fa_icon("trash", text: "Delete"), @order, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm")
+      = link_to(fa_icon("book", text: "All Orders"), orders_path, class: "btn btn-success btn-sm")
+      .page-header
+        h1
+          = @order.name
+          small
+            = local_time(@order.user_date)
+      div
+        h4
+          = @order.contact.name
+        p
+          = @order.contact.address
+          br
+          = @order.contact.city
+          | , 
+          = @order.contact.state
+          | , 
+          = @order.contact.postal_code
+          = @order.contact.country
+      table.table.table-striped
+        thead
+          th
+            | Product
+          th
+            | Quantity
+          th
+            | Cost
+          th
+            | Average Cost
+        tbody
+          = render @order.order_items.includes(:product)

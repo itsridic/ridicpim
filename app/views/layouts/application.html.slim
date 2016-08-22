@@ -1,0 +1,29 @@
+doctype html
+html
+  head
+    title
+      | Ridicpim
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application'
+    = javascript_include_tag 'application'
+  body
+    - unless QboConfig.exists? || current_page?(root_url)
+      ipp:connecttointuit
+      script[type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"]
+      script
+        |  intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '<ruby code="= authenticate_quick_books_url"></ruby>'}); 
+    header.container
+      nav.navbar.navbar-default
+        .navbar-header
+          = link_to "It's Ridic! PIM", root_path, class: 'navbar-brand'
+        - if user_signed_in?
+          .pull-right.right-buttons
+            = link_to 'Sign out', destroy_user_session_path, method: 'delete', class: 'btn btn-default navbar-btn'
+          ul.nav.navbar-nav.navbar-right
+            li
+              = link_to 'Users', users_path
+    .container
+      = flash_messages if show_layout_flash?
+      .row
+        = yield
+      #remote-container

@@ -1,0 +1,32 @@
+= simple_form_for(@sales_receipt) do |f|
+  - if @sales_receipt.errors.any?
+    p
+      - p @sales_receipt.errors
+  = f.error_notification
+  = link_to "Add Date", "#", id: "adduserdate"
+  = f.input :user_date, include_blank: true
+  .form-group
+    = f.association :contact, collection: Contact.order('name'), prompt: "Choose Contact..."
+  .form-group
+    = f.association :payment
+  h3
+    | Sale Items
+  #sale-items
+    = f.simple_fields_for :sales do |sale|
+      = render 'sale_fields', :f => sale
+    .links[style="margin-top: 1%; margin-bottom: 1%;"]
+      = link_to_add_association(fa_icon('plus lg', text: 'add item'), f, :sales, class: "btn btn-success")
+  = f.submit "Submit", class: "btn btn-primary"
+
+javascript:
+  $(document).ready(function() { 
+    function toggleDate() { 
+      $(".sales_receipt_user_date").toggle(); 
+      if ($("#adduserdate").text() == "Add Date") { 
+        $("#adduserdate").text("Hide Date"); 
+      } else { 
+        $("#adduserdate").text("Add Date"); 
+      } 
+    } 
+    $(".sales_receipt_user_date").hide(); var addUserDate = document.getElementById('adduserdate'); addUserDate.addEventListener('click', toggleDate, false); 
+  });

@@ -23,6 +23,8 @@ gem 'cocoon', '~> 1.2', '>= 1.2.9'
 gem 'local_time', '~> 1.0', '>= 1.0.3'
 gem 'will_paginate', '~> 3.1'
 gem 'goldiloader'
+gem 'slim', '~> 3.0', '>= 3.0.7'
+gem 'slim-rails', '~> 3.1'
 gem 'client_side_validations',
      github: 'DavyJonesLocker/client_side_validations',
      branch: 'rails5'

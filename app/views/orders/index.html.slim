@@ -1,0 +1,10 @@
+.container
+  .col-md-10.col-md-offset-1.panel.panel-default
+    .panel-body
+      .page-header
+        h1
+          | Orders
+        = link_to(fa_icon("tasks", text: "New Order"), new_order_path, class: "btn btn-sm btn-primary")
+        #all-orders
+          = render @orders
+= will_paginate(@orders)

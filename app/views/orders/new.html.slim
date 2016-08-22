@@ -1,14 +1,12 @@
-<div class="container">
-  <div class="col-md-10 col-md-offset-1 panel panel-default">
-    <div class="panel-body new-order-form">
-      <h1>New Order</h1>
-        <%= render 'form' %>
-        <%= link_to 'Back', orders_path %>
-    </div>
-  </div>
-</div>
+.container
+  .col-md-10.col-md-offset-1.panel.panel-default
+    .panel-body.new-order-form
+      h1
+        | New Order
+      = render 'form'
+      = link_to 'Back', orders_path
 
-<script>
+javascript:
   $(document).ready(function() {
     $(".add_fields").click();
     $(document).on('change', '.order-product', function() {
@@ -24,4 +22,3 @@
       }
      });
   });
-</script>

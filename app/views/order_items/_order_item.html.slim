@@ -1,0 +1,9 @@
+tr
+  td
+    = order_item.product.name
+  td
+    = order_item.quantity
+  td
+    = number_to_currency(order_item.cost)
+  td
+    = number_to_currency(order_item.average_cost)
