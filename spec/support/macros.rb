@@ -18,7 +18,6 @@ def sign_user_in(user, opts={})
   else
     visit new_user_session_path
   end
-  
   fill_in 'user[email]', with: user.email
   fill_in 'user[password]', with: (opts[:password] || user.password)
   click_button 'Log in'
