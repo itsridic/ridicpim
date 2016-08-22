@@ -20,19 +20,6 @@ feature 'user creates product' do
     
     expect(page).to have_content('Test Product')
   end
-
-  # scenario 'with invalid fields' do
-  #   product = build_stubbed(:product, name: '', amazon_sku: '', price: 0.00)
-  #   sign_user_in(user, subdomain: account.subdomain)
-  #   click_on 'Products'
-  #   click_on 'New Product'
-  #   fill_in 'product[name]', with: product.name
-  #   fill_in 'product[amazon_sku]', with: product.amazon_sku
-  #   fill_in 'product[price]', with: product.price
-  #   click_on 'Create Product'
-
-  #   expect(page).to have_content("can't be blank")
-  # end
 end
 
 def set_host(host)
