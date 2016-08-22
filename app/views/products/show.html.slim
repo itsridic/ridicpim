@@ -1,0 +1,13 @@
+.col-md-10.col-md-offset-1
+  .panel.panel-default
+    .panel-heading
+      h3.panel-title
+        = @product.name
+    .panel-body
+      p
+        | Amazon SKU: 
+        = @product.amazon_sku
+      p
+        | Price: 
+        = number_to_currency(@product.price)
+  = link_to "All Products", products_path, class: "btn btn-sm btn-primary"

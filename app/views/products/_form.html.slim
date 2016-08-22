@@ -1,0 +1,25 @@
+#edit_product.modal.fade
+  = simple_form_for @product, remote: true, validate: true do |f|
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | ×
+          h4.modal-title
+            | Edit Product
+        .modal-body
+          .form-inputs
+            = f.input :name
+            = f.input :amazon_sku
+            = f.input :price
+        .modal-footer
+          button.btn.btn-default[type="button" data-dismiss="modal"]
+            | Close
+          = f.button :submit, class: 'btn btn-primary'
+
+javascript:
+  $(document).ready(function() {
+    $(".modal").on("shown.bs.modal", function(e) {
+      $('form[data-validate]').enableClientSideValidations();
+    });
+  });
