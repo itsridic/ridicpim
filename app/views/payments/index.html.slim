@@ -1,0 +1,36 @@
+.col-md-10.col-md-offset-1
+  h1
+    | Payments
+  = link_to "New Payment", "#new_payment", data: { toggle: "modal" }, class: "btn btn-sm btn-primary"
+  table.table.table-striped
+    thead
+      th
+      th
+        | Name
+    tbody#payments
+      = render @payments
+#new_payment.modal.fade
+  = simple_form_for Payment.new, remote: true, validate: true do |f|
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | ×
+          h4.modal-title
+            | New Payment
+        .modal-body
+          .form-inputs
+            = f.input :name, autofocus: true
+        .modal-footer
+          button.btn.btn-default[type="button" data-dismiss="modal"]
+            | Close
+          = f.button :submit, class: 'btn btn-primary'
+script
+  |  $(document).ready(function() { $(".modal").on("shown.bs.modal", function(e) { $(':input','#new_payment').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected'); $('form[data-validate]').enableClientSideValidations(); }); }); 
+javascript:
+  $(document).ready(function() {
+    $(".modal").on("shown.bs.modal", function(e) {
+      $(':input','#new_payment').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
+      $('form[data-validate]').enableClientSideValidations();
+    });
+  });

@@ -16,12 +16,7 @@
         p
           = @order.contact.address
           br
-          = @order.contact.city
-          | , 
-          = @order.contact.state
-          | , 
-          = @order.contact.postal_code
-          = @order.contact.country
+          = "#{@order.contact.city}, #{@order.contact.state}  #{@order.contact.postal_code} #{@order.contact.country}"
       table.table.table-striped
         thead
           th

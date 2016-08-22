@@ -1,0 +1,22 @@
+#edit_payment.modal.fade
+  = simple_form_for @payment, remote: true, validate: true do |f|
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | ×
+          h4.modal-title
+            | Edit Payment
+        .modal-body
+          .form-inputs
+            = f.input :name
+        .modal-footer
+          button.btn.btn-default[type="button" data-dismiss="modal"]
+            | Close
+          = f.button :submit, class: 'btn btn-primary'
+javascript:
+  $(document).ready(function() {
+    $(".modal").on("shown.bs.modal", function(e) {
+      $('form[data-validate]').enableClientSideValidations();
+    });
+  });
