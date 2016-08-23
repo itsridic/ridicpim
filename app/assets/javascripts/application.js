@@ -15,4 +15,6 @@
 //= require jquery_ujs
 //= require cocoon
 //= require local_time
+//= require mdb/mdb
+//= require mdb/tether
 //= require_tree .

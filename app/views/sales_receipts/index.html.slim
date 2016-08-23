@@ -1,0 +1,10 @@
+.container
+  .col-md-10.col-md-offset-1.panel.panel-default
+    .panel-body
+      .page-header
+        h1
+          | Sales Receipts
+        = link_to(fa_icon("file-text-o", text: "New Sales Receipt"), new_sales_receipt_path, class: "btn btn-sm btn-primary")
+        #all-sales_receipts
+          = render @sales_receipts
+= will_paginate(@sales_receipts)

@@ -5,11 +5,11 @@
     small
       = local_time(order.user_date)
     small
-      = link_to(fa_icon("search", text: "View"), order, class: "btn btn-default btn-xs")
+      = link_to(fa_icon("search", text: "View"), order, class: "btn btn-default btn-sm")
     small
-      = link_to(fa_icon("pencil", text: "Edit"), edit_order_path(order), class: "btn btn-default btn-xs")
+      = link_to(fa_icon("pencil", text: "Edit"), edit_order_path(order), class: "btn btn-default btn-sm")
     small
-      = link_to(fa_icon("trash", text: "Delete"), order, method: :delete, data: { confirm: "Are you sure?" }, remote: true, class: "btn btn-default btn-xs")
+      = link_to(fa_icon("trash", text: "Delete"), order, method: :delete, data: { confirm: "Are you sure?" }, remote: true, class: "btn btn-default btn-sm")
 div
   h4
     = order.contact.name

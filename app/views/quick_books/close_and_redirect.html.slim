@@ -1,0 +1,10 @@
+doctype html
+html
+  head
+    title
+      = @msg
+  body
+    h3
+      = @msg
+    javascript:
+      setTimeout(function(){ window.opener.location = '<ruby code="= @url"></ruby>'; window.close(); }, 10000);

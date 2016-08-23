@@ -12,7 +12,7 @@
   h3
     | Sale Items
   #sale-items
-    = f.simple_fields_for :sales do |sale|
+    = f.simple_fields_for :sales, class: "form-inline" do |sale|
       = render 'sale_fields', :f => sale
     .links[style="margin-top: 1%; margin-bottom: 1%;"]
       = link_to_add_association(fa_icon('plus lg', text: 'add item'), f, :sales, class: "btn btn-success")

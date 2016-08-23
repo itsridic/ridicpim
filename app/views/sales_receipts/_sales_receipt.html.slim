@@ -1,0 +1,21 @@
+.page-header
+  h1
+    = sales_receipt.contact.name
+    small
+      = local_time(sales_receipt.user_date)
+    small
+      = link_to(fa_icon("pencil", text: "Edit"), edit_sales_receipt_path(sales_receipt), class: "btn btn-default btn-sm")
+table.table.table-striped
+  thead
+    th
+      | Product
+    th
+      | Description
+    th
+      | Quantity
+    th
+      | Rate
+    th
+      | Amount
+  tbody
+    = render sales_receipt.sales
