@@ -5,60 +5,61 @@
 a {
 }
 
-select {
-  border: 2px solid white !important;
-  border-radius: 5px !important;
-  background-color: #2E2E2E !important;
-  display: inline-block;
-  font: inherit;
-  line-height: 1.5em;
-  padding: 0.5em 3.5em 0.5em 1em;
+.panel-body {
+  select {
+    border: 2px solid white !important;
+    border-radius: 5px !important;
+    background-color: #2E2E2E !important;
+    display: inline-block;
+    font: inherit;
+    line-height: 1.5em;
+    padding: 0.5em 3.5em 0.5em 1em;
 
-    /* reset */
+      /* reset */
 
-  margin: 0;      
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-appearance: none;
-  -moz-appearance: none;  
-  background-image:
-    linear-gradient(45deg, transparent 50%, #2E2E2E 50%),
-    linear-gradient(135deg, #2E2E2E 50%, transparent 50%),
-    linear-gradient(to right, #3F729B, #3F729B) !important;
-  background-position:
-    calc(100% - 20px) calc(1em + 2px),
-    calc(100% - 15px) calc(1em + 2px),
-    100% 0 !important;
-  background-size:
-    5px 5px,
-    5px 5px,
-    2.5em 2.5em !important;
-  background-repeat: no-repeat !important;
+    margin: 0;      
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;  
+    background-image:
+      linear-gradient(45deg, transparent 50%, #2E2E2E 50%),
+      linear-gradient(135deg, #2E2E2E 50%, transparent 50%),
+      linear-gradient(to right, #3F729B, #3F729B) !important;
+    background-position:
+      calc(100% - 20px) calc(1em + 2px),
+      calc(100% - 15px) calc(1em + 2px),
+      100% 0 !important;
+    background-size:
+      5px 5px,
+      5px 5px,
+      2.5em 2.5em !important;
+    background-repeat: no-repeat !important;
+  }
+
+  select:focus {
+    background-image:
+      linear-gradient(45deg, black 50%, transparent 50%),
+      linear-gradient(135deg, transparent 50%, black 50%),
+      linear-gradient(to right, gray, gray);
+    background-position:
+      calc(100% - 15px) 1em,
+      calc(100% - 20px) 1em,
+      100% 0;
+    background-size:
+      5px 5px,
+      5px 5px,
+      2.5em 2.5em;
+    background-repeat: no-repeat;
+    border-color: grey;
+    outline: 0;
+  }
+
+  select:active {
+    background-color: black !important;
+  }
 }
-
-select:focus {
-  background-image:
-    linear-gradient(45deg, black 50%, transparent 50%),
-    linear-gradient(135deg, transparent 50%, black 50%),
-    linear-gradient(to right, gray, gray);
-  background-position:
-    calc(100% - 15px) 1em,
-    calc(100% - 20px) 1em,
-    100% 0;
-  background-size:
-    5px 5px,
-    5px 5px,
-    2.5em 2.5em;
-  background-repeat: no-repeat;
-  border-color: grey;
-  outline: 0;
-}
-
-select:active {
-  background-color: black !important;
-}
-
 h1 {
   margin-top: 1%;
   margin-bottom: 1%;
@@ -80,14 +81,19 @@ small {
   .modal-title {
     color: black !important;
   }
+  .model-body {
+    .form-group {
+      margin-botton: 0px !important;
+    }
+  }
   label {
     color: black !important;
   }
-  input[type="text"] {
-    width: 95%;
-    padding-left: 2%;
+  input:not([type=submit]) {
+    margin: 0;
+    padding: 0;
   }
-  input[type="number"] {
+  input[type="text"], input[type="number"], input[type="email"], input[type="tel"] {
     width: 95%;
     padding-left: 2%;
   }  
@@ -102,6 +108,15 @@ small {
   span {
     color: red !important;
   }
+  select {
+    width: 95%;
+    border: 1px solid #4B515D !important;
+    border-radius: 5px !important;
+    color: black !important;
+    option {
+      color: black !important;
+    }
+  }  
 }
 
 .card-block {
