@@ -3,7 +3,7 @@
     .modal-dialog
       .modal-content
         .modal-header
-          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          button.close[type="button" data-dismiss="modal" aria-hidden="true" class="elegant-color"]
             | ×
           h4.modal-title
             | Edit Product
@@ -13,9 +13,9 @@
             = f.input :amazon_sku
             = f.input :price
         .modal-footer
-          button.btn.btn-default[type="button" data-dismiss="modal"]
+          button.btn.elegant-color[type="button" data-dismiss="modal"]
             | Close
-          = f.button :submit, class: 'btn btn-primary'
+          = f.button :submit, class: 'btn unique-color'
 
 javascript:
   $(document).ready(function() {
