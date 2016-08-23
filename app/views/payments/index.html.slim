@@ -14,7 +14,7 @@
     .modal-dialog
       .modal-content
         .modal-header
-          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          button.close.elegant-color[type="button" data-dismiss="modal" aria-hidden="true"]
             | ×
           h4.modal-title
             | New Payment
@@ -22,9 +22,9 @@
           .form-inputs
             = f.input :name, autofocus: true
         .modal-footer
-          button.btn.btn-default[type="button" data-dismiss="modal"]
+          button.btn.stylish-color-dark[type="button" data-dismiss="modal"]
             | Close
-          = f.button :submit, class: 'btn btn-primary'
+          = f.button :submit, class: 'btn unique-color'
 script
   |  $(document).ready(function() { $(".modal").on("shown.bs.modal", function(e) { $(':input','#new_payment').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected'); $('form[data-validate]').enableClientSideValidations(); }); }); 
 javascript:

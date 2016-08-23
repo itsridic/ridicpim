@@ -1,5 +1,8 @@
 * {
-  color: #FFFFFF !important;
+  color: #FFFFFF;
+}
+
+a {
 }
 
 select {
@@ -73,6 +76,34 @@ small {
   }
 }
 
+.modal-content {
+  .modal-title {
+    color: black !important;
+  }
+  label {
+    color: black !important;
+  }
+  input[type="text"] {
+    width: 95%;
+    padding-left: 2%;
+  }
+  input[type="number"] {
+    width: 95%;
+    padding-left: 2%;
+  }  
+  input {
+    border: 1px solid #4B515D;
+    border-radius: 5px;
+    color: black !important;
+  }
+  .btn {
+    color: white !important;
+  }
+  span {
+    color: red !important;
+  }
+}
+
 .card-block {
   background-color: #4B515D;
 }
@@ -83,4 +114,8 @@ small {
 
 .cw-red {
   background-color: #C35A46 !important;
+}
+
+.cw-red-text {
+  color: #C35A46 !important;
 }

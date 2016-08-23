@@ -1,7 +1,7 @@
-<div id="#{payment.id}"> 
-td
-  => link_to fa_icon("search"), payment
-  => link_to fa_icon("pencil"), edit_payment_path(payment), remote: true
-  => link_to fa_icon("trash" ), payment, method: :delete, data: { confirm: "Are you sure?" }, remote: true
-td
-  = payment.name
+<tr id="#{payment.id}">
+  td
+    => link_to fa_icon("search"), payment, class: "blue-text"
+    => link_to fa_icon("pencil"), edit_payment_path(payment), remote: true, class: "teal-text"
+    => link_to fa_icon("trash" ), payment, method: :delete, data: { confirm: "Are you sure?" }, remote: true, class: "cw-red-text"
+  td
+    = payment.name
