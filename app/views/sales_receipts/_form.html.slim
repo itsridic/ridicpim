@@ -15,8 +15,8 @@
     = f.simple_fields_for :sales, class: "form-inline" do |sale|
       = render 'sale_fields', :f => sale
     .links[style="margin-top: 1%; margin-bottom: 1%;"]
-      = link_to_add_association(fa_icon('plus lg', text: 'add item'), f, :sales, class: "btn btn-success")
-  = f.submit "Submit", class: "btn btn-primary"
+      = link_to_add_association(fa_icon('plus lg', text: 'add item'), f, :sales, class: "btn teal")
+  = f.submit "Submit", class: "btn unique-color"
 
 javascript:
   $(document).ready(function() { 

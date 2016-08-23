@@ -1,21 +1,24 @@
-.page-header
-  h1
+.card
+  .card-header.unique-color.white-text
     = sales_receipt.contact.name
     small
       = local_time(sales_receipt.user_date)
     small
-      = link_to(fa_icon("pencil", text: "Edit"), edit_sales_receipt_path(sales_receipt), class: "btn btn-default btn-sm")
-table.table.table-striped
-  thead
-    th
-      | Product
-    th
-      | Description
-    th
-      | Quantity
-    th
-      | Rate
-    th
-      | Amount
-  tbody
-    = render sales_receipt.sales
+      = link_to(fa_icon("search", text: "View"), sales_receipt, class: "btn btn-sm blue")
+      = link_to(fa_icon("pencil", text: "Edit"), edit_sales_receipt_path(sales_receipt), class: "btn btn-sm teal")
+      = link_to(fa_icon("trash", text: "Delete"), sales_receipt, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm cw-red")
+  .card-block
+    table.table.table-striped
+      thead
+        th
+          | Product
+        th
+          | Description
+        th
+          | Quantity
+        th
+          | Rate
+        th
+          | Amount
+      tbody
+        = render sales_receipt.sales

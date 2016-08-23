@@ -1,17 +1,16 @@
 .container
-  .col-md-10.col-md-offset-1.panel.panel-default
-    .panel-body.new-order-form
-      = link_to(fa_icon("pencil", text: "Edit"), edit_sales_receipt_path(@sales_receipt), class: "btn btn-primary btn-sm")
-      = link_to(fa_icon("trash", text: "Delete"), @sales_receipt, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm")
-      = link_to(fa_icon("book", text: "All Sales"), sales_receipts_path, class: "btn btn-success btn-sm")
-      .page-header
-        h1
-          = @sales_receipt.contact.name
-          small
-            = local_time(@sales_receipt.user_date)
-      div
-        h4
-          = @sales_receipt.payment.name
+  p
+  = link_to(fa_icon("pencil", text: "Edit"), edit_sales_receipt_path(@sales_receipt), class: "btn btn-sm teal")
+  = link_to(fa_icon("trash", text: "Delete"), @sales_receipt, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm cw-red")
+  = link_to(fa_icon("book", text: "All Sales"), sales_receipts_path, class: "btn btn-sm unique-color")
+  p
+  .card
+    .card-header.unique-color.white-text
+      = @sales_receipt.contact.name
+      small
+        = local_time(@sales_receipt.user_date)
+    .card-block
+      | Payment: #{@sales_receipt.payment.name}
       table.table.table-striped
         thead
           th
