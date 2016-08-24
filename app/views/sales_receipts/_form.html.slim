@@ -6,9 +6,11 @@
   = link_to "Add Date", "#", id: "adduserdate"
   = f.input :user_date, include_blank: true
   .form-group
-    = f.association :contact, collection: Contact.order('name'), prompt: "Choose Contact..."
+    = f.label :contact
+    = f.collection_select :contact_id, Contact.order('name'), :id, :name, { prompt: "Choose Contact" }, { class: "form-control" }
   .form-group
-    = f.association :payment
+    = f.label :payment
+    = f.collection_select :payment_id, Payment.order('name'), :id, :name, { prompt: "Choose Payment" }, { class: "form-control" }
   h3
     | Sale Items
   #sale-items

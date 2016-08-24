@@ -4,14 +4,16 @@
       .col-md-2
         .form-group
           = f.label :quantity
-          = f.number_field :quantity, class: "form-control"
+          = f.number_field :quantity, class: "form-control-sm"
       .col-md-2
-        = f.label :cost
-        = f.number_field :cost, class: "form-control"
-      .col-md-4
-        .form-group.inline
+        .form-group
+          = f.label :cost
+          = f.number_field :cost, class: "form-control-sm"
+      .col-md-6
+        .form-group
           = f.label :product
           = f.collection_select :product_id, Product.all.order("name"), :id, :name, { prompt: "Choose a Product..." }, { class: "form-control order-product" }
-      .col-md-4
-        br
-        = link_to_remove_association(fa_icon("times lg"), f, class: "btn btn-sm btn-danger", style: "margin-top: 0.5%;")
+      .col-md-2
+        .form-group
+          br
+          = link_to_remove_association(fa_icon("times lg"), f, class: "btn btn-sm cw-red", style: "margin-top: 0.5%;")

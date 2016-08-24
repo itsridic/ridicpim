@@ -2,10 +2,14 @@
   = f.error_notification
   - if !@order.user_date
     = link_to "Add Date", "#", id: "adduserdate"
-  = f.input :user_date, include_blank: true
-  = f.input :name
-  = f.label :vendor
-  = f.collection_select :contact_id, Contact.all, :id, :name, {}, { class: "form-control" }
+  .form-group
+    = f.input :user_date, include_blank: true
+  .form-group
+    = f.input :name
+  .form-group
+    = f.label :vendor
+  .form-group
+    = f.collection_select :contact_id, Contact.all, :id, :name, {}, { class: "form-control" }
   .contactSelectAdd.form-group[style="display: none;"]
     a#cancel-contact[style="color:black" href="javascript:cancelContact()"]
       | Cancel
@@ -16,8 +20,8 @@
     = f.simple_fields_for :order_items do |oi|
       = render 'order_item_fields', :f => oi
     .links[style="margin-top: 1%; margin-bottom: 1%;"]
-      = link_to_add_association(fa_icon('plus lg', text: 'add item'), f, :order_items, class: "btn btn-success")
-  = f.submit 'Save', class: "btn btn-primary"
+      = link_to_add_association(fa_icon('plus lg', text: 'add item'), f, :order_items, class: "btn teal")
+  = f.submit 'Save', class: "btn unique-color"
 
 javascript:
   $(document).ready(function() {

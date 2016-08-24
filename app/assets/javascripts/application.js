@@ -12,9 +12,10 @@
 //
 //= require jquery
 //= require bootstrap-sprockets
+//= require mdb/tether
+//= require mdb/mdb
 //= require jquery_ujs
+//= require jquery-ui/datepicker
 //= require cocoon
 //= require local_time
-//= require mdb/mdb
-//= require mdb/tether
 //= require_tree .
