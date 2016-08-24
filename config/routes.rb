@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     resources :sales_receipts
     resources :adjustment_types
     resources :adjustments
+    resources :credentials
     resources :amazon_statements, only: [:index, :show] do
       collection do
         get :fetch
