@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :adjustment_types
     resources :adjustments
     resources :credentials
+    resources :inventory, only: [:index]
     resources :amazon_statements, only: [:index, :show] do
       collection do
         get :fetch

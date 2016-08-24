@@ -48,4 +48,11 @@ p
       | Credentials
     .card-block
       = link_to credentials_path, class: "btn unique-color" do
-        = fa_icon "key", text: "Credentials"        
+        = fa_icon "key", text: "Credentials"
+.col-md-3.col-xs-4
+  .card
+    .card-header.unique-color.white-text
+      | Inventory
+    .card-block
+      = link_to inventory_index_path, class: "btn unique-color" do
+        = fa_icon "dashboard", text: "Inventory"                
