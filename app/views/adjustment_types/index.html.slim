@@ -1,0 +1,32 @@
+.col-md-10.offset-md-1
+  h1
+    | Adjustment Types
+    small
+      |  #{link_to "Back to Adjustments", adjustments_path}
+  = link_to "New Adjustment Type", "#new_adjustment_type", data: { toggle: "modal" }, class: "btn btn-sm btn-primary"
+  table.table.table-striped
+    thead
+      th
+      th Name
+    tbody#adjustment_types
+      = render @adjustment_types
+#new_adjustment_type.modal.fade
+  = simple_form_for AdjustmentType.new, remote: true, validate: true do |f|
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
+          h4.modal-title New Adjustment Type
+        .modal-body
+          .form-inputs
+            = f.input :name, autofocus: true
+        .modal-footer
+          button.btn.stylish-color-dark data-dismiss="modal" type="button"  Close
+          = f.button :submit, class: 'btn unique-color'
+javascript:
+  $(document).ready(function() {
+    $(".modal").on("shown.bs.modal", function(e) {
+      $(':input','#new_adjustment_type').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
+      $('form[data-validate]').enableClientSideValidations();
+    });
+  });

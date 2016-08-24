@@ -1,6 +1,5 @@
-.col-md-10.col-md-offset-1
-  h1
-    | Payments
+.col-md-10.offset-md-1
+  h1 Payments
   = link_to "New Payment", "#new_payment", data: { toggle: "modal" }, class: "btn btn-sm btn-primary"
   table.table.table-striped
     thead
@@ -14,10 +13,8 @@
     .modal-dialog
       .modal-content
         .modal-header
-          button.close.elegant-color[type="button" data-dismiss="modal" aria-hidden="true"]
-            | ×
-          h4.modal-title
-            | New Payment
+          button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
+          h4.modal-title New Payment
         .modal-body
           .form-inputs
             = f.input :name, autofocus: true

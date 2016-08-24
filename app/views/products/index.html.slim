@@ -1,4 +1,4 @@
-.col-md-10.col-md-offset-1
+.col-md-10.offset-md-1
   h1
     | Products
   = link_to "New Product", "#new_product", data: { toggle: "modal" }, class: "btn btn-sm btn-primary"
@@ -18,8 +18,7 @@
     .modal-dialog
       .modal-content
         .modal-header
-          button.close.elegant-color[type="button" data-dismiss="modal" aria-hidden="true"]
-            | ×
+          button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
           h4.modal-title
             | New Product
         .modal-body

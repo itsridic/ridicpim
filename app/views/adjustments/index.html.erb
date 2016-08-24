@@ -1,4 +1,4 @@
-<div class="col-md-10 col-md-offset-1">
+<div class="col-md-10 offset-md-1">
   <h1>Adjustments<small>&nbsp;<%= link_to "Manage Adjustment Types", adjustment_types_path %></small></h1>
   <%= link_to "New Adjustment", "#new_adjustment", data: { toggle: "modal" }, class: "btn btn-sm btn-primary" %>
   <table class="table table-striped">
@@ -13,7 +13,6 @@
     </tbody>
   </table>
 </div>
-<%# will_paginate(@orders) %>
 
 <div class="modal fade" id="new_adjustment">
   <%= simple_form_for Adjustment.new, remote: true, validate: true do |f| %>

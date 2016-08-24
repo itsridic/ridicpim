@@ -1,0 +1,44 @@
+.col-md-12
+  h1 Contacts
+  = link_to "New Contact", "#new_contact", data: { toggle: "modal" }, class: "btn btn-sm btn-primary"
+  table.table.table-striped
+    thead
+      th
+      th Name
+      th Address
+      th City
+      th State
+      th Postal Code
+      th Country
+      th Email Address
+      th Phone Number
+      th QBO ID
+    tbody#contacts
+      = render @contacts
+#new_contact.modal.fade
+  = simple_form_for Contact.new, remote: true, validate: true do |f|
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
+          h4.modal-title New Contact
+        .modal-body
+          .form-inputs
+            = f.input :name, autofocus: true
+            = f.input :address
+            = f.input :city
+            = f.input :state
+            = f.input :postal_code
+            = f.input :country, selected: ["US"]
+            = f.input :email_address
+            = f.input :phone_number
+        .modal-footer
+          button.btn.stylish-color-dark data-dismiss="modal" type="button"  Close
+          = f.button :submit, class: 'btn unique-color'
+javascript:
+  $(document).ready(function() {
+    $(".modal").on("shown.bs.modal", function(e) {
+      $(':input','#new_contact').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
+      $('form[data-validate]').enableClientSideValidations();
+    });
+  });
