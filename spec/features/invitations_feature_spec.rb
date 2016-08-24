@@ -13,7 +13,7 @@ feature 'invitations' do
   it 'shows the owner in the authorized users list' do
     expect(page).to have_content user.name
     expect(page).to have_content user.email
-    expect(page).to have_selector '.glyphicon-ok'
+    expect(page).to have_selector '.fa-check'
   end
 
   it 'validates email' do
@@ -55,7 +55,7 @@ feature 'invitations' do
       it 'shows a checkmark on the users page' do
         visit users_path
         within('tr', text: 'New User') do
-          expect(page).to have_selector '.glyphicon-ok'
+          expect(page).to have_selector '.fa-check'
         end
       end
     end
