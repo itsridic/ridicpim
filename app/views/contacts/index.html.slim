@@ -1,20 +1,11 @@
-.col-md-12
-  h1 Contacts
-  = link_to "New Contact", "#new_contact", data: { toggle: "modal" }, class: "btn btn-sm btn-primary"
-  table.table.table-striped
-    thead
-      th
-      th Name
-      th Address
-      th City
-      th State
-      th Postal Code
-      th Country
-      th Email Address
-      th Phone Number
-      th QBO ID
-    tbody#contacts
-      = render @contacts
+.container
+  .col-md-10.offset-md-1.panel.panel-default
+    .panel-body
+      .page-header
+        h1 Contacts
+        = link_to "New Contact", "#new_contact", data: { toggle: "modal" }, class: "btn btn-sm btn-primary"
+        #contacts
+          = render @contacts
 #new_contact.modal.fade
   = simple_form_for Contact.new, remote: true, validate: true do |f|
     .modal-dialog

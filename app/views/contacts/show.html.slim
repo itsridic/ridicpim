@@ -1,0 +1,20 @@
+.container
+  .col-md-10.offset-md-1
+    p
+      = link_to "All Contacts", contacts_path, class: "btn btn-sm unique-color"
+    p
+    .card
+      .card-header.unique-color.white-text
+        => @contact.name
+      .card-block
+        = contact_address(@contact)
+        table.table
+          thead
+            th Email Address
+            th Phone Number
+            th qbo_id
+          tbody
+            tr
+              td = @contact.email_address
+              td = @contact.phone_number
+              td = @contact.qbo_id

@@ -1,0 +1,19 @@
+.card[id="#{contact.id}"]
+  .card-header.unique-color.white-text
+    = contact.name
+    = link_to(fa_icon("search", text: "View"), contact, class: "btn btn-sm blue")
+    = link_to(fa_icon("pencil", text: "Edit"), edit_contact_path(contact), class: "btn btn-sm teal", remote: true)
+    = link_to(fa_icon("trash", text: "Delete"), contact, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm cw-red", remote: true)
+  .card-block
+    table.table
+      thead
+        th Address
+        th Email Address
+        th Phone Number
+        th qbo_id
+      tbody
+        tr
+          td = contact_address(contact)
+          td = contact.email_address
+          td = contact.phone_number
+          td = contact.qbo_id

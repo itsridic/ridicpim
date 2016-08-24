@@ -2,7 +2,7 @@
 .card
   .card-header.unique-color.white-text
     = order.name
-    small
+    small<>
       = local_time(order.user_date)
     small
       = link_to(fa_icon("search", text: "View"), order, class: "btn btn-sm blue")
