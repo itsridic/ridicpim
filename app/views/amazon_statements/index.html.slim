@@ -1,5 +1,6 @@
 p
 .col-md-10.offset-md-1
+  h1 Amazon Statements
   table.table.statements
     thead
       th Settlement ID
@@ -19,7 +20,7 @@ p
             td.status= link_to as.status, amazon_statement_path(as)
           - else
             td.status PROCESSED
-  = link_to "Fetch", fetch_amazon_statements_path, remote: true, class: "btn btn-success btn-sm"
+  = link_to "Fetch", fetch_amazon_statements_path, remote: true, class: "btn btn-sm teal"
   .spinner
     i.fa.fa-refresh.fa-spin aria-hidden="true" 
     small Retrieving data from Amazon, please wait...

@@ -1,4 +1,6 @@
 class AmazonStatementsController < ApplicationController
+  before_action :set_qb_service, only: [:show]
+  
   def index
     @amazon_statements = AmazonStatement.all.order("period DESC")
   end
@@ -58,6 +60,9 @@ class AmazonStatementsController < ApplicationController
   end
 
   def show
+    @amazon_statement = AmazonStatement.find(params[:id])
+    redirect_to amazon_statements_path unless @amazon_statement.status == 'NOT_PROCESSED'
+    receipt = AmazonSummary.new(eval(@amazon_statement.summary)).create_sales_receipt(@amazon_statement.period.split(" - ")[1])
     redirect_to amazon_statements_path
   end
 
@@ -82,5 +87,12 @@ class AmazonStatementsController < ApplicationController
       settlement_id = item_to_add['SettlementData']['AmazonSettlementID']
       AmazonStatement.create!(period: period, deposit_total: deposit_total, status: status, summary: summary, settlement_id: settlement_id, report_id: report_id)
     end
-  end  
+  end
+
+  def set_qb_service
+    oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, QboConfig.first.token, QboConfig.first.secret)
+    @vendor_service = Quickbooks::Service::Vendor.new
+    @vendor_service.access_token = oauth_client
+    @vendor_service.company_id = QboConfig.realm_id
+  end
 end
