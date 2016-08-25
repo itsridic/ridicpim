@@ -5,6 +5,8 @@ body {
 #flash_notice {
 	@extend .alert;
 	@extend .alert-success;
+  background-color: #42A5F5;
+  color: black;
 }
 #flash_success {
   @extend .alert;
@@ -21,6 +23,8 @@ body {
 #flash_alert {
   @extend .alert;
   @extend .alert-danger;
+  background-color: #B71C1C;
+  color: white;
 }
 
 .navbar .right-buttons {
