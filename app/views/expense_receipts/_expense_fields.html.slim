@@ -1,0 +1,20 @@
+.container
+  .nested-fields
+    .row
+      .col-md-3
+        .form-group
+          = f.label :description
+          = f.text_field :description
+      .col-md-3
+        .form-group
+          = f.label :amount
+          = f.number_field :amount
+      .col-md-5
+        .form-group
+          = f.label :qbo_account_id
+          = f.collection_select :qbo_account_id, QboAccount.all.order("name"), :id, :name, { prompt: "Choose an Account..." }, { class: "form-control choose-account" }
+      .col-md-1
+        .form-group
+          br
+          p
+          = link_to_remove_association(fa_icon("times lg"), f, class: "btn btn-sm cw-red", style: "margin-top: 0.5%;")

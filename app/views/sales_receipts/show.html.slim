@@ -13,15 +13,10 @@
       | Payment: #{@sales_receipt.payment.name}
       table.table.table-striped
         thead
-          th
-            | Product
-          th
-            | Description
-          th
-            | Quantity
-          th
-            | Rate
-          th
-            | Amount
+          th Product
+          th Description
+          th Quantity
+          th Rate
+          th Amount
         tbody
           = render @sales_receipt.sales

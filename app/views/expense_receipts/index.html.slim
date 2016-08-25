@@ -1,0 +1,9 @@
+.container
+  .col-md-10.offset-md-1.panel.panel-default
+    .panel-body
+      .page-header
+        h1 Expense Receipts
+        = link_to(fa_icon("file-text-o", text: "New Expense Receipt"), new_expense_receipt_path, class: "btn indigo")
+        #all-expense_receipts
+          = render @expense_receipts
+= will_paginate(@expense_receipts)

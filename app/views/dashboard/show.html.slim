@@ -53,3 +53,9 @@ p
     .card-block
       = link_to qbo_accounts_path, class: "btn unique-color" do
         = fa_icon "calculator", text: "QBO Accounts"
+.col-md-3.col-xs-6
+  .card
+    .card-header.unique-color.white-text Expenses
+    .card-block
+      = link_to expense_receipts_path, class: "btn unique-color" do
+        = fa_icon "credit-card", text: "Expenses"        
