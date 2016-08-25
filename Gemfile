@@ -26,6 +26,7 @@ gem 'will_paginate', '~> 3.1'
 gem 'goldiloader'
 gem 'slim', '~> 3.0', '>= 3.0.7'
 gem 'slim-rails', '~> 3.1'
+gem 'peddler', '~> 1.4'
 gem 'client_side_validations',
      github: 'DavyJonesLocker/client_side_validations',
      branch: 'rails5'

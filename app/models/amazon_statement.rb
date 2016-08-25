@@ -1,0 +1,2 @@
+class AmazonStatement < ApplicationRecord
+end

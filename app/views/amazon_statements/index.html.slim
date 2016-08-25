@@ -1,0 +1,39 @@
+p
+.col-md-10.offset-md-1
+  table.table.statements
+    thead
+      th Settlement ID
+      th Period
+      th Deposit Total
+      th Status
+    tbody
+      - @amazon_statements.each do |as|
+        tr
+          td
+            span.label.label-default= as.settlement_id
+          td
+            => fa_icon("calendar")
+            = as.period
+          td= number_to_currency(as.deposit_total)
+          - if as.status == "NOT_PROCESSED"
+            td.status= link_to as.status, amazon_statement_path(as)
+          - else
+            td.status PROCESSED
+  = link_to "Fetch", fetch_amazon_statements_path, remote: true, class: "btn btn-success btn-sm"
+  .spinner
+    i.fa.fa-refresh.fa-spin aria-hidden="true" 
+    small Retrieving data from Amazon, please wait...
+
+  javascript:
+    $( document ).ready(function() {
+      $(".spinner").hide();
+
+      $(document).ajaxStart(function(){
+        $(".spinner").show();
+      });
+
+      $(document).ajaxStop(function(){
+        $(".spinner").hide();
+        location.reload();
+      });
+    });

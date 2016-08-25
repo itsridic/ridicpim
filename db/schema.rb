@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160825183732) do
+ActiveRecord::Schema.define(version: 20160825200930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,17 @@ ActiveRecord::Schema.define(version: 20160825183732) do
     t.datetime "updated_at",         null: false
     t.index ["adjustment_type_id"], name: "index_adjustments_on_adjustment_type_id", using: :btree
     t.index ["product_id"], name: "index_adjustments_on_product_id", using: :btree
+  end
+
+  create_table "amazon_statements", force: :cascade do |t|
+    t.string   "settlement_id"
+    t.string   "period"
+    t.decimal  "deposit_total"
+    t.json     "summary"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "status"
+    t.string   "report_id"
   end
 
   create_table "contacts", force: :cascade do |t|
