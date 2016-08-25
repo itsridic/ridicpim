@@ -3,7 +3,7 @@
   - if !@order.user_date
     = link_to "Add Date", "#", id: "adduserdate"
   .form-group
-    = f.input :user_date, include_blank: true
+    = f.input :user_date, as: :text, include_blank: true
   .form-group
     = f.input :name
   .form-group
@@ -37,5 +37,8 @@ javascript:
         $("#order_contact_id").hide();
         $(".contactSelectAdd").show();
       }
+    });
+    $("#order_user_date").datetimepicker({
+      theme: "dark"
     });
   });

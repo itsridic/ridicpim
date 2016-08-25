@@ -15,7 +15,7 @@
 //= require mdb/tether
 //= require mdb/mdb
 //= require jquery_ujs
-//= require jquery-ui/datepicker
+//= require datetimepicker/jquery.datetimepicker
 //= require cocoon
 //= require local_time
 //= require_tree .

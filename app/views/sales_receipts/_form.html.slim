@@ -4,7 +4,7 @@
       - p @sales_receipt.errors
   = f.error_notification
   = link_to "Add Date", "#", id: "adduserdate"
-  = f.input :user_date, include_blank: true
+  = f.input :user_date, as: :text, include_blank: true
   .form-group
     = f.label :contact
     = f.collection_select :contact_id, Contact.order('name'), :id, :name, { prompt: "Choose Contact" }, { class: "form-control" }
@@ -31,4 +31,7 @@ javascript:
       } 
     } 
     $(".sales_receipt_user_date").hide(); var addUserDate = document.getElementById('adduserdate'); addUserDate.addEventListener('click', toggleDate, false); 
+    $("#sales_receipt_user_date").datetimepicker({
+      theme: "dark"
+    });
   });
