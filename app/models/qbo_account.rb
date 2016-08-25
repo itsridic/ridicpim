@@ -1,0 +1,2 @@
+class QboAccount < ApplicationRecord
+end

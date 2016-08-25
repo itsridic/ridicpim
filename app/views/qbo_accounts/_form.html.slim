@@ -1,0 +1,20 @@
+#edit_qbo_account.modal.fade
+  = simple_form_for @qbo_account, remote: true, validate: true do |f|
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
+          h4.modal-title Edit QBO Account
+        .modal-body
+          .form-inputs
+            = f.input :name
+            = f.input :account_type
+        .modal-footer
+          button.btn.elegant-color[type="button" data-dismiss="modal"] Close
+          = f.button :submit, class: 'btn unique-color'
+javascript:
+  $(document).ready(function() {
+    $(".modal").on("shown.bs.modal", function(e) {
+      $('form[data-validate]').enableClientSideValidations();
+    });
+  });

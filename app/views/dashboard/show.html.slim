@@ -1,49 +1,55 @@
 p
-.col-md-3.col-xs-4
+.col-md-3.col-xs-6
   .card
     .card-header.unique-color.white-text Products
     .card-block
       = link_to products_path, class: "btn unique-color" do
         = fa_icon "barcode", text: "Products"
-.col-md-3.col-xs-4
+.col-md-3.col-xs-6
   .card
     .card-header.unique-color.white-text Contacts
     .card-block
       = link_to contacts_path, class: "btn unique-color" do
         = fa_icon "users", text: "Contacts"
-.col-md-3.col-xs-4
+.col-md-3.col-xs-6
   .card
     .card-header.unique-color.white-text Orders
     .card-block
       = link_to orders_path, class: "btn unique-color" do
         = fa_icon "book", text: "Orders"
-.col-md-3.col-xs-4
+.col-md-3.col-xs-6
   .card
     .card-header.unique-color.white-text Payments
     .card-block
       = link_to payments_path, class: "btn unique-color" do
         = fa_icon "money", text: "Payments"
-.col-md-3.col-xs-4
+.col-md-3.col-xs-6
   .card
     .card-header.unique-color.white-text Sales
     .card-block
       = link_to sales_receipts_path, class: "btn unique-color" do
         = fa_icon "shopping-cart", text: "Sales"
-.col-md-3.col-xs-4
+.col-md-3.col-xs-6
   .card
     .card-header.unique-color.white-text Adjustments
     .card-block
       = link_to adjustments_path, class: "btn unique-color" do
         = fa_icon "balance-scale", text: "Adjustments"
-.col-md-3.col-xs-4
+.col-md-3.col-xs-6
   .card
     .card-header.unique-color.white-text Credentials
     .card-block
       = link_to credentials_path, class: "btn unique-color" do
         = fa_icon "key", text: "Credentials"
-.col-md-3.col-xs-4
+.col-md-3.col-xs-6
   .card
     .card-header.unique-color.white-text Inventory
     .card-block
       = link_to inventory_index_path, class: "btn unique-color" do
         = fa_icon "dashboard", text: "Inventory"
+.col-md-3.col-xs-6
+  .card
+    .card-header.unique-color.white-text QBO Accounts
+    .card-block
+      = link_to qbo_accounts_path, class: "btn unique-color" do
+        = fa_icon "calculator", text: "Inventory"

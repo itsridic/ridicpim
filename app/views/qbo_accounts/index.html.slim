@@ -1,27 +1,24 @@
 .col-md-10.offset-md-1
-  h1 Products
-  = link_to "New Product", "#new_product", data: { toggle: "modal" }, class: "btn btn-sm btn-primary"
+  h1 QBO Accounts
+  = link_to "New Account", "#new_qbo_account", data: { toggle: "modal" }, class: "btn btn-sm btn-primary"
   table.table.table-striped
     thead
       th
       th Name
-      th Amazon SKU
-      th Price
-    tbody#products
-      = render @products
-#new_product.modal.fade
-  = simple_form_for Product.new, remote: true, validate: true do |f|
+      th Account Type
+    tbody#qbo_accounts
+      = render @qbo_accounts
+#new_qbo_account.modal.fade
+  = simple_form_for QboAccount.new, remote: true, validate: true do |f|
     .modal-dialog
       .modal-content
         .modal-header
           button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
-          h4.modal-title
-            | New Product
+          h4.modal-title New QBO Account
         .modal-body
           .form-inputs
             = f.input :name, autofocus: true
-            = f.input :amazon_sku
-            = f.input :price
+            = f.input :account_type
         .modal-footer
           button.btn.stylish-color-dark[type="button" data-dismiss="modal"]
             | Close
@@ -29,7 +26,7 @@
 javascript:
   $(document).ready(function() {
     $(".modal").on("shown.bs.modal", function(e) {
-      $(':input','#new_product').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
+      $(':input','#new_qbo_account').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
       $('form[data-validate]').enableClientSideValidations();
     });
   });

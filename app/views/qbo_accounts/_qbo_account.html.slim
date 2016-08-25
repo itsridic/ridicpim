@@ -1,0 +1,8 @@
+<tr id="#{qbo_account.id}">
+  td
+    => link_to fa_icon("search"), qbo_account
+    => link_to fa_icon("pencil"), edit_qbo_account_path(qbo_account), remote: true
+    => link_to fa_icon("trash" ), qbo_account, method: :delete, data: { confirm: "Are you sure?" }, remote: true
+  td = qbo_account.name
+  td = qbo_account.account_type
+  td = qbo_account.qbo_id
