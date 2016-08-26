@@ -1,0 +1,10 @@
+-
+  question: When creating a sales receipt, what is the default customer?
+  model: Contact
+  display: name
+  setting_name: sales_receipt_default_customer
+-
+  question: When creating a sales receipt, what is the default deposit to account?
+  model: QboAccount
+  display: name
+  setting_name: sales_receipt_deposit_to_account

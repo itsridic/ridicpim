@@ -26,6 +26,11 @@ Rails.application.routes.draw do
     resources :qbo_accounts
     resources :inventory, only: [:index]
     resources :expense_receipts
+    resources :settings, only: [:index] do
+      collection do
+        put :change
+      end
+    end
     resources :amazon_statements, only: [:index, :show] do
       collection do
         get :fetch

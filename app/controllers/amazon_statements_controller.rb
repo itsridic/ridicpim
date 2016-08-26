@@ -62,7 +62,16 @@ class AmazonStatementsController < ApplicationController
   def show
     @amazon_statement = AmazonStatement.find(params[:id])
     redirect_to amazon_statements_path unless @amazon_statement.status == 'NOT_PROCESSED'
-    receipt = AmazonSummary.new(eval(@amazon_statement.summary)).create_sales_receipt(@amazon_statement.period.split(" - ")[1])
+    ActiveRecord::Base.transaction do
+      receipt = AmazonSummary.new(eval(@amazon_statement.summary)).create_sales_receipt(@amazon_statement.period.split(" - ")[1])
+      # Create Sales Receipt in QBO.  ITW...
+      # qbo_rails = QboRails.new(QboConfig.last, :sales_receipt)
+      # qbo_receipt = qbo_rails.base.qr_model(:sales_receipt)
+      # qbo_receipt.customer_id = Config.sales_receipt_customer
+      # qbo_receipt.txn_date = Date.parse(receipt.user_date.to_s)
+      # qbo_receipt.deposit_to_account_id = Config.sales_receipt_deposit_account
+      # qbo_receipt.auto_doc_number!      
+    end
     redirect_to amazon_statements_path
   end
 
