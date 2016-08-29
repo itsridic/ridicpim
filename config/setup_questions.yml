@@ -8,3 +8,48 @@
   model: QboAccount
   display: name
   setting_name: sales_receipt_deposit_to_account
+-
+  question: What account do you want Amazon 'Shipping' to go to?
+  model: QboAccount
+  display: name
+  setting_name: classify_shipping
+-
+  question: What account do you want Amazon 'SaleTax' to go to?
+  model: QboAccount
+  display: name
+  setting_name: classify_sale_tax
+-
+  question: What account do you want Amazon 'PromotionShipping' to go to?
+  model: QboAccount
+  display: name
+  setting_name: classify_promotion_shipping
+-
+  question: What account do you want Amazon 'ShippingSalesTax' to go to?
+  model: QboAccount
+  display: name
+  setting_name: classify_shipping_sales_tax
+-
+  question: What account do you want Amazon 'FBAGiftWrap' to go to?
+  model: QboAccount
+  display: name
+  setting_name: classify_fba_gift_wrap
+-
+  question: What account do you want Amazon 'GiftWrapTax' to go to?
+  model: QboAccount
+  display: name
+  setting_name: classify_gift_wrap_tax
+-
+  question: What account do you want Amazon 'BalanceAdjustment' to go to?
+  model: QboAccount
+  display: name
+  setting_name: classify_balance_adjustment
+-
+  question: What account do you want unknown Amazon to go to?
+  model: QboAccount
+  display: name
+  setting_name: classify_unknown
+-
+  question: When creating a product in QBO, what is the income account used?
+  model: QboAccount
+  display: name
+  setting_name: sales_receipt_income_account

@@ -22,9 +22,13 @@ Rails.application.routes.draw do
     resources :adjustment_types
     resources :adjustments
     resources :credentials
-    resources :qbo_accounts
     resources :inventory, only: [:index]
     resources :expense_receipts
+    resources :qbo_accounts do
+      collection do
+        get :fetch
+      end
+    end    
     resources :settings, only: [:index] do
       collection do
         put :change

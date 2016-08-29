@@ -52,6 +52,20 @@ class QboAccountsController < ApplicationController
     end
   end
 
+  def fetch
+    oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, QboConfig.first.token, QboConfig.first.secret)
+    account_service = Quickbooks::Service::Account.new(:access_token => oauth_client, :company_id => QboConfig.realm_id)
+    query = "SELECT * FROM Account WHERE active = true"
+    account_service.query_in_batches(query, per_page: 1000) do |batch|
+      batch.each do |account|
+        if QboAccount.where(name: account.name).count == 0
+          QboAccount.create!(name: account.name, account_type: account.account_type, qbo_id: account.id)
+        end
+      end
+    end
+    redirect_to accounts_path
+  end
+
   private
 
   def set_account

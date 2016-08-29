@@ -7,9 +7,10 @@
       th Name
       th Amazon SKU
       th Price
+      th qbo_id
     tbody#products
       = render @products
-  = link_to "Fetch", fetch_products_path, remote: true, class: "btn btn-sm success-color-dark"
+  = link_to "Fetch", fetch_products_path, remote: true, class: "btn btn-sm success-color-dark", id: "fetch-products"
   .spinner
     i[class="fa fa-refresh fa-spin" aria-hidden="true"]
     small Retrieving Products from QBO, please wait...
@@ -32,16 +33,19 @@
           = f.button :submit, class: 'btn unique-color'
 javascript:
   $(document).ready(function() {
+    $(".spinner").hide();
     $(".modal").on("shown.bs.modal", function(e) {
+      $(document).off(".fetchProducts")
       $(':input','#new_product').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
       $('form[data-validate]').enableClientSideValidations();
     });
-    $(".spinner").hide();
-    $(document).ajaxStart(function(){
-      $(".spinner").show();
-    });
-    $(document).ajaxStop(function(){
-      $(".spinner").hide();
-      location.reload();
-    });    
+    $("#fetch-products").click(function() {
+      $(document).on("ajaxStart.fetchProducts", function () {
+          $('.spinner').show();
+      });
+      $(document).on("ajaxStop.fetchProducts", function () {
+          $('.spinner').hide();
+          location.reload();
+      });      
+    }); 
   });
