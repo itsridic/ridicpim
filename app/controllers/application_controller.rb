@@ -5,6 +5,16 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_quickbooks_base_config
 
+  def set_client
+    MWS::Reports::Client.new(
+      primary_marketplace_id: Credential.last.primary_marketplace_id,
+      merchant_id: Credential.last.merchant_id,
+      aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+      aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+      auth_token: Credential.last.auth_token
+    )
+  end 
+
   protected
 
   def configure_permitted_parameters

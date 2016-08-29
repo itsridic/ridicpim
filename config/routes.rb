@@ -15,7 +15,6 @@ Rails.application.routes.draw do
     root 'dashboard#show', as: :subdomain_root
     devise_for :users
     resources :users, only: [:index]
-    resources :products
     resources :contacts
     resources :orders
     resources :payments
@@ -32,6 +31,11 @@ Rails.application.routes.draw do
       end
     end
     resources :amazon_statements, only: [:index, :show] do
+      collection do
+        get :fetch
+      end
+    end
+    resources :products do
       collection do
         get :fetch
       end

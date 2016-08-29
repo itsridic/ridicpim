@@ -1,4 +1,4 @@
-.col-md-10.offset-md-1
+.col-md-12
   h1 Products
   = link_to "New Product", "#new_product", data: { toggle: "modal" }, class: "btn btn-sm btn-primary"
   table.table.table-striped
@@ -9,6 +9,10 @@
       th Price
     tbody#products
       = render @products
+  = link_to "Fetch", fetch_products_path, remote: true, class: "btn btn-sm success-color-dark"
+  .spinner
+    i[class="fa fa-refresh fa-spin" aria-hidden="true"]
+    small Retrieving Products from QBO, please wait...
 #new_product.modal.fade
   = simple_form_for Product.new, remote: true, validate: true do |f|
     .modal-dialog
@@ -32,4 +36,12 @@ javascript:
       $(':input','#new_product').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
       $('form[data-validate]').enableClientSideValidations();
     });
+    $(".spinner").hide();
+    $(document).ajaxStart(function(){
+      $(".spinner").show();
+    });
+    $(document).ajaxStop(function(){
+      $(".spinner").hide();
+      location.reload();
+    });    
   });

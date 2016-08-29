@@ -82,16 +82,6 @@ class AmazonStatementsController < ApplicationController
 
   private
 
-  def set_client
-    MWS::Reports::Client.new(
-      primary_marketplace_id: Credential.last.primary_marketplace_id,
-      merchant_id: Credential.last.merchant_id,
-      aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],
-      aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
-      auth_token: Credential.last.auth_token
-    )
-  end
-
   def add_statement_to_db(item_to_add, report_id)
     if AmazonStatement.where(settlement_id: item_to_add['SettlementData']['AmazonSettlementID']).blank?
       period = item_to_add['SettlementData']['StartDate'].gsub(/T.+/, '') + ' - ' + item_to_add['SettlementData']['EndDate'].gsub(/T.+/, '')
