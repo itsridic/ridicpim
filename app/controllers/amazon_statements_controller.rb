@@ -65,12 +65,17 @@ class AmazonStatementsController < ApplicationController
     ActiveRecord::Base.transaction do
       receipt = AmazonSummary.new(eval(@amazon_statement.summary)).create_sales_receipt(@amazon_statement.period.split(" - ")[1])
       # Create Sales Receipt in QBO.  ITW...
-      # qbo_rails = QboRails.new(QboConfig.last, :sales_receipt)
-      # qbo_receipt = qbo_rails.base.qr_model(:sales_receipt)
-      # qbo_receipt.customer_id = Config.sales_receipt_customer
-      # qbo_receipt.txn_date = Date.parse(receipt.user_date.to_s)
-      # qbo_receipt.deposit_to_account_id = Config.sales_receipt_deposit_account
-      # qbo_receipt.auto_doc_number!      
+      # Set up QBO Rails
+      qbo_rails = QboRails.new(QboConfig.last, :sales_receipt)
+      qbo_receipt = qbo_rails.base.qr_model(:sales_receipt)
+      qbo_receipt.customer_id = current_account.settings(:sales_receipt_default_customer).val
+      qbo_receipt.txn_date = Date.parse(receipt.user_date.to_s)
+      qbo_receipt.deposit_to_account_id = current_account.settings(:sales_receipt_deposit_to_account).val
+      qbo_receipt.auto_doc_number!
+
+      # Create Items in QBO If Necessary
+      create_items_in_qbo(receipt, qbo_rails, qbo_receipt)
+      fail
     end
     redirect_to amazon_statements_path
   end
@@ -103,5 +108,63 @@ class AmazonStatementsController < ApplicationController
     @vendor_service = Quickbooks::Service::Vendor.new
     @vendor_service.access_token = oauth_client
     @vendor_service.company_id = QboConfig.realm_id
+  end
+
+  def create_items_in_qbo(receipt, qbo_rails, qbo_receipt)
+    # Loop through and create items if necessary in QBO
+    receipt.sales.each do |sale|
+      if !sale.product.nil?
+        if sale.product.qbo_id.nil?
+          # Query QB to see if product exists.  If not, create it.
+          items = item_service.query("SELECT * FROM Item WHERE sku = '#{sale.product.amazon_sku}'")
+          p items
+          if items.count == 0
+            item = Quickbooks::Model::Item.new
+            item.income_account_id = Config.sales_receipt_income_account
+            item.type = "NonInventory"
+            item.name = sale.product.amazon_sku
+            item.description = sale.product.name
+            item.unit_price = sale.product.price
+            item.sku = sale.product.amazon_sku
+            p item
+          else
+            sale.product.qbo_id = items.entries[0].id
+            sale.product.save
+          end
+          begin
+            created_item = item_service.create(item)
+            sale.product.qbo_id = created_item.id
+            sale.product.save
+          rescue Exception => e
+            puts "**************** QBO ERROR 1 *******************"
+            p e
+            puts "**************** QBO ERROR 1 *******************"
+          end
+        end
+      else
+        prod = sale.description.gsub(" ", "_").camelize
+        income_account_id = classify_income_account(prod)
+        items = item_service.query("SELECT * FROM Item WHERE name = '#{prod}'")
+        if items.entries.count == 0
+          # Create Item in QBO
+          item = Quickbooks::Model::Item.new
+          item.income_account_id = income_account_id
+          item.type = "NonInventory"
+          item.name = prod
+          item.description = prod
+          item.unit_price = sale.rate
+          begin
+            created_item = item_service.create(item)
+          rescue Exception => e
+            puts "**************** QBO ERROR 2 *******************"
+            p e
+            puts "**************** QBO ERROR 2 *******************"
+          end
+        else
+          sale.qbo_id = items.entries[0].id
+          sale.save!
+        end
+      end
+    end
   end
 end
