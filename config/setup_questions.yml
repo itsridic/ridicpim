@@ -53,3 +53,13 @@
   model: QboAccount
   display: name
   setting_name: sales_receipt_income_account
+-
+  question: When creating an expense receipt, what is the default account used?
+  model: QboAccount
+  display: name
+  setting_name: expense_bank_account
+-
+  question: When creating an expense receipt, what is the default customer?
+  model: Contact
+  display: name
+  setting_name: expense_customer

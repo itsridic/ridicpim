@@ -5,6 +5,30 @@ class AmazonStatementsController < ApplicationController
     @amazon_statements = AmazonStatement.all.order("period DESC")
   end
 
+  def show
+    @amazon_statement = AmazonStatement.find(params[:id])
+    redirect_to amazon_statements_path unless @amazon_statement.status == 'NOT_PROCESSED'
+    ActiveRecord::Base.transaction do
+      receipt = AmazonSummary.new(eval(@amazon_statement.summary)).create_sales_receipt(@amazon_statement.period.split(" - ")[1])
+      # Create Sales Receipt in QBO.  ITW...
+      # Set up QBO Rails
+      qbo_rails = QboRails.new(QboConfig.last, :sales_receipt)
+      qbo_receipt = qbo_rails.base.qr_model(:sales_receipt)
+      qbo_receipt.customer_id = current_account.settings(:sales_receipt_default_customer).val
+      qbo_receipt.txn_date = Date.parse(receipt.user_date.to_s)
+      qbo_receipt.deposit_to_account_id = current_account.settings(:sales_receipt_deposit_to_account).val
+      qbo_receipt.auto_doc_number!
+
+      # Create Items in QBO If Necessary
+      create_items_in_qbo(receipt)
+      # Create Receipt in QBO
+      create_sales_receipt_in_qbo(qbo_receipt, receipt)
+      # Create Expense Receipt in QBO
+      create_expense_receipt(@amazon_statement.period)
+    end
+    redirect_to amazon_statements_path
+  end
+
   def fetch
     client  = set_client
     begin
@@ -55,28 +79,6 @@ class AmazonStatementsController < ApplicationController
         puts "%" * 50
         next
       end
-    end
-    redirect_to amazon_statements_path
-  end
-
-  def show
-    @amazon_statement = AmazonStatement.find(params[:id])
-    redirect_to amazon_statements_path unless @amazon_statement.status == 'NOT_PROCESSED'
-    ActiveRecord::Base.transaction do
-      receipt = AmazonSummary.new(eval(@amazon_statement.summary)).create_sales_receipt(@amazon_statement.period.split(" - ")[1])
-      # Create Sales Receipt in QBO.  ITW...
-      # Set up QBO Rails
-      qbo_rails = QboRails.new(QboConfig.last, :sales_receipt)
-      qbo_receipt = qbo_rails.base.qr_model(:sales_receipt)
-      qbo_receipt.customer_id = current_account.settings(:sales_receipt_default_customer).val
-      qbo_receipt.txn_date = Date.parse(receipt.user_date.to_s)
-      qbo_receipt.deposit_to_account_id = current_account.settings(:sales_receipt_deposit_to_account).val
-      qbo_receipt.auto_doc_number!
-
-      # Create Items in QBO If Necessary
-      create_items_in_qbo(receipt)
-      # Create Receipt in QBO
-      create_sales_receipt_in_qbo(qbo_receipt, receipt)
     end
     redirect_to amazon_statements_path
   end
@@ -209,4 +211,28 @@ class AmazonStatementsController < ApplicationController
     end
     created_receipt = qbo_rails.create(qbo_receipt)    
   end
+
+ def create_expense_receipt(desc)
+    # Create Expense Receipt in App
+    expense_receipt = AmazonSummary.new(eval(@amazon_statement.summary)).create_expense_receipt(desc, current_account.settings(:expense_bank_account).val)
+    # Create Expense Receipt in QBO
+    qbo_rails = QboRails.new(QboConfig.last, :purchase)
+    purchase = qbo_rails.base.qr_model(:purchase)
+    purchase.txn_date = @amazon_statement.period.split(" - ")[1]
+    purchase.payment_type = 'Cash'
+    purchase.account_id = current_account.settings(:expense_bank_account).val
+    purchase.line_items = []
+    # Loop through all expenses and create new model for it.
+    expense_receipt.expenses.each do |expense|
+      line_item = qbo_rails.base.qr_model(:purchase_line_item)
+      line_item.amount = expense.amount
+      line_item.description = expense.description
+      line_item.account_based_expense! do |detail|
+        detail.account_id = expense.qbo_account.qbo_id
+        detail.customer_id = current_account.settings(:expense_customer).val
+      end
+      purchase.line_items << line_item
+    end
+    result = qbo_rails.create(purchase)
+  end  
 end

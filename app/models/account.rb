@@ -14,7 +14,7 @@ class Account < ApplicationRecord
 	has_settings :sales_receipt_default_customer, :sales_receipt_deposit_to_account, :classify_shipping,
 							 :classify_sale_tax, :classify_promotion_shipping, :classify_shipping_sales_tax,
 							 :classify_fba_gift_wrap, :classify_balance_adjustment, :classify_gift_wrap_tax, :classify_unknown,
-							 :sales_receipt_income_account
+							 :sales_receipt_income_account, :expense_bank_account, :expense_customer
 
 	private
 
