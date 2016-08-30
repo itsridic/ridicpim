@@ -22,7 +22,9 @@
         .modal-body
           .form-inputs
             = f.input :name, autofocus: true
-            = f.input :account_type
+            = f.input :account_type, collection: ["Bank", "Other Current Asset", "Fixed Asset", "Other Asset", "Accounts Receivable", "Equity",
+                                                  "Expense", "Other Expense", "Cost Of Goods Sold", "Accounts Payable", "Credit Card", "Long Term Liability",
+                                                  "Other Current Liability", "Income", "Other Income"]
         .modal-footer
           button.btn.stylish-color-dark[type="button" data-dismiss="modal"]
             | Close

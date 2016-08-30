@@ -2,7 +2,7 @@ class QboAccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
 
   def index
-    @qbo_accounts = QboAccount.all
+    @qbo_accounts = QboAccount.all.order("name")
   end
 
   def show
@@ -20,6 +20,14 @@ class QboAccountsController < ApplicationController
 
     respond_to do |format|
       if @qbo_account.save
+        # Create / Update Account in QBO
+        qbo_rails = QboRails.new(QboConfig.last, :account)
+        qb_account = qbo_rails.base.qr_model(:account)
+        qb_account.name = @qbo_account.name
+        qb_account.account_type = @qbo_account.account_type
+        qb_account.classification = classify_account(@qbo_account.account_type)
+        qbo_rails.create_or_update(@qbo_account, qb_account)
+
         format.html { redirect_to @qbo_account, notice: 'Account was successfully created.' }
         format.js {}
         format.json { render :show, status: :created, location: @qbo_account }
@@ -33,6 +41,14 @@ class QboAccountsController < ApplicationController
   def update
     respond_to do |format|
       if @qbo_account.update(account_params)
+        # Create / Update Account in QBO
+        qbo_rails = QboRails.new(QboConfig.last, :account)
+        qb_account = qbo_rails.base.qr_model(:account)
+        qb_account.name = @qbo_account.name
+        qb_account.account_type = @qbo_account.account_type
+        qb_account.classification = classify_account(@qbo_account.account_type)
+        qbo_rails.create_or_update(@qbo_account, qb_account)
+
         format.html { redirect_to @qbo_account, notice: 'Account was successfully updated.' }
         format.js {}
         format.json { render :show, status: :ok, location: @qbo_account }
@@ -67,6 +83,17 @@ class QboAccountsController < ApplicationController
   end
 
   private
+
+  def classify_account(account_type)
+    mapping = {
+      "Bank" => "Asset", "Other Current Asset" => "Asset", "Fixed Asset" => "Asset", "Other Asset" => "Asset", "Accounts Receivable" => "Asset",
+      "Equity" => "Equity",
+      "Expense" => "Expense", "Other Expense" => "Expense", "Cost Of Goods Sold" => "Expense",
+      "Accounts Payable" => "Liability", "Credit Card" => "Liability", "Long Term Liability" => "Liability", "Other Current Liability" => "Liability",
+      "Income" => "Revenue", "Other Income" => "Revenue"
+    }
+    mapping[account_type]
+  end
 
   def set_account
     @qbo_account = QboAccount.find(params[:id])

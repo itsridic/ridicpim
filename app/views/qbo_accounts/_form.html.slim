@@ -8,7 +8,9 @@
         .modal-body
           .form-inputs
             = f.input :name
-            = f.input :account_type
+            = f.input :account_type, collection: ["Bank", "Other Current Asset", "Fixed Asset", "Other Asset", "Accounts Receivable", "Equity",
+                                                  "Expense", "Other Expense", "Cost Of Goods Sold", "Accounts Payable", "Credit Card", "Long Term Liability",
+                                                  "Other Current Liability", "Income", "Other Income"]
         .modal-footer
           button.btn.elegant-color[type="button" data-dismiss="modal"] Close
           = f.button :submit, class: 'btn unique-color'
