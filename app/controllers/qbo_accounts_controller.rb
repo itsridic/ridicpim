@@ -24,7 +24,8 @@ class QboAccountsController < ApplicationController
         qbo_rails = QboRails.new(QboConfig.last, :account)
         qb_account = qbo_rails.base.qr_model(:account)
         qb_account.name = @qbo_account.name
-        qb_account.account_type = @qbo_account.account_type
+        #qb_account.account_type = @qbo_account.account_type
+        qb_account.account_sub_type = @qbo_account.account_sub_type
         qb_account.classification = classify_account(@qbo_account.account_type)
         qbo_rails.create_or_update(@qbo_account, qb_account)
 
@@ -60,8 +61,11 @@ class QboAccountsController < ApplicationController
   end
 
   def destroy
+    # Delete in QBO
     @qbo_account.destroy
     respond_to do |format|
+      qbo_rails = QboRails.new(QboConfig.last, :account)
+      qbo_rails.delete(@qbo_account)      
       format.html { redirect_to accounts_url, notice: 'Account was successfully destroyed.' }
       format.js {}
       format.json { head :no_content }
@@ -100,6 +104,6 @@ class QboAccountsController < ApplicationController
   end
 
   def account_params
-    params.require(:qbo_account).permit(:name, :account_type, :qbo_id)
+    params.require(:qbo_account).permit(:name, :account_type, :account_sub_type, :qbo_id)
   end
 end

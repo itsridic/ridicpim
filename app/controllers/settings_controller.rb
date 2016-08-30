@@ -7,6 +7,7 @@ class SettingsController < ApplicationController
 
   def change
     updated_settings = params[:settings]
+    p updated_settings
     updated_settings.each do |setting, value|
       puts "setting: #{setting}"
       puts "value: #{value}"
