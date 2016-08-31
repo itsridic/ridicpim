@@ -668,7 +668,7 @@ class AmazonSummary
       amount = self.send(method) * -1
       puts amount
       puts "()()()()()()()()()()()()()()()()()()()()"
-      expense_receipt.expenses << Expense.create!(qbo_account: expense_account, description: description, amount: amount) 
+      expense_receipt.expenses << Expense.create!(qbo_account: expense_account, description: description, amount: amount) unless amount == 0.00
     end
     expense_receipt.save
     expense_receipt
