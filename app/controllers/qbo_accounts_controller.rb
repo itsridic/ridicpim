@@ -79,7 +79,7 @@ class QboAccountsController < ApplicationController
     account_service.query_in_batches(query, per_page: 1000) do |batch|
       batch.each do |account|
         if QboAccount.where(name: account.name).count == 0
-          QboAccount.create!(name: account.name, account_type: account.account_type, qbo_id: account.id)
+          QboAccount.create!(name: account.name, account_type: account.account_type, account_sub_type: account.account_sub_type, qbo_id: account.id)
         end
       end
     end

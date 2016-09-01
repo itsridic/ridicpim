@@ -28,4 +28,9 @@ html
       = flash_messages if show_layout_flash?
       .row
         = yield
+        = insert_paloma_hook
+        javascript:
+          $(document).ready(function(){
+            Paloma.start();
+          });
       #remote-container
