@@ -1,7 +1,7 @@
 class CreateExpenseReceiptInQBOWorker
   include Sidekiq::Worker
 
-  def perform(amazon_statement_id, current_account_id, expense_receipt_id)
+  def perform(amazon_statement_id, current_account_id, expense_receipt_id, receipt_id)
     amazon_statement = AmazonStatement.find(amazon_statement_id)
     current_account = Account.find(current_account_id)
     expense_receipt = ExpenseReceipt.find(expense_receipt_id)
@@ -24,7 +24,6 @@ class CreateExpenseReceiptInQBOWorker
       purchase.line_items << line_item
     end
     result = qbo_rails.create(purchase)
-    amazon_statement.status = "COMPLETE"
-    amazon_statement.save
+    CreateCostOfGoodsSoldInQboWorker.perform_async(amazon_statement_id, receipt_id)
   end
 end

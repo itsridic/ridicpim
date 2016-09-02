@@ -4,7 +4,6 @@ class CreateItemsInQboWorker
   def perform(amazon_statement_id, current_account_id, receipt_id)
     puts "Creating Items in QBO..."
     @current_account = Account.find(current_account_id)
-    p @current_account
     receipt = SalesReceipt.find(receipt_id)
     oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, QboConfig.first.token, QboConfig.first.secret)
 
