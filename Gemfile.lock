@@ -70,6 +70,9 @@ GEM
     apartment (1.2.0)
       activerecord (>= 3.1.2, < 6.0)
       rack (>= 1.3.6)
+    apartment-sidekiq (1.1.0)
+      apartment (~> 1.0)
+      sidekiq (>= 2.11)
     arel (7.1.1)
     autoprefixer-rails (6.4.0.3)
       execjs
@@ -107,6 +110,7 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     concurrent-ruby (1.0.2)
+    connection_pool (2.2.0)
     countries (1.2.5)
       currencies (~> 0.4.2)
       i18n_data (~> 0.7.0)
@@ -290,6 +294,7 @@ GEM
     rb-fsevent (0.9.7)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
+    redis (3.3.1)
     regexp_parser (0.3.6)
     responders (2.2.0)
       railties (>= 4.2.0, < 5.1)
@@ -332,6 +337,10 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
+    sidekiq (4.1.2)
+      concurrent-ruby (~> 1.0)
+      connection_pool (~> 2.2, >= 2.2.0)
+      redis (~> 3.2, >= 3.2.1)
     simple_form (3.2.1)
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
@@ -386,6 +395,7 @@ PLATFORMS
 
 DEPENDENCIES
   apartment (~> 1.2)
+  apartment-sidekiq
   better_errors (~> 2.1, >= 2.1.1)
   bootstrap (~> 4.0.0.alpha3.1)
   bullet (~> 5.3)
@@ -429,6 +439,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   selenium-webdriver (~> 2.53, >= 2.53.4)
   shoulda-matchers (~> 3.1, >= 3.1.1)
+  sidekiq
   simple_form (~> 3.2, >= 3.2.1)
   slim (~> 3.0, >= 3.0.7)
   slim-rails (~> 3.1)

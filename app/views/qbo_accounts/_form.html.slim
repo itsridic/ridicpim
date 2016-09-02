@@ -20,7 +20,7 @@ javascript:
     $(".modal").on("shown.bs.modal", function(e) {
       $('form[data-validate]').enableClientSideValidations();
     });
-    $("#account_type").on("change", function(e) {
+    $("#account_type").on("change click", function(e) {
       var selectedValue = e.target.value;
       switch(selectedValue) {
         case "Bank":

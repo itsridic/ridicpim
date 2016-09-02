@@ -11,3 +11,10 @@ $qb_oauth_consumer = OAuth::Consumer.new(QB_KEY, QB_SECRET, {
 Quickbooks.sandbox_mode = true
 Quickbooks.log = true
 Quickbooks.logger = Rails.logger
+
+
+Quickbooks::Base.configure do |c|
+  c.persistent_token = 'token'
+  c.persistent_secret = 'secret'
+  c.persistent_company_id = 'realm_id'
+end
