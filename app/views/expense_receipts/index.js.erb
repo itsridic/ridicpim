@@ -1,0 +1,7 @@
+$('#all-expense_receipts').append('<%= j render("expense_receipt_page_header") %>');
+$('#all-expense_receipts').append('<%= j render(@expense_receipts) %>');
+<% if @expense_receipts.next_page %>
+  $('.pagination').replaceWith('<%= j will_paginate(@expense_receipts) %>');
+<% else %>
+  $('.pagination').remove();
+<% end %>
