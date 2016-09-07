@@ -1,7 +1,7 @@
 - unless QboConfig.exists?
   ipp:connecttointuit
   script[type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"]
-  script intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '#{= authenticate_quick_books_url}'});
+  script intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '#{authenticate_quick_books_url}'});
 p
 .col-md-3.col-xs-6
   .card
