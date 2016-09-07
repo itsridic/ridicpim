@@ -49,7 +49,6 @@ class CredentialsController < ApplicationController
   def destroy
     @credential.destroy
     respond_to :js
-    end
   end
 
   private
