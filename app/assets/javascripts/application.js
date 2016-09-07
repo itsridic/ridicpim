@@ -18,5 +18,5 @@
 //= require datetimepicker/jquery.datetimepicker
 //= require cocoon
 //= require local_time
-//= require paloma
+//= require tether
 //= require_tree .

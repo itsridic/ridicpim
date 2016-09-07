@@ -30,9 +30,10 @@ gem 'slim-rails', '~> 3.1'
 gem 'peddler', '~> 1.4'
 gem 'jsonpath', '~> 0.5.8'
 gem 'ledermann-rails-settings', '~> 2.4', '>= 2.4.2'
-gem 'paloma', '~> 5.0'
+#gem 'paloma', '~> 5.0'
 gem 'sidekiq'
 gem 'apartment-sidekiq'
+gem 'tether-rails'
 gem 'client_side_validations',
      github: 'DavyJonesLocker/client_side_validations',
      branch: 'rails5'
