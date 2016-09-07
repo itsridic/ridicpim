@@ -48,7 +48,10 @@ class CredentialsController < ApplicationController
 
   def destroy
     respond_to do |format|
-      format.js { @credential.destroy }
+      format.js do
+        Rails.logger.info "in JS handler"
+        @credential.destroy
+      end
     end
   end
 
