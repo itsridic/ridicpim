@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require tether
 //= require bootstrap-sprockets
 //= require mdb/tether
 //= require mdb/mdb
@@ -18,5 +19,4 @@
 //= require datetimepicker/jquery.datetimepicker
 //= require cocoon
 //= require local_time
-//= require tether
 //= require_tree .
