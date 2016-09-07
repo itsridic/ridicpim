@@ -65,7 +65,7 @@ class ProductsController < ApplicationController
         end
       end
     end
-    redirect_to contacts_path
+    redirect_to products_path
   end
 
   private
