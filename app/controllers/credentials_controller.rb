@@ -48,10 +48,7 @@ class CredentialsController < ApplicationController
 
   def destroy
     @credential.destroy
-    respond_to do |format|
-      #format.html { redirect_to credentials_url, notice: 'Credential was successfully destroyed.' }
-      format.js {}
-      format.json { head :no_content }
+    respond_to :js
     end
   end
 
