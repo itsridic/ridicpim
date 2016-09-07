@@ -12,8 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap-sprockets
 //= require tether
+//= require bootstrap-sprockets
 //= require mdb/mdb
 //= require datetimepicker/jquery.datetimepicker
 //= require cocoon
