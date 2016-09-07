@@ -66,3 +66,7 @@ group :development do
   gem 'better_errors', '~> 2.1', '>= 2.1.1'
   gem 'bullet', '~> 5.3'
 end
+
+group :production do
+  gem 'rails_12factor'
+end
