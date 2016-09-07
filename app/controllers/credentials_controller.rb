@@ -47,8 +47,9 @@ class CredentialsController < ApplicationController
   end
 
   def destroy
-    @credential.destroy
-    respond_to :js
+    respond_to do |format|
+      format.js { @credential.destroy }
+    end
   end
 
   private
