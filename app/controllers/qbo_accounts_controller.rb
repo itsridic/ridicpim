@@ -83,7 +83,7 @@ class QboAccountsController < ApplicationController
         end
       end
     end
-    redirect_to accounts_path
+    redirect_to qbo_accounts_path
   end
 
   private
