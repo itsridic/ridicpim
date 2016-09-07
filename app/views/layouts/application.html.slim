@@ -1,14 +1,13 @@
 doctype html
 html
   head
-    title
-      | Ridicpim
+    title Ridicpim
     = csrf_meta_tags
     = stylesheet_link_tag    'application'
     = javascript_include_tag 'application'
     link[href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"]
   body
-    - unless QboConfig.exists? || current_page?(root_url)
+    - unless QboConfig.exists? || current_page?(root_url) || current_page?(new_account_url)
       ipp:connecttointuit
       script[type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"]
       script
