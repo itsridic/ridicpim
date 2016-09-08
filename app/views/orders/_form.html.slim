@@ -18,7 +18,7 @@
     = f.simple_fields_for :order_items do |oi|
       = render 'order_item_fields', :f => oi
     .links[style="margin-top: 1%; margin-bottom: 1%;"]
-    = link_to_add_association(fa_icon('plus lg', text: 'add item'), f, :order_items, class: "btn teal")
+      = link_to_add_association(fa_icon('plus lg', text: 'add item'), f, :order_items, class: "btn teal")
   = f.submit 'Save', class: "btn unique-color"
 
 javascript:
