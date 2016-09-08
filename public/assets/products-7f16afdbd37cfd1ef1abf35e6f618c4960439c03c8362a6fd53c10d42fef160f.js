@@ -1,0 +1,1 @@
+(function(){$(function(){if($(".pagination").length&&$("#all-orders").length)return $(window).scroll(function(){var n;if(n=$(".pagination .next_page").attr("href"),n&&$(window).scrollTop()>$(document).height()-$(window).height()-50)return $(".pagination").html('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>'),$.getScript(n)}),$(window).scroll()})}).call(this);
