@@ -13,5 +13,6 @@ module Ridicpim
     # -- all .rb files in that directory are automatically loaded.
     config.autoload_paths += %W(#{config.root}/services)
     config.autoload_paths += %W(#{config.root}/services/qbo_rails)
+    config.serve_static_assets = true
   end
 end
