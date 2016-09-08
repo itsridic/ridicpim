@@ -18,17 +18,11 @@
     = f.simple_fields_for :order_items do |oi|
       = render 'order_item_fields', :f => oi
     .links[style="margin-top: 1%; margin-bottom: 1%;"]
-      = link_to_add_association(fa_icon('plus lg', text: 'add item'), f, :order_items, class: "btn teal")
+    = link_to_add_association(fa_icon('plus lg', text: 'add item'), f, :order_items, class: "btn teal")
   = f.submit 'Save', class: "btn unique-color"
 
 javascript:
-  $(document).ready(function() {
-    function cancelContact() {
-      $(".contactSelectAdd").hide();
-      $("#order_contact_id").show();
-      $("#order_contact_id").val('1');
-      $("#order_contact_name").val('');
-    }    
+  $(document).ready(function() {   
     $("#order_user_date").datetimepicker({
       theme: "dark"
     });
