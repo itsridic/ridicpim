@@ -10,4 +10,4 @@ Rails.application.config.assets.paths << Rails.root.join("vendor", "assets", "st
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
-Rails.application.config.assets.precompile += %w( rails.validations.js rails.validations.simple_form.js sales_receipts.coffee products.coffee expense_receipts.coffee )
+Rails.application.config.assets.precompile += %w( jquery.datetimepicker.js cocoon.js rails.validations.js rails.validations.simple_form.js sales_receipts.coffee products.coffee expense_receipts.coffee )
