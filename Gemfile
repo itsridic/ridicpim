@@ -34,6 +34,7 @@ gem 'ledermann-rails-settings', '~> 2.4', '>= 2.4.2'
 gem 'sidekiq'
 gem 'apartment-sidekiq'
 gem 'tether-rails'
+gem 'redis'
 gem 'client_side_validations',
      github: 'DavyJonesLocker/client_side_validations',
      branch: 'rails5'
@@ -69,5 +70,4 @@ end
 
 group :production do
   gem 'rails_12factor'
-  gem 'redis'
 end
