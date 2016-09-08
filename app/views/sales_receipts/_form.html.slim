@@ -30,7 +30,9 @@ javascript:
         $("#adduserdate").text("Add Date"); 
       } 
     } 
-    $(".sales_receipt_user_date").hide(); var addUserDate = document.getElementById('adduserdate'); addUserDate.addEventListener('click', toggleDate, false); 
+    $(".sales_receipt_user_date").hide(); 
+    var addUserDate = document.getElementById('adduserdate'); 
+    addUserDate.addEventListener('click', toggleDate, false); 
     $("#sales_receipt_user_date").datetimepicker({
       theme: "dark"
     });

@@ -9,13 +9,11 @@
   .form-group
     = f.label :vendor
   .form-group
-    = f.collection_select :contact_id, Contact.all, :id, :name, {}, { class: "form-control" }
+    = f.collection_select :contact_id, Contact.all.order("name"), :id, :name, {}, { class: "form-control" }
   .contactSelectAdd.form-group[style="display: none;"]
-    a#cancel-contact[style="color:black" href="javascript:cancelContact()"]
-      | Cancel
+    a#cancel-contact[style="color:black" href="javascript:cancelContact()"] Cancel
     input#order_contact_name[placeholder="Enter name" type="text" name="order[contact_name]"]
-  h3
-    | Order Items
+  h3 Order Items
   #order-items
     = f.simple_fields_for :order_items do |oi|
       = render 'order_item_fields', :f => oi
@@ -31,14 +29,17 @@ javascript:
       $("#order_contact_id").val('1');
       $("#order_contact_name").val('');
     }    
-    $("#order_contact_id").append('<option value=9999>Add New Vendor...</option>');
-    $('select[name="order[contact_id]"]').change(function() {
-      if ($(this).val() == "9999") {
-        $("#order_contact_id").hide();
-        $(".contactSelectAdd").show();
-      }
-    });
     $("#order_user_date").datetimepicker({
       theme: "dark"
+    });
+    $(".order_user_date").hide();
+    $("#adduserdate").on("click", function() {
+      $(".order_user_date").toggle();
+      if ($("#adduserdate").text() == "Add Date") {
+        $("#adduserdate").text("Hide Date");
+      }
+      else {
+        $("#adduserdate").text("Add Date");
+      }
     });
   });
