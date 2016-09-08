@@ -1,24 +1,7 @@
-# README
+# Retail Merge
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The purpose of this web application is to make the lives of those who sell on Amazon much easier.  After selling products on Amazon FBA, we ran into a number of pain points that this project aims to fix:
 
-Things you may want to cover:
+* Integration with QuickBooks Online.  From the start, we've made a commitment to keeping proper books.  Retail Merge will automatically create Sales Receipts, Expense Receipts, and Journal Entries (for keeping track of Cost of Goods Sold) in QBO.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Inventory Management.  Keeping track of inventory for our growing product line in spreadsheets became too much.  Especially keeping track of the average cost when we were buying at different prices depending on how many units we ordered.
