@@ -441,6 +441,7 @@ DEPENDENCIES
   quickbooks-ruby-base (~> 1.6)
   rails (~> 5.0.0, >= 5.0.0.1)
   rails_12factor
+  redis
   rspec-rails (~> 3.5, >= 3.5.1)
   sass-rails (~> 5.0)
   selenium-webdriver (~> 2.53, >= 2.53.4)
