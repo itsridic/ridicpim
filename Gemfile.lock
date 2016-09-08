@@ -369,6 +369,8 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sprockets_better_errors (0.0.4)
+      sprockets-rails (>= 1.0.0)
     temple (0.7.7)
     tether-rails (1.3.3)
       rails (>= 3.1)
@@ -453,6 +455,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   sprockets-rails
+  sprockets_better_errors
   tether-rails
   uglifier (>= 1.3.0)
   web-console
