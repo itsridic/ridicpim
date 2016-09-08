@@ -22,10 +22,7 @@
   = f.submit 'Save', class: "btn unique-color"
 
 javascript:
-  $(document).ready(function() {   
-    $("#order_user_date").datetimepicker({
-      theme: "dark"
-    });
+  $(document).ready(function() {
     $(".order_user_date").hide();
     $("#adduserdate").on("click", function() {
       $(".order_user_date").toggle();
@@ -35,5 +32,8 @@ javascript:
       else {
         $("#adduserdate").text("Add Date");
       }
+    });  
+    $("#order_user_date").datetimepicker({
+      theme: "dark"
     });
   });
