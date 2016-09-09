@@ -11,7 +11,7 @@ module Ridicpim
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-    config.autoload_paths += %W(#{config.root}/services)
-    config.autoload_paths += %W(#{config.root}/services/qbo_rails)
+    config.assets.paths << Rails.root.join("vendor", "assets", "javascripts", "datetimepicker")
+    config.assets.paths << Rails.root.join("vendor", "assets", "stylesheets", "datetimepicker")
   end
 end
