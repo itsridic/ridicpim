@@ -85,6 +85,20 @@ class ContactsController < ApplicationController
     end
   end
 
+  def fetch
+    oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, QboConfig.first.token, QboConfig.first.secret)
+    customer_service = Quickbooks::Service::Customer.new(:access_token => oauth_client, :company_id => QboConfig.realm_id)
+    query = "SELECT * FROM Customer WHERE active = true"
+    customer_service.query_in_batches(query, per_page: 1000) do |batch|
+      batch.each do |customer|
+        if Contact.where(name: customer.display_name).count == 0
+          Contact.create!(name: customer.display_name, qbo_id: customer.id)
+        end
+      end
+    end
+    redirect_to contacts_path
+  end  
+
   private
 
   def contact_params

@@ -15,7 +15,6 @@ Rails.application.routes.draw do
     root 'dashboard#show', as: :subdomain_root
     devise_for :users
     resources :users, only: [:index]
-    resources :contacts
     resources :orders
     resources :payments
     resources :sales_receipts
@@ -24,6 +23,11 @@ Rails.application.routes.draw do
     resources :credentials
     resources :inventory, only: [:index]
     resources :expense_receipts
+    resources :contacts do
+      collection do
+        get :fetch
+      end
+    end
     resources :qbo_accounts do
       collection do
         get :fetch
