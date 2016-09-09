@@ -1,0 +1,12 @@
+/* line 2, /home/nate/Desktop/Rails/ridicpim/app/assets/stylesheets/signin.scss */
+.signin h2 {
+  margin-top: 0;
+}
+/* line 3, /home/nate/Desktop/Rails/ridicpim/app/assets/stylesheets/signin.scss */
+.signin form {
+  margin-bottom: 20px;
+}
+/* line 4, /home/nate/Desktop/Rails/ridicpim/app/assets/stylesheets/signin.scss */
+.signin .glyphicon {
+  top: 0;
+}

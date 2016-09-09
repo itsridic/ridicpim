@@ -3,26 +3,26 @@ body {
 }
 
 #flash_notice {
-	@extend .alert;
-	@extend .alert-success;
+	@extend .alert !optional;
+	@extend .alert-success !optional;
   background-color: #42A5F5;
   color: black;
 }
 #flash_success {
-  @extend .alert;
-  @extend .alert-success;
+  @extend .alert !optional;
+  @extend .alert-success !optional;
 }
 #flash_error {
-	@extend .alert;
-	@extend .alert-danger;
+	@extend .alert !optional;
+	@extend .alert-danger !optional;
 }
 #flash_warning {
-	@extend .alert;
-	@extend .alert-warning;
+	@extend .alert !optional;
+	@extend .alert-warning !optional;
 }
 #flash_alert {
-  @extend .alert;
-  @extend .alert-danger;
+  @extend .alert !optional;
+  @extend .alert-danger !optional;
   background-color: #B71C1C;
   color: white;
 }

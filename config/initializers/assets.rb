@@ -8,5 +8,6 @@ Rails.application.config.assets.version = '1.0'
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
-Rails.application.config.assets.precompile += %w( cocoon.js rails.validations.js rails.validations.simple_form.js sales_receipts.coffee products.coffee expense_receipts.coffee )
-Rails.application.config.assets.precompile += %w( datetimepicker.js jquery.datetimepicker.css )
+Rails.application.config.assets.paths << Rails.root.join("vendor", "assets", "javascripts", "datetimepicker")
+Rails.application.config.assets.paths << Rails.root.join("vendor", "assets", "stylesheets", "datetimepicker")
+Rails.application.config.assets.precompile += %w( *.js )

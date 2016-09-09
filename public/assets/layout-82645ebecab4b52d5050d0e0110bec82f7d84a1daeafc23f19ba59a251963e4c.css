@@ -1,0 +1,32 @@
+/* line 1, /home/nate/Desktop/Rails/ridicpim/app/assets/stylesheets/layout.scss */
+body {
+  padding-top: 20px;
+}
+
+/* line 5, /home/nate/Desktop/Rails/ridicpim/app/assets/stylesheets/layout.scss */
+#flash_notice {
+  background-color: #42A5F5;
+  color: black;
+}
+
+/* line 23, /home/nate/Desktop/Rails/ridicpim/app/assets/stylesheets/layout.scss */
+#flash_alert {
+  background-color: #B71C1C;
+  color: white;
+}
+
+/* line 30, /home/nate/Desktop/Rails/ridicpim/app/assets/stylesheets/layout.scss */
+.navbar .right-buttons {
+  margin-right: 15px;
+  margin-left: 25px;
+}
+
+/* line 36, /home/nate/Desktop/Rails/ridicpim/app/assets/stylesheets/layout.scss */
+.status a {
+  color: white;
+}
+
+/* line 40, /home/nate/Desktop/Rails/ridicpim/app/assets/stylesheets/layout.scss */
+.account input {
+  padding-left: 2% !important;
+}
