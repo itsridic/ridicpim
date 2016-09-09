@@ -1,7 +1,6 @@
 = simple_form_for(@order) do |f|
   = f.error_notification
-  - if !@order.user_date
-    = link_to "Add Date", "#", id: "adduserdate"
+  = link_to "Add Date", "#", id: "adduserdate"
   .form-group
     = f.input :user_date, as: :text, include_blank: true
   .form-group

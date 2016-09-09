@@ -9,7 +9,7 @@
     .card-header.unique-color.white-text
       = @sales_receipt.contact.name
       small
-        = local_time(@sales_receipt.user_date)
+        = @sales_receipt.user_date
     .card-block
       | Payment: #{@sales_receipt.payment.name}
       table.table.table-striped
