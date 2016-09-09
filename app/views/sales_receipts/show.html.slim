@@ -1,5 +1,6 @@
 .container
   p
+  = link_to(fa_icon("plus-circle", text: "New Sales Receipt"), new_sales_receipt_path, class: "btn btn-sm unique-color")
   = link_to(fa_icon("pencil", text: "Edit"), edit_sales_receipt_path(@sales_receipt), class: "btn btn-sm teal")
   = link_to(fa_icon("trash", text: "Delete"), @sales_receipt, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm cw-red")
   = link_to(fa_icon("book", text: "All Sales"), sales_receipts_path, class: "btn btn-sm unique-color")
