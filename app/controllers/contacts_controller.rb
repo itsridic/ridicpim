@@ -91,8 +91,8 @@ class ContactsController < ApplicationController
     query = "SELECT * FROM Customer WHERE active = true"
     customer_service.query_in_batches(query, per_page: 1000) do |batch|
       batch.each do |customer|
-        if Contact.where(name: customer.display_name).count == 0
-          Contact.create!(name: customer.display_name, qbo_id: customer.id)
+        if Contact.where(name: customer.given_name).count == 0
+          Contact.create!(name: customer.given_name, qbo_id: customer.id)
         end
       end
     end
