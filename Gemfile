@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+ruby "2.3.0"
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.0'
@@ -66,8 +67,4 @@ group :development do
   gem 'pry-rails'
   gem 'better_errors', '~> 2.1', '>= 2.1.1'
   gem 'bullet', '~> 5.3'
-end
-
-group :production do
-  gem 'rails_12factor'
 end
