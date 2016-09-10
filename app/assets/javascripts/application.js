@@ -18,4 +18,5 @@
 //= require local_time
 //= require cocoon
 //= require datetimepicker/datetimepicker
+//= require select2
 //= require_tree .

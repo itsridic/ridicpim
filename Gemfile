@@ -36,6 +36,7 @@ gem 'sidekiq'
 gem 'apartment-sidekiq'
 gem 'tether-rails'
 gem 'redis'
+gem 'select2-rails'
 gem 'client_side_validations',
      github: 'DavyJonesLocker/client_side_validations',
      branch: 'rails5'
@@ -68,3 +69,8 @@ group :development do
   gem 'better_errors', '~> 2.1', '>= 2.1.1'
   gem 'bullet', '~> 5.3'
 end
+
+gem 'derailed_benchmarks', group: :development
+gem 'stackprof', group: :development
+
+

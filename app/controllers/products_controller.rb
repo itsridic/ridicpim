@@ -60,7 +60,7 @@ class ProductsController < ApplicationController
       batch.each do |product|
         product_sku   = product.sku
         product_name  = product.name || product.description
-        product_price = product.unit_price || 0        
+        product_price = product.unit_price || 0
         product_sku = product_name if product_sku.blank?
         if Product.where(amazon_sku: product_sku).count == 0
           Product.create!(name: product_name, amazon_sku: product_sku, price: product_price, qbo_id: product.id)

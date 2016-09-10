@@ -19,5 +19,5 @@ test:
 production:
   <<: *default
   database: ridicpim_production
-  username: ridicpim
-  password: <%= ENV['RIDICPIM_DATABASE_PASSWORD'] %>
+  username: pguser #ridicpim
+  password: ridicpim #<%= ENV['RIDICPIM_DATABASE_PASSWORD'] %>
