@@ -3,7 +3,7 @@
     => link_to fa_icon("search"), product
     => link_to fa_icon("pencil"), edit_product_path(product), remote: true
     => link_to fa_icon("trash" ), product, method: :delete, data: { confirm: "Are you sure?" }, remote: true
-  td = truncate(product.name, length: 70, separator: ' ')
+  td = truncate(product.name, length: 65, separator: ' ')
   td = product.amazon_sku
   td = number_to_currency product.price
   td = product.qbo_id
