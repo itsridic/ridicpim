@@ -55,13 +55,14 @@ class ProductsController < ApplicationController
   def fetch
     oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, QboConfig.first.token, QboConfig.first.secret)
     product_service = Quickbooks::Service::Item.new(:access_token => oauth_client, :company_id => QboConfig.realm_id)
-    query = "SELECT * FROM Item WHERE active = true"
+    query = "SELECT * FROM Item WHERE active = true AND type = 'NonInventory'"
     product_service.query_in_batches(query, per_page: 1000) do |batch|
       batch.each do |product|
         if Product.where(amazon_sku: product.sku).count == 0
-          unless product.description.blank? or product.sku.blank?
-            Product.create!(name: product.description, amazon_sku: product.sku, price: product.unit_price, qbo_id: product.id)
-          end
+          product_name  = product.name || product.description
+          product_sku   = product.sku  || product.name
+          product_price = product.unit_price || 0
+          Product.create!(name: product_name, amazon_sku: product_sku, price: product_price, qbo_id: product.id)
         end
       end
     end
