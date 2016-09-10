@@ -9,15 +9,21 @@
 javascript:
   $(document).ready(function() {
     $(".add_fields").click();
+    $(".order-product").select2();
+    $(".order-quantity").last().focus();
     $(document).on('change', '.order-product', function() {
       var text = $(".order-product option:selected").text();
       if(text) {
         if(text.match(/Choose/)) {
           if(text.match(/Choose/g).length === 1) {
             $(".add_fields").click();
+            $(".order-product").select2();
+            $(".order-quantity").last().focus();
           }
         } else {
           $(".add_fields").click();
+          $(".order-product").select2();
+          $(".order-quantity").last().focus();
         }
       }
      });
