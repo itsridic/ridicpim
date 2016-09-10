@@ -58,10 +58,11 @@ class ProductsController < ApplicationController
     query = "SELECT * FROM Item WHERE active = true AND type = 'NonInventory'"
     product_service.query_in_batches(query, per_page: 1000) do |batch|
       batch.each do |product|
-        if Product.where(amazon_sku: product.sku).count == 0
-          product_name  = product.name || product.description
-          product_sku   = product.sku  || product.name
-          product_price = product.unit_price || 0
+        product_sku   = product.sku
+        product_name  = product.name || product.description
+        product_price = product.unit_price || 0        
+        product_sku = product_name if product_sku.blank?
+        if Product.where(amazon_sku: product_sku).count == 0
           Product.create!(name: product_name, amazon_sku: product_sku, price: product_price, qbo_id: product.id)
         end
       end
