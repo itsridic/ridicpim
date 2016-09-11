@@ -10,14 +10,12 @@ class AmazonStatementsController < ApplicationController
     @amazon_statement.status = "PROCESSING..."
     @amazon_statement.save
     #redirect_to amazon_statements_path unless @amazon_statement.status == 'NOT_PROCESSED'
-    ActiveRecord::Base.transaction do
       # @amazon_statement.status = "PROCESSING..."
       # @amazon_statement.save
-      SyncWithQBOWorker.perform_async(current_account.id, @amazon_statement.id)
+    SyncWithQBOWorker.perform_async(current_account.id, @amazon_statement.id)
       #create_expense_receipt(@amazon_statement.period)
       # Create Journal Entries in QBO
       #create_journal_entry(receipt, Date.parse(receipt.user_date.to_s))
-    end
     redirect_to amazon_statements_path
   end
 
