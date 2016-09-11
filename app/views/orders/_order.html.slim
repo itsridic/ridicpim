@@ -17,13 +17,9 @@
       = "#{order.contact.city}, #{order.contact.state}  #{order.contact.postal_code}  #{order.contact.country}"
     table.table
       thead
-        th
-          | Product
-        th
-          | Quantity
-        th
-          | Cost
-        th
-          | Average Cost
+        th Product
+        th Quantity
+        th Cost
+        th Average Cost
       tbody
         = render order.order_items
