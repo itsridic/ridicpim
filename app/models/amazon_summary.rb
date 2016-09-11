@@ -618,6 +618,7 @@ class AmazonSummary
         receipt.sales.create!(description: prod, quantity: qty , amount: amount, rate: rate)
       end
     end
+    GC.start
     return receipt
   end
 
@@ -671,6 +672,7 @@ class AmazonSummary
       expense_receipt.expenses << Expense.create!(qbo_account: expense_account, description: description, amount: amount) unless amount == 0.00
     end
     expense_receipt.save
+    GC.start
     expense_receipt
   end
 
