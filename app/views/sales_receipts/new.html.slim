@@ -8,15 +8,20 @@
 javascript:
   $(document).ready(function() {
     $(".add_fields").click();
+    $(".choose-product").select2();
     $(document).on('change', '.choose-product', function() {
       var text = $(".choose-product option:selected").text();
       if(text) {
         if(text.match(/Choose/)) {
           if(text.match(/Choose/g).length === 1) {
             $(".add_fields").click();
+            $(".choose-product").select2();
+            $(".sale-quantity").eq(-2).focus();
           }
         } else {
           $(".add_fields").click();
+          $(".choose-product").select2();
+          $(".sale-quantity").eq(-2).focus();
         }
       }
      });
