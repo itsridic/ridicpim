@@ -8,6 +8,7 @@
       </div>
       <div class="modal-body">
         <div class="form-inputs">
+          <%= f.input :user_date, as: :string, autofocus: true, input_html: { class: "edit_adjustment_user_date" } %>
           <%= f.association :product %>
           <%= f.association :adjustment_type %>
           <%= f.input :adjusted_quantity %>
@@ -25,6 +26,9 @@
   $(document).ready(function() {
     $(".modal").on("shown.bs.modal", function(e) {
       $('form[data-validate]').enableClientSideValidations();
+      $(".edit_adjustment_user_date").datetimepicker({
+        theme: "dark"
+      });
     });
   });
 </script>

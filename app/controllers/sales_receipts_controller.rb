@@ -1,5 +1,6 @@
 class SalesReceiptsController < ApplicationController
   before_action :set_receipt, only: [:show, :edit, :update, :destroy]
+  after_action :recalculate_average_cost, only: [:create, :update, :destroy]
 
   def index
     @sales_receipts = SalesReceipt.order(user_date: :desc).paginate(page: params[:page], per_page: 10).includes(:contact, :sales => :product)
@@ -58,5 +59,19 @@ class SalesReceiptsController < ApplicationController
 
   def sales_receipt_params
     params.require(:sales_receipt).permit(:contact_id, :payment_id, :user_date, sales_attributes: [:id, :quantity, :product_id, :sales_receipt_id, :amount, :rate, :_destroy])
+  end
+
+  def recalculate_average_cost
+    Order.where("user_date > ?", @sales_receipt.user_date).order("user_date").each do |order|
+      order.order_items.each do |oi|
+        if oi.trigger_update.nil?
+          oi.trigger_update = true
+          oi.save
+        else
+          oi.trigger_update = !oi.trigger_update
+          oi.save
+        end
+      end
+    end
   end
 end

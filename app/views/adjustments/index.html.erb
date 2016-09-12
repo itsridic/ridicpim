@@ -24,7 +24,8 @@
       </div>
       <div class="modal-body">
         <div class="form-inputs">
-          <%= f.association :product, collection: Product.order(:name), prompt: "Choose a Product", autofocus: true %>
+          <%= f.input :user_date, as: :string, include_blank: true, autofocus: true, class: "form-control-sm" %>
+          <%= f.association :product, collection: Product.order(:name), prompt: "Choose a Product" %>
           <%= f.association :adjustment_type, collection: AdjustmentType.order(:name), prompt: "Choose an Adjustment Type" %>
           <%= f.input :adjusted_quantity %>
         </div>
@@ -42,6 +43,9 @@
     $(".modal").on("shown.bs.modal", function(e) {
       $(':input','#new_adjustment').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
       $('form[data-validate]').enableClientSideValidations();
+      $("#adjustment_user_date").datetimepicker({
+        theme: "dark"
+      }); 
     });
-  });
+  });  
 </script>
