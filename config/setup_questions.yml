@@ -68,3 +68,8 @@
   model: Product
   display: name
   setting_name: discount_item
+-
+  question: When creating Cost of Goods Sold which account do you want to use?
+  model: QboAccount
+  display: name
+  setting_name: cost_of_goods_sold_account

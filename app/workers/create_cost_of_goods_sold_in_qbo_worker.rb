@@ -1,7 +1,8 @@
 class CreateCostOfGoodsSoldInQboWorker
   include Sidekiq::Worker
 
-  def perform(amazon_statement_id, receipt_id)
+  def perform(amazon_statement_id, receipt_id, current_account_id)
+    current_account = Account.find(current_account_id)    
     amazon_statement = AmazonStatement.find(amazon_statement_id)
     receipt = SalesReceipt.find(receipt_id)
     txn_date = Date.parse(receipt.user_date.to_s)
@@ -72,7 +73,7 @@ class CreateCostOfGoodsSoldInQboWorker
         line_item_debit.detail_type = 'JournalEntryLineDetail'
         jel = qbo_rails.base.qr_model(:journal_entry_line_detail)
         jel.posting_type = 'Debit'
-        jel.account_id = 80 # TO DO: Set up question! 80 = Sandbox2
+        jel.account_id = current_account.settings(:cost_of_goods_sold_account).val
         line_item_debit.journal_entry_line_detail = jel
         journal_entry.line_items << line_item_debit
       end
