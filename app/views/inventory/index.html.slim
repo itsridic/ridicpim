@@ -21,4 +21,4 @@
               td= product.quantity_sold
               td= product.quantity_adjusted
               td= product.on_hand
-              td= number_to_currency(product.average_cost(Date.today))
+              td= number_to_currency(product.average_cost(Date.today), precision: 4)
