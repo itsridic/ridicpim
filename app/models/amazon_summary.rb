@@ -507,7 +507,8 @@ class AmazonSummary
       .map(&:to_f).inject(:+).to_f.round(2)
   end
 
-  def create_sales_receipt(user_date)
+  def create_sales_receipt(user_date, current_account_id)
+    current_account = Account.find(current_account_id)
     # Find / create customer
     amazon_customer = Contact.find_by(name: "Amazon")
     if amazon_customer.nil?
@@ -556,7 +557,7 @@ class AmazonSummary
             receipt.sales.create!(description: "REFUND - #{description}", quantity: refund_qty.to_i, amount: refund_amt.to_f, rate: refund_rate.to_f, product: product)
           end
           if disc_rate != 0
-            receipt.sales.create!(description: "DISCOUNT - #{description}", quantity: refund_qty.to_i, amount: refund_amt.to_f, rate: refund_rate.to_f, product: product)
+            receipt.sales.create!(description: "DISCOUNT - #{description}", quantity: refund_qty.to_i, amount: refund_amt.to_f, rate: refund_rate.to_f, product: Product.find_by(qbo_id: current_account.settings(:discount_item).val.to_i))
           end
         end
       else
@@ -586,7 +587,7 @@ class AmazonSummary
           receipt.sales.create!(description: "REFUND - #{description}", quantity: refund_qty.to_i, amount: refund_amt.to_f, rate: refund_rate.to_f, product: product)
         end
         if disc_rate != 0
-          receipt.sales.create!(description: "DISCOUNT - #{description}", quantity: disc_qty.to_i, amount: disc_amt.to_f, rate: disc_rate.to_f, product: product)
+          receipt.sales.create!(description: "DISCOUNT - #{description}", quantity: disc_qty.to_i, amount: disc_amt.to_f, rate: disc_rate.to_f, product: Product.find_by(qbo_id: current_account.settings(:discount_item).val.to_i))
         end
         if goodwillamt != 0
           receipt.sales.create!(description: "Goodwill - #{description}", quantity: 1, amount: goodwillamt.to_f, rate: goodwillamt.to_f, product: product)

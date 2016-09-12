@@ -63,3 +63,8 @@
   model: Contact
   display: name
   setting_name: expense_customer
+-
+  question: What item do you want discounts to go to?
+  model: Product
+  display: name
+  setting_name: discount_item
