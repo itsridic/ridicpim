@@ -34,8 +34,6 @@ class SalesReceiptWorker
       qbo_receipt.line_items << line_item
     end
     created_receipt = qbo_rails.create(qbo_receipt)
-    puts "Calling CreateExpenseReceiptWorker..."
     CreateExpenseReceiptWorker.perform_async(amazon_statement_id, current_account_id, receipt_id)
-    puts "CreateExpenseReceiptWorker Called!"
   end
 end

@@ -550,14 +550,21 @@ class AmazonSummary
           disc_rate   = self.promotion_rate(sku)
           disc_qty    = (disc_amt / disc_rate).to_f.round(2) if disc_rate != 0
           description = sku_description
+          puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
           if order_qty != 0
-            receipt.sales.create!(description: description, quantity: order_qty.to_i, amount: order_amt.to_f, rate: order_rate.to_f, product: product)
+            unless receipt.sales.find_by(description: description, quantity: order_qty.to_i, amount: order_amt.to_d, rate: order_rate.to_d, product: product).present?
+              receipt.sales.create!(description: description, quantity: order_qty.to_i, amount: order_amt.to_f, rate: order_rate.to_f, product: product)
+            end
           end
           if refund_qty != 0 and refund_amt != 0
-            receipt.sales.create!(description: "REFUND - #{description}", quantity: refund_qty.to_i, amount: refund_amt.to_f, rate: refund_rate.to_f, product: product)
+            unless receipt.sales.find_by(description: "REFUND - #{description}", quantity: refund_qty.to_i, amount: refund_amt.to_d, rate: refund_rate.to_d, product: product).present?
+              receipt.sales.create!(description: "REFUND - #{description}", quantity: refund_qty.to_i, amount: refund_amt.to_f, rate: refund_rate.to_f, product: product)
+            end
           end
           if disc_rate != 0
-            receipt.sales.create!(description: "DISCOUNT - #{description}", quantity: refund_qty.to_i, amount: refund_amt.to_f, rate: refund_rate.to_f, product: Product.find_by(qbo_id: current_account.settings(:discount_item).val.to_i))
+            unless receipt.sales.find_by(description: "DISCOUNT - #{description}", quantity: refund_qty.to_i, amount: refund_amt.to_d, rate: refund_rate.to_d, product: Product.find_by(qbo_id: current_account.settings(:discount_item).val.to_i)).present?
+              receipt.sales.create!(description: "DISCOUNT - #{description}", quantity: refund_qty.to_i, amount: refund_amt.to_f, rate: refund_rate.to_f, product: Product.find_by(qbo_id: current_account.settings(:discount_item).val.to_i))
+            end
           end
         end
       else
