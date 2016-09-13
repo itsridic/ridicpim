@@ -621,7 +621,8 @@ class AmazonSummary
     return receipt
   end
 
-  def create_expense_receipt(description, expense_bank_account)
+  def create_expense_receipt(description, current_account_id)
+    current_account = Account.find(current_account_id)
     expense_methods = [:amazon_commission, :refund_commission_total, 
                        :fba_per_order_fulfillment_fee, :fba_per_unit_fulfillment_fee, 
                        :fba_weight_based_fee, :sales_tax_service_fee, :inbound_transportation_fee,
@@ -631,50 +632,28 @@ class AmazonSummary
                        :fba_customer_return_per_order_fee, :fba_customer_return_per_unit_fee, 
                        :fba_customer_return_weight_based_fee, :gift_wrap_charge_back,
                        :disposal_fee, :reversal_reimbursement, :cs_error_items]
-    expense_receipt = ExpenseReceipt.create!(description: description, qbo_account: QboAccount.find_by(id: expense_bank_account.to_i))
-    expense_methods.each_with_index do |method, index|
-      # TO DO: Not use hardcoded values.
-      # Something like:
-      # expense_methods.each do |method|
-      #   account_method = "expense_#{method}".to_sym
-      #   begin:
-      #     expense_account = Config.send(account_method)
-      #   rescue NoMethodError => e
-      #     expense_account = Config.default_expense_account
-      #   end
-      #   ...
-      # end 
-      account = case method.to_s.camelcase
-                when "RefundCommissionTotal" then "AmazonRefundCommission"
-                when "SalesTaxServiceFee" then "AmazonSalesTaxServiceFee"
-                when "InboundTransportationFee" then "FBAInboundTransportationFee"
-                when "PayableToAmazon" then "Amazon Monthly FBA FEE"
-                when "StorageFees" then "FBAStorageFee"
-                when "WarehouseDamage" then "DamagedInventory"
-                when "GiftWrapChargeBack" then "FBAGiftWrapchargeback"
-                else method.to_s.camelcase.gsub('Fba', 'FBA')
-                end
-      # Look up account by name in DB.  If it exists, use Expense.new(expense_account: Expense.find_by(name: account))
-      # If it doesn't exist...alert user?
-      expense_account = QboAccount.find_by(name: account)
-      if expense_account.nil?
-        # Use default? May be set up question later
-        puts "UNKNOWN expense: #{method.to_s.camelcase.gsub('Fba','FBA')}"
-        puts "USING DEFAULT..."
-        expense_account = QboAccount.find_by(name: "Commissions & fees")
-      end
-      puts "()()()()()()()()()()()()()()()()()()()()"
-      puts account
-      amount = self.send(method) * -1
-      puts amount
-      puts "()()()()()()()()()()()()()()()()()()()()"
-      expense_receipt.expenses << Expense.create!(qbo_account: expense_account, description: description, amount: amount) unless amount == 0.00
-    end
+    expense_receipt = ExpenseReceipt.create!(description: description, qbo_account: QboAccount.find_by(qbo_id: current_account.settings(:expense_bank_account).val.to_i))
+    account_method = nil
+    amount = 0
+      expense_methods.each do |method|
+        account_method = method.to_sym
+        begin
+          expense_account = QboAccount.find_by(qbo_id: current_account.settings(account_method).val.to_i)
+        rescue ArgumentError => e
+          puts "UNKNOWN expense: #{method}.  Using DEFAULT!"
+          expense_account = QboAccount.find_by(qbo_id: current_account.settings(:expense_unknown).val)
+        end
+        puts "()()()()()()()()()()()()()()()()()()()()"
+        puts method
+        amount = self.send(method) * -1
+        puts amount
+        puts "()()()()()()()()()()()()()()()()()()()()"
+        expense_receipt.expenses << Expense.create!(qbo_account: expense_account, description: description, amount: amount) unless amount == 0.00
+      end 
     expense_receipt.save
     GC.start
     expense_receipt
   end
-
 
   private
   # Helper Methods

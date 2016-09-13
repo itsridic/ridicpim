@@ -64,6 +64,116 @@
   display: name
   setting_name: expense_customer
 -
+  question: When creating an expense receipt, what account should unknown expenses go to?
+  model: QboAccount
+  display: name
+  setting_name: expense_unknown
+-
+  question: When creating an expense receipt, what account should 'amazon_commission' go to?
+  model: QboAccount
+  display: name
+  setting_name: amazon_commission
+-
+  question: When creating an expense receipt, what account should 'refund_commission_total' go to?
+  model: QboAccount
+  display: name
+  setting_name: refund_commission_total
+-
+  question: When creating an expense receipt, what account should 'fba_per_order_fulfillment_fee' go to?
+  model: QboAccount
+  display: name
+  setting_name: fba_per_order_fulfillment_fee  
+-
+  question: When creating an expense receipt, what account should 'fba_per_unit_fulfillment_fee' go to?
+  model: QboAccount
+  display: name
+  setting_name: fba_per_unit_fulfillment_fee
+-
+  question: When creating an expense receipt, what account should 'fba_weight_based_fee' go to?
+  model: QboAccount
+  display: name
+  setting_name: fba_weight_based_fee
+-
+  question: When creating an expense receipt, what account should 'sales_tax_service_fee' go to?
+  model: QboAccount
+  display: name
+  setting_name: sales_tax_service_fee
+-
+  question: When creating an expense receipt, what account should 'inbound_transportation_fee' go to?
+  model: QboAccount
+  display: name
+  setting_name: inbound_transportation_fee
+-
+  question: When creating an expense receipt, what account should 'payable_to_amazon' (monthly FBA fee) go to?
+  model: QboAccount
+  display: name
+  setting_name: payable_to_amazon
+-
+  question: When creating an expense receipt, what account should 'storage_fees' go to?
+  model: QboAccount
+  display: name
+  setting_name: storage_fees
+-
+  question: When creating an expense receipt, what account should 'shipping_chargeback' go to?
+  model: QboAccount
+  display: name
+  setting_name: shipping_chargeback
+-
+  question: When creating an expense receipt, what account should 'shipping_chargeback_refund' go to?
+  model: QboAccount
+  display: name
+  setting_name: shipping_chargeback_refund
+-
+  question: When creating an expense receipt, what account should 'warehouse_damage' go to?
+  model: QboAccount
+  display: name
+  setting_name: warehouse_damage
+-
+  question: When creating an expense receipt, what account should 'warehouse_damage_exception' go to?
+  model: QboAccount
+  display: name
+  setting_name: warehouse_damage_exception
+-
+  question: When creating an expense receipt, what account should 'warehouse_lost_manual' go to?
+  model: QboAccount
+  display: name
+  setting_name: warehouse_lost_manual  
+-
+  question: When creating an expense receipt, what account should 'fba_customer_return_per_order_fee' go to?
+  model: QboAccount
+  display: name
+  setting_name: fba_customer_return_per_order_fee
+-
+  question: When creating an expense receipt, what account should 'fba_customer_return_per_unit_fee' go to?
+  model: QboAccount
+  display: name
+  setting_name: fba_customer_return_per_unit_fee
+-
+  question: When creating an expense receipt, what account should 'fba_customer_return_weight_based_fee' go to?
+  model: QboAccount
+  display: name
+  setting_name: fba_customer_return_weight_based_fee
+-
+  question: When creating an expense receipt, what account should 'gift_wrap_charge_back' go to?
+  model: QboAccount
+  display: name
+  setting_name: gift_wrap_charge_back
+-
+  question: When creating an expense receipt, what account should 'disposal_fee' go to?
+  model: QboAccount
+  display: name
+  setting_name: disposal_fee
+-
+  question: When creating an expense receipt, what account should 'reversal_reimbursement' go to?
+  model: QboAccount
+  display: name
+  setting_name: reversal_reimbursement
+-
+  question: When creating an expense receipt, what account should 'cs_error_items' go to?
+  model: QboAccount
+  display: name
+  setting_name: cs_error_items            
+-
   question: What item do you want discounts to go to?
   model: Product
   display: name

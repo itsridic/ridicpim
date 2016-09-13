@@ -18,9 +18,5 @@ class QboRails
         false
       end
     end
-
-    def self.say_cheese
-      puts "Cheeeese!"
-    end
   end
 end
