@@ -24,6 +24,8 @@ class CreateExpenseReceiptInQBOWorker
       purchase.line_items << line_item
     end
     result = qbo_rails.create(purchase)
-    CreateCostOfGoodsSoldInQboWorker.perform_async(amazon_statement_id, receipt_id, current_account_id)
+    #CreateCostOfGoodsSoldInQboWorker.perform_async(amazon_statement_id, receipt_id, current_account_id)
+    amazon_statement.status = "COMPLETE"
+    amazon_statement.save    
   end
 end
