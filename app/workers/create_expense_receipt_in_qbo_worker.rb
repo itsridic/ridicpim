@@ -9,7 +9,6 @@ class CreateExpenseReceiptInQBOWorker
     qbo_rails = QboRails.new(QboConfig.last, :purchase)
     purchase = qbo_rails.base.qr_model(:purchase)
     purchase.txn_date = amazon_statement.period.split(" - ")[1]
-    purchase.payment_type = 'Cash'
     purchase.account_id = current_account.settings(:expense_bank_account).val
     purchase.line_items = []
     # Loop through all expenses and create new model for it.
