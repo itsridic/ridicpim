@@ -1,11 +1,6 @@
-tr
-  td
-    = show_product_or_description(sale)
-  td
-    = sale.description
-  td
-    = sale.quantity
-  td
-    = number_to_currency(sale.rate)
-  td
-    = number_to_currency(sale.amount)
+tr[id="sale_#{sale.id}"]
+  td = show_product_or_description(sale)
+  td = sale.description
+  td = sale.quantity
+  td = number_to_currency(sale.rate)
+  td = number_to_currency(sale.amount)
