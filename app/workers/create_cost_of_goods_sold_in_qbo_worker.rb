@@ -8,6 +8,7 @@ class CreateCostOfGoodsSoldInQboWorker
     txn_date = Date.parse(receipt.user_date.to_s)
     oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, QboConfig.first.token, QboConfig.first.secret)
 
+    discount_item = Product.find_by(qbo_id: current_account.settings(:discount_item).val)
     # Lookup / Create Accounts in QBO
     # STEP 1: FIND "Inventory Asset" ACCOUNT
     account_service = Quickbooks::Service::Account.new(:access_token => oauth_client, :company_id => QboConfig.realm_id)
@@ -50,6 +51,7 @@ class CreateCostOfGoodsSoldInQboWorker
     journal_entry = qbo_rails.base.qr_model(:journal_entry)
     journal_entry.txn_date = txn_date
     receipt.sales.each do |sale|
+      next if sale.product == discount_item
       if sale.product and sale.quantity > 0
         # Create Credit Line
         average_cost = sale.product.average_cost(receipt.user_date)
