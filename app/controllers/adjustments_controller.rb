@@ -3,7 +3,7 @@ class AdjustmentsController < ApplicationController
   after_action :recalculate_average_cost, only: [:create, :update, :destroy]
 
   def index
-    @adjustments = Adjustment.all.includes(:product, :adjustment_type)
+    @adjustments = Adjustment.all.includes(:product, :adjustment_type).joins(:product).order("products.name")
     @adjustment = Adjustment.new
   end
 
