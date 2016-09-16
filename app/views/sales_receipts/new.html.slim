@@ -24,5 +24,8 @@ javascript:
           $(".sale-quantity").eq(-2).focus();
         }
       }
-     });
+    });
+    $("#sales_receipt_payment_id").change(function() {
+      $(".choose-product").first().focus();
+    })
   });
