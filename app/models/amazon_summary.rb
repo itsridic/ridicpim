@@ -507,6 +507,11 @@ class AmazonSummary
       .map(&:to_f).inject(:+).to_f.round(2)
   end
 
+  def removal_complete
+    JsonPath.on(@summary_as_array, "$..[?(@.TransactionType=='RemovalComplete')].Amount..__content__")
+      .map(&:to_f).inject(:+).to_f.round(2)
+  end
+
   def create_sales_receipt(user_date, current_account_id)
     current_account = Account.find(current_account_id)
     # Find / create customer
@@ -637,7 +642,7 @@ class AmazonSummary
                        :warehouse_damage_exception, :warehouse_lost_manual,
                        :fba_customer_return_per_order_fee, :fba_customer_return_per_unit_fee, 
                        :fba_customer_return_weight_based_fee, :gift_wrap_charge_back,
-                       :disposal_fee, :reversal_reimbursement, :cs_error_items]
+                       :disposal_fee, :reversal_reimbursement, :cs_error_items, :removal_complete]
     expense_receipt = ExpenseReceipt.create!(description: description, qbo_account: QboAccount.find_by(qbo_id: current_account.settings(:expense_bank_account).val.to_i))
     account_method = nil
     amount = 0

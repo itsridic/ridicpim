@@ -172,7 +172,12 @@
   question: When creating an expense receipt, what account should 'cs_error_items' go to?
   model: QboAccount
   display: name
-  setting_name: cs_error_items            
+  setting_name: cs_error_items
+-
+  question: When creating an expense receipt, what account should 'removal_complete' go to?
+  model: QboAccount
+  display: name
+  setting_name: removal_complete  
 -
   question: What item do you want discounts to go to?
   model: Product
