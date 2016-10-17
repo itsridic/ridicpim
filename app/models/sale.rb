@@ -5,6 +5,8 @@ class Sale < ApplicationRecord
 
   validates :quantity, presence: true
   validates :amount, presence: true
+
+  default_scope { order(:id) }
   
   private
 
