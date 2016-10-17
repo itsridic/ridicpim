@@ -12,6 +12,8 @@
       <%= render @adjustments %>
     </tbody>
   </table>
+  <h3>Quick Add</h3>
+  <%= render "new_adjustment_form" %>
 </div>
 
 <div class="modal fade" id="new_adjustment">
@@ -40,6 +42,18 @@
 </div>
 <script>
   $(document).ready(function() {
+    $(".choose-product").select2();
+    $(".adjustment-type").select2();
+    $(".choose-product").change(function() {
+      setTimeout(function(){
+        $('.adjustment-type').focus();
+      });
+    });
+    $(".adjustment-type").change(function() {
+      setTimeout(function(){
+        $('.adjustment-quantity').focus();
+      });
+    });
     $(".modal").on("shown.bs.modal", function(e) {
       $(':input','#new_adjustment').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
       $('form[data-validate]').enableClientSideValidations();
@@ -47,5 +61,10 @@
         theme: "dark"
       }); 
     });
-  });  
+    $(':input','#new-adjustment-form')
+    .not(':button, :submit, :reset, :hidden')
+    .val('')
+    .removeAttr('checked')
+    .removeAttr('selected');
+  });
 </script>

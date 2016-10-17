@@ -1,2 +1,10 @@
 $("#adjustments").prepend('<%= j render @adjustment %>');
 $("#new_adjustment").modal("hide");
+$(':input','#new-adjustment-form')
+.not(':button, :submit, :reset, :hidden')
+.val('')
+.removeAttr('checked')
+.removeAttr('selected');
+setTimeout(function(){
+  $('.choose-product').focus();
+});
