@@ -49,19 +49,18 @@
     });
     $(".adjustment-type option").each(function() { 
       ttext = $(this).text().slice(0,35); 
-      console.log(ttext);
       $(this).text(ttext); 
     });    
     $(".choose-product").select2();
     $(".adjustment-type").select2();
     $(".choose-product").change(function() {
       setTimeout(function(){
-        $('.adjustment-type').focus();
+        $('.choose-product').focus();
       });
     });
     $(".adjustment-type").change(function() {
       setTimeout(function(){
-        $('.adjustment-quantity').focus();
+        $('.adjustment-type').focus();
       });
     });
     $(".modal").on("shown.bs.modal", function(e) {
@@ -74,7 +73,5 @@
     $(':input','#new-adjustment-form')
     .not(':button, :submit, :reset, :hidden')
     .val('')
-    .removeAttr('checked')
-    .removeAttr('selected');
   });
 </script>
