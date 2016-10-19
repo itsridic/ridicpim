@@ -7,9 +7,10 @@
   p
   .card
     .card-header.unique-color.white-text
-      = @sales_receipt.contact.name
+      => @sales_receipt.contact.name
       small
-        = @sales_receipt.user_date
+        => @sales_receipt.user_date
+        = sale_location(@sales_receipt)
     .card-block
       | Payment: #{@sales_receipt.payment.name}
       table.table.table-striped

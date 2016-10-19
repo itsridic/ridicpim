@@ -9,6 +9,9 @@
     p 
       | Total: 
       = number_to_currency(sales_receipt.sales.sum(:amount))
+      br
+      | Location: 
+      = sale_location(sales_receipt)
   .card-block
     table.table.table-striped
       thead
