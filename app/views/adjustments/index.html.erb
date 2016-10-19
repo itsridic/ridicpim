@@ -7,6 +7,7 @@
       <th>Product</th>
       <th>Adjustment Type</th>
       <th>Adjusted Quantity</th>
+      <th>Location</th>
     </thead>
     <tbody id="adjustments">
       <%= render @adjustments %>
@@ -27,6 +28,7 @@
       <div class="modal-body">
         <div class="form-inputs">
           <%= f.input :user_date, as: :string, include_blank: true, autofocus: true, class: "form-control-sm" %>
+          <%= f.association :location, collection: Location.order(:name), prompt: "Choose a Location" %>
           <%= f.association :product, collection: Product.order(:name), prompt: "Choose a Product" %>
           <%= f.association :adjustment_type, collection: AdjustmentType.order(:name), prompt: "Choose an Adjustment Type" %>
           <%= f.input :adjusted_quantity %>

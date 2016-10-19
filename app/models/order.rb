@@ -7,6 +7,7 @@ class Order < ApplicationRecord
 
   validates :name, presence: true
   validates :contact, presence: true
+  validates :location, presence: true
 
   private
 

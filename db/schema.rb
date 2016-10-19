@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161019175222) do
+ActiveRecord::Schema.define(version: 20161019180417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,7 +35,9 @@ ActiveRecord::Schema.define(version: 20161019175222) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.datetime "user_date"
+    t.integer  "location_id"
     t.index ["adjustment_type_id"], name: "index_adjustments_on_adjustment_type_id", using: :btree
+    t.index ["location_id"], name: "index_adjustments_on_location_id", using: :btree
     t.index ["product_id"], name: "index_adjustments_on_product_id", using: :btree
   end
 
@@ -227,6 +229,7 @@ ActiveRecord::Schema.define(version: 20161019175222) do
   end
 
   add_foreign_key "adjustments", "adjustment_types"
+  add_foreign_key "adjustments", "locations"
   add_foreign_key "adjustments", "products"
   add_foreign_key "expense_receipts", "qbo_accounts"
   add_foreign_key "expenses", "expense_receipts"

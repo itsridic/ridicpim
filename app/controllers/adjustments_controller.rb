@@ -61,7 +61,7 @@ class AdjustmentsController < ApplicationController
   end
 
   def adjustment_params
-    params.require(:adjustment).permit(:product_id, :adjustment_type_id, :adjusted_quantity, :user_date)
+    params.require(:adjustment).permit(:product_id, :adjustment_type_id, :adjusted_quantity, :user_date, :location_id)
   end
 
   def recalculate_average_cost
