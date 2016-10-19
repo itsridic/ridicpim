@@ -21,7 +21,7 @@ class Sale < ApplicationRecord
     prod = self.product
     unless prod.nil?
       loc = self.sales_receipt.location
-      qty = self.quantity
+      qty = self.quantity * -1
       InventoryMovement.create!(location: loc, product: prod, quantity: qty, movement_type: "SALE")
     end
   end
