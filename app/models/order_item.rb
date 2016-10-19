@@ -1,7 +1,7 @@
 class OrderItem < ApplicationRecord
   belongs_to :order
   belongs_to :product
-  before_save :set_average_cost
+  before_save :set_average_cost, :create_inventory_movement
 
   validates :product, presence: true
 
@@ -56,5 +56,12 @@ class OrderItem < ApplicationRecord
         self.average_cost = ((last_order_average_cost * last_quantity) + self.cost) / ( last_quantity + self.quantity )
       end
     end
+  end
+
+  def create_inventory_movement
+    prod = Product.find(self.product_id)
+    loc = self.order.location
+    qty = self.quantity
+    InventoryMovement.create!(location: loc, product: prod, quantity: qty, movement_type: "ORDER")
   end
 end

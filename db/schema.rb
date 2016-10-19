@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161019180417) do
+ActiveRecord::Schema.define(version: 20161019181935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,17 @@ ActiveRecord::Schema.define(version: 20161019180417) do
     t.datetime "updated_at",         null: false
     t.index ["expense_receipt_id"], name: "index_expenses_on_expense_receipt_id", using: :btree
     t.index ["qbo_account_id"], name: "index_expenses_on_qbo_account_id", using: :btree
+  end
+
+  create_table "inventory_movements", force: :cascade do |t|
+    t.integer  "location_id"
+    t.integer  "product_id"
+    t.integer  "quantity"
+    t.string   "movement_type"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["location_id"], name: "index_inventory_movements_on_location_id", using: :btree
+    t.index ["product_id"], name: "index_inventory_movements_on_product_id", using: :btree
   end
 
   create_table "locations", force: :cascade do |t|
@@ -234,6 +245,8 @@ ActiveRecord::Schema.define(version: 20161019180417) do
   add_foreign_key "expense_receipts", "qbo_accounts"
   add_foreign_key "expenses", "expense_receipts"
   add_foreign_key "expenses", "qbo_accounts"
+  add_foreign_key "inventory_movements", "locations"
+  add_foreign_key "inventory_movements", "products"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "contacts"
