@@ -9,14 +9,10 @@
     .card-block
       table.table
         thead
-          th
-            | Amazon SKU
-          th
-            | Price
+          th Amazon SKU
+          th Price
           th
         tbody
           tr
-            td
-              = @product.amazon_sku
-            td
-              = number_to_currency(@product.price)
+            td = @product.amazon_sku
+            td = number_to_currency(@product.price)

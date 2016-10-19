@@ -1,0 +1,16 @@
+.container
+  p
+  = link_to(fa_icon("trash", text: "Delete"), @location, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm cw-red")
+  = link_to(fa_icon("book", text: "All Locations"), locations_path, class: "btn btn-sm unique-color")
+  p
+  .card
+    .card-header.unique-color.white-text
+      = @location.name
+    .card-block
+      table.table
+        thead
+          th Name
+          th
+        tbody
+          tr
+            td = @location.name

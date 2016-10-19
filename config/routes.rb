@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :credentials
     resources :inventory, only: [:index]
     resources :expense_receipts
+    resources :locations
     resources :contacts do
       collection do
         get :fetch

@@ -1,0 +1,29 @@
+.col-md-10.offset-md-1
+  h1 Locations
+  = link_to "New Location", "#new_location", data: { toggle: "modal" }, class: "btn btn-sm btn-primary"
+  table.table.table-striped
+    thead
+      th
+      th Name
+    tbody#locations
+      = render @locations
+#new_location.modal.fade
+  = simple_form_for Location.new, remote: true, validate: true do |f|
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
+          h4.modal-title New Location
+        .modal-body
+          .form-inputs
+            = f.input :name, autofocus: true
+        .modal-footer
+          button.btn.stylish-color-dark data-dismiss="modal" type="button"  Close
+          = f.button :submit, class: 'btn unique-color'
+javascript:
+  $(document).ready(function() {
+    $(".modal").on("shown.bs.modal", function(e) {
+      $(':input','#new_location').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
+      $('form[data-validate]').enableClientSideValidations();
+    });
+  });
