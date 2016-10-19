@@ -60,7 +60,7 @@ class OrdersController < ApplicationController
 
 
   def order_params
-    params.require(:order).permit(:name, :contact_id, :user_date, :contact_name, order_items_attributes: [:id, :cost, :quantity, :product_id, :order_id, :_destroy]).except(:contact_name)
+    params.require(:order).permit(:name, :contact_id, :location_id, :user_date, :contact_name, order_items_attributes: [:id, :cost, :quantity, :product_id, :order_id, :_destroy]).except(:contact_name)
   end
 
   def create_new_contact(name)

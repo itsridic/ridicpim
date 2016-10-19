@@ -1,5 +1,6 @@
 class Order < ApplicationRecord
   belongs_to :contact
+  belongs_to :location
   has_many :order_items, dependent: :destroy
   accepts_nested_attributes_for :order_items, reject_if: :all_blank, allow_destroy: true
   after_save :set_user_date

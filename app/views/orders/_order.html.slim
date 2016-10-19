@@ -4,6 +4,8 @@
     = order.name
     small<>
       = order.user_date
+    smale<>
+      = order_location(order)
     small
       = link_to(fa_icon("search", text: "View"), order, class: "btn btn-sm blue")
       = link_to(fa_icon("pencil", text: "Edit"), edit_order_path(order), class: "btn btn-sm teal")

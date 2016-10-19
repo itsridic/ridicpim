@@ -7,8 +7,10 @@
     = f.input :name
   .form-group
     = f.label :vendor
-  .form-group
     = f.collection_select :contact_id, Contact.all.order("name"), :id, :name, {}, { class: "form-control" }
+  .form-group
+    = f.label :location
+    = f.collection_select :location_id, Location.all.order("name"), :id, :name, {}, { class: "form-control" }
   .contactSelectAdd.form-group[style="display: none;"]
     a#cancel-contact[style="color:black" href="javascript:cancelContact()"] Cancel
     input#order_contact_name[placeholder="Enter name" type="text" name="order[contact_name]"]

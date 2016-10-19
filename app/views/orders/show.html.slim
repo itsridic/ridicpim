@@ -10,23 +10,18 @@
       => @order.name
       small
         => @order.user_date
+        => order_location(@order)
     .card-block      
       div
-        h4
-          = @order.contact.name
-        p
-          = @order.contact.address
+        h4 = @order.contact.name
+        p = @order.contact.address
         br
           = "#{@order.contact.city}, #{@order.contact.state}  #{@order.contact.postal_code} #{@order.contact.country}"
       table.table.table-striped
         thead
-          th
-            | Product
-          th
-            | Quantity
-          th
-            | Cost
-          th
-            | Average Cost
+          th Product
+          th Quantity
+          th Cost
+          th Average Cost
         tbody
           = render @order.order_items.includes(:product)
