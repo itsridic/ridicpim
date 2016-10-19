@@ -6,8 +6,9 @@
           - model = setting["model"]
           - display = setting["display"]
           - setting_name = setting["setting_name"]
+          - id_field = setting["id_field"]
           - selected = current_account.settings(setting_name.to_sym).val
           .form-group
             = label_tag(setting["question"])
-            = select_tag("settings[#{setting['setting_name']}]", options_from_collection_for_select(model.constantize.all.order(display), "qbo_id", display, selected), class: "form-control", prompt: "Select One...")
+            = select_tag("settings[#{setting['setting_name']}]", options_from_collection_for_select(model.constantize.all.order(display), id_field, display, selected), class: "form-control", prompt: "Select One...")
         = submit_tag("Update Settings", class: "btn btn-primary")

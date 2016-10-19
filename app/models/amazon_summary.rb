@@ -525,7 +525,7 @@ class AmazonSummary
       payment_method = Payment.create!(name: "AMAZON")
     end
     # Create Sales Receipt
-    receipt = SalesReceipt.create!(contact_id: amazon_customer.id, payment_id: payment_method.id, user_date: user_date)
+    receipt = SalesReceipt.create!(contact_id: amazon_customer.id, payment_id: payment_method.id, user_date: user_date, location_id: current_account.settings(:default_location_for_amazon).val.to_i)
 
     sales_receipt_methods = [:total_tax, :shipping_total, :total_promotion_shipping, :shipping_tax, :gift_wrap, :gift_wrap_tax, :balance_adjustment]
     self.skus.sort.each do |sku|
