@@ -2,8 +2,8 @@ class Adjustment < ApplicationRecord
   belongs_to :adjustment_type
   belongs_to :product
   belongs_to :location
-  before_save :create_inventory_movement
-  after_save :set_user_date
+  after_save :set_user_date, :create_inventory_movement
+  after_destroy :remove_inventory_movement
 
   validates :product, presence: true
   validates :adjustment_type, presence: true
@@ -19,9 +19,24 @@ class Adjustment < ApplicationRecord
   end
 
   def create_inventory_movement
-    loc = self.location
-    prod = self.product
-    qty = self.adjusted_quantity
-    InventoryMovement.create!(location: loc, product: prod, quantity: qty, movement_type: "ADJUSTMENT")
+    inventory_movement = InventoryMovement.find_by(movement_type: "ADJUSTMENT", reference_id: self.id)
+    if inventory_movement
+      loc = self.location
+      prod = self.product
+      qty = self.adjusted_quantity
+      inventory_movement.update(location: loc, product: prod, quantity: qty, movement_type: "ADJUSTMENT")
+    else
+      loc = self.location
+      prod = self.product
+      qty = self.adjusted_quantity
+      InventoryMovement.create!(location: loc, product: prod, quantity: qty, movement_type: "ADJUSTMENT")      
+    end
+  end
+
+  def remove_inventory_movement
+    inventory_movement = InventoryMovement.find_by(movement_type: "ADJUSTMENT", reference_id: self.id)
+    if inventory_movement
+      inventory_movement.destroy
+    end
   end
 end

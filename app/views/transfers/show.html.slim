@@ -1,0 +1,24 @@
+.container
+  p
+  = link_to(fa_icon("trash", text: "Delete"), @transfer, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm cw-red")
+  = link_to(fa_icon("book", text: "All Transfers"), transfers_path, class: "btn btn-sm unique-color")
+  p
+  .card
+    .card-header.unique-color.white-text
+      = @transfer.created_at
+    .card-block
+      table.table
+        thead
+          th From Location
+          th To Location
+          th Product
+          th Quantity
+          th Description
+          th
+        tbody
+          tr
+            td = from_location(@transfer)
+            td = to_location(@transfer)
+            td = @transfer.product.name
+            td = @transfer.quantity
+            td = @transfer.description

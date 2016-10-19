@@ -1,0 +1,32 @@
+<div class="modal fade" id="edit_transfer">
+  <%= simple_form_for @transfer, remote: true, validate: true do |f| %>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Edit Transfer</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-inputs">
+            <%= f.input :from_location_id, collection: Location.order(:name), prompt: "Choose a Location" %>
+            <%= f.input :to_location_id, collection: Location.order(:name), prompt: "Choose a Location" %>
+            <%= f.input :product, collection: Product.order(:name), prompt: "Choose a Product" %>
+            <%= f.input :quantity, input_html: { min: "1" } %>
+            <%= f.input :description %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn stylish-color-dark" data-dismiss="modal">Close</button>
+        <%= f.button :submit, class: 'btn unique-color' %>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>
+<script>
+  $(document).ready(function() {
+    $(".modal").on("shown.bs.modal", function(e) {
+      $('form[data-validate]').enableClientSideValidations();
+    });
+  });
+</script>

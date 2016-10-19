@@ -1,7 +1,9 @@
 class OrderItem < ApplicationRecord
   belongs_to :order
   belongs_to :product
-  before_save :set_average_cost, :create_inventory_movement
+  before_save :set_average_cost
+  after_save :create_inventory_movement
+  after_destroy :remove_inventory_movement
 
   validates :product, presence: true
 
@@ -59,9 +61,24 @@ class OrderItem < ApplicationRecord
   end
 
   def create_inventory_movement
-    prod = Product.find(self.product_id)
-    loc = self.order.location
-    qty = self.quantity
-    InventoryMovement.create!(location: loc, product: prod, quantity: qty, movement_type: "ORDER")
+    inventory_movement = InventoryMovement.find_by(movement_type: "ORDER", reference_id: self.id)
+    if inventory_movement
+      prod = Product.find(self.product_id)
+      loc = self.order.location
+      qty = self.quantity
+      inventory_movement.update(location: loc, product: prod, quantity: qty, movement_type: "ORDER", reference_id: self.id)
+    else
+      prod = Product.find(self.product_id)
+      loc = self.order.location
+      qty = self.quantity
+      InventoryMovement.create!(location: loc, product: prod, quantity: qty, movement_type: "ORDER", reference_id: self.id)
+    end
+  end
+
+  def remove_inventory_movement
+    inventory_movement = InventoryMovement.find_by(movement_type: "ORDER", reference_id: self.id)
+    if inventory_movement
+      inventory_movement.destroy
+    end
   end
 end

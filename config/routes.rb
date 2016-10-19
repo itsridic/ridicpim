@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     resources :inventory, only: [:index]
     resources :expense_receipts
     resources :locations
+    resources :transfers
     resources :contacts do
       collection do
         get :fetch

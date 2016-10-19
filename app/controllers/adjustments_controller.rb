@@ -1,6 +1,6 @@
 class AdjustmentsController < ApplicationController
   before_action :set_adjustment, only: [:show, :edit, :update, :destroy]
-  after_action :recalculate_average_cost, only: [:create, :update, :destroy]
+  #after_action :recalculate_average_cost, only: [:create, :update, :destroy]
 
   def index
     @adjustments = Adjustment.all.includes(:product, :adjustment_type).joins(:product).order("products.name")
@@ -64,17 +64,17 @@ class AdjustmentsController < ApplicationController
     params.require(:adjustment).permit(:product_id, :adjustment_type_id, :adjusted_quantity, :user_date, :location_id)
   end
 
-  def recalculate_average_cost
-    Order.where("user_date > ?", @adjustment.user_date).order("user_date").each do |order|
-      order.order_items.each do |oi|
-        if oi.trigger_update.nil?
-          oi.trigger_update = true
-          oi.save
-        else
-          oi.trigger_update = !oi.trigger_update
-          oi.save
-        end
-      end
-    end
-  end  
+  # def recalculate_average_cost
+  #   Order.where("user_date > ?", @adjustment.user_date).order("user_date").each do |order|
+  #     order.order_items.each do |oi|
+  #       if oi.trigger_update.nil?
+  #         oi.trigger_update = true
+  #         oi.save
+  #       else
+  #         oi.trigger_update = !oi.trigger_update
+  #         oi.save
+  #       end
+  #     end
+  #   end
+  # end 
 end

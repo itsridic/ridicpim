@@ -1,0 +1,37 @@
+.col-md-10.offset-md-1
+  h1 Transfers
+  = link_to "New Transfer", "#new_transfer", data: { toggle: "modal" }, class: "btn btn-sm btn-primary"
+  table.table.table-striped
+    thead
+      th
+      th From Location
+      th To Location
+      th Product
+      th Quantity
+      th Description
+    tbody#transfers
+      = render @transfers
+#new_transfer.modal.fade
+  = simple_form_for Transfer.new, remote: true, validate: true do |f|
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
+          h4.modal-title New Transfer
+        .modal-body
+          .form-inputs
+            = f.input :from_location_id, collection: Location.order(:name), prompt: "Choose a Location"
+            = f.input :to_location_id, collection: Location.order(:name), prompt: "Choose a Location"
+            = f.association :product, collection: Product.order(:name), prompt: "Choose a Product"
+            = f.input :quantity, input_html: { min: "1" }
+            = f.input :description
+        .modal-footer
+          button.btn.stylish-color-dark data-dismiss="modal" type="button"  Close
+          = f.button :submit, class: 'btn unique-color'
+javascript:
+  $(document).ready(function() {
+    $(".modal").on("shown.bs.modal", function(e) {
+      $(':input','#new_transfer').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
+      $('form[data-validate]').enableClientSideValidations();
+    });
+  });

@@ -19,6 +19,10 @@ class Product < ApplicationRecord
     quantity_ordered - quantity_sold + quantity_adjusted
   end
 
+  def on_hand_by_location(location)
+    InventoryMovement.where("product_id = ? AND location_id = ?", self.id, location.id).sum(:quantity)
+  end
+
   def last_quantity_ordered
     if item_ordered?
       OrderItem.where("product_id = ?", self.id).last.quantity
@@ -46,7 +50,7 @@ class Product < ApplicationRecord
 
   def average_cost(date)
     if item_ordered?
-      OrderItem.joins(:order).where("product_id = ? AND user_date < ?", self.id, date).order("user_date DESC").first.try(:average_cost) || 0
+      OrderItem.joins(:order).where("product_id = ? AND user_date <= ?", self.id, date).order("user_date DESC").first.try(:average_cost) || 0
     else
       0
     end
