@@ -1,3 +1,20 @@
+#new_product.modal.fade
+  = simple_form_for Product.new, remote: true, validate: true do |f|
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
+          h4.modal-title
+            | New Product
+        .modal-body
+          .form-inputs
+            = f.input :name, autofocus: true
+            = f.input :amazon_sku
+            = f.input :price
+        .modal-footer
+          button.btn.stylish-color-dark[type="button" data-dismiss="modal"]
+            | Close
+          = f.button :submit, class: 'btn unique-color'
 = simple_form_for(@order) do |f|
   = f.error_notification
   = link_to "Add Date", "#", id: "adduserdate"
@@ -21,7 +38,6 @@
     .links[style="margin-top: 1%; margin-bottom: 1%;"]
       = link_to_add_association(fa_icon('plus lg', text: 'add item'), f, :order_items, class: "btn teal")
   = f.submit 'Save', class: "btn unique-color"
-
 javascript:
   $(document).ready(function() {
     $(".order_user_date").hide();
@@ -37,4 +53,8 @@ javascript:
     $("#order_user_date").datetimepicker({
       theme: "dark"
     });
+    $(".modal").on("shown.bs.modal", function(e) {
+      $(':input','#new_product').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
+      $('form[data-validate]').enableClientSideValidations();
+    });    
   });
