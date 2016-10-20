@@ -2,25 +2,26 @@
   p
   .card
     .card-header.unique-color.white-text
-      h4
-        | Inventory Status
+      h4 Inventory Status
     .card-block
-      - Location.all.each do |loc|
-        h1 = loc.name
-        table.table
-          thead
-            th Product
-            th Ordered
-            th Sold
-            th Adjusted
-            th On Hand
-            th Average Cost (as of #{Date.today})
-          tbody
-            - @products.each do |product|
-              tr
-                td= product.name
-                td= product.quantity_ordered
-                td= product.quantity_sold
-                td= product.quantity_adjusted
-                td= product.on_hand_by_location(loc)
-                td= number_to_currency(product.average_cost(Time.now.utc), precision: 4)
+      table.table.table-responsive
+        thead
+          th[style="width: 1% !important;"] Product
+          th Ordered
+          th Sold
+          th Adjusted
+          - Location.order("name").each do |location|
+            th OH #{location.name}
+          th On Hand
+          th AVCO
+        tbody
+          - @products.each do |product|
+            tr
+              td = product.name
+              td = product.quantity_ordered
+              td = product.quantity_sold
+              td = product.quantity_adjusted
+              - @locations.each do |location|
+                td = product.on_hand_by_location(location)
+              td = product.on_hand
+              td = number_to_currency(product.average_cost(Time.now.utc), precision: 4)
