@@ -9,7 +9,7 @@ html
     header.container
       nav.navbar.navbar-dark.unique-color
         .navbar-header
-          = link_to "It's Ridic! PIM", root_path, class: 'navbar-brand nav-link'
+          = link_to "It's Ridic! Retail Merge", root_path, class: 'navbar-brand nav-link'
         - if user_signed_in?
           .pull-right.right-buttons
             = link_to 'Sign out', destroy_user_session_path, method: 'delete', class: 'btn navbar-btn stylish-color'
