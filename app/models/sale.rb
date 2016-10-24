@@ -7,9 +7,21 @@ class Sale < ApplicationRecord
   validates :quantity, presence: true
   validates :amount, presence: true
 
+  validates :product, presence: true, allow_blank: true
+  validates :description, presence: true, allow_blank: true
+
+
+  validate :product_or_description
+
   default_scope { order(:id) }
   
   private
+
+  def product_or_description
+    unless product.blank? or description.blank?
+      errors.add(:line, "must specify a product or description, not both")
+    end
+  end
 
   def set_rate
     if self.rate.blank?

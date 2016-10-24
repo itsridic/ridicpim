@@ -253,3 +253,10 @@ small {
   background-color: #fff;
   cursor: default;
 }
+
+.error {
+  ul, li {
+    background-color: #F2DEDE;
+    color: #A94442;
+  }
+}
