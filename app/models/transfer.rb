@@ -3,6 +3,11 @@ class Transfer < ApplicationRecord
   after_save :create_inventory_movement
   after_destroy :remove_inventory_movement
 
+  validates :product_id, presence: true
+  validates :from_location_id, presence: true
+  validates :to_location_id, presence: true
+  validates :quantity, presence: true
+
   private
 
   def create_inventory_movement
