@@ -1,0 +1,33 @@
+#inventory-table {
+  thead {
+    background-color: #4B515D;
+  }
+  td {
+    background-color: #4B515D;
+  }
+  .inventory-table_length {
+    color: #212121;
+  }
+}
+
+#inventory-table_wrapper {
+  select {
+    color: black;
+  }
+  input {
+    color: black;
+  }
+}
+
+#inventory-table_info {
+  color: white;
+  #inventory-table_previous {
+    color: white;
+  }
+}
+
+.dataTable {
+  th {
+    background-color: #4B515D;
+  }
+}
