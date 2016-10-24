@@ -1,8 +1,11 @@
 = simple_form_for(@sales_receipt) do |f|
   - if @sales_receipt.errors.any?
-    p
-      - p @sales_receipt.errors
-  = f.error_notification
+    = f.error_notification
+    .container
+      .error
+        ul
+        - @sales_receipt.errors.full_messages.each do |error|
+          li = error
   = link_to "Add Date", "#", id: "adduserdate"
   = f.input :user_date, as: :text, include_blank: true, input_html: { tabindex: 1 }
   .form-group

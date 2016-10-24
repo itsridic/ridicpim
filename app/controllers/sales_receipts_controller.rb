@@ -29,6 +29,22 @@ class SalesReceiptsController < ApplicationController
   end
 
   def create
+    # Clear empty rows
+    params["sales_receipt"]["sales_attributes"].each do |k,v|
+      if params["sales_receipt"]["sales_attributes"][k]["product_id"] == ""
+        params["sales_receipt"]["sales_attributes"].delete(k)
+      else
+        if params["sales_receipt"]["sales_attributes"][k]["product_id"].to_i == 0
+          params["sales_receipt"]["sales_attributes"][k]["description"] = params["sales_receipt"]["sales_attributes"][k]["product_id"]
+          params["sales_receipt"]["sales_attributes"][k]["product_id"] = ""
+        end
+      end
+    end
+
+    p "*" * 100
+    p params
+    p "*" * 100
+    
     @sales_receipt = SalesReceipt.new(sales_receipt_params)
 
     respond_to do |format|
@@ -58,7 +74,7 @@ class SalesReceiptsController < ApplicationController
   end
 
   def sales_receipt_params
-    params.require(:sales_receipt).permit(:contact_id, :payment_id, :location_id, :user_date, sales_attributes: [:id, :quantity, :product_id, :sales_receipt_id, :amount, :rate, :_destroy])
+    params.require(:sales_receipt).permit(:contact_id, :payment_id, :location_id, :user_date, sales_attributes: [:id, :quantity, :product_id, :sales_receipt_id, :amount, :rate, :description, :_destroy])
   end
 
   def recalculate_average_cost
