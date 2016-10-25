@@ -21,17 +21,3 @@ p
   .spinner
     i.fa.fa-refresh.fa-spin aria-hidden="true" 
     small Retrieving data from Amazon, please wait...
-
-  javascript:
-    $( document ).ready(function() {
-      $(".spinner").hide();
-
-      $(document).ajaxStart(function(){
-        $(".spinner").show();
-      });
-
-      $(document).ajaxStop(function(){
-        $(".spinner").hide();
-        location.reload();
-      });
-    });

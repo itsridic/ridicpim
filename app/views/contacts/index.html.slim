@@ -30,23 +30,4 @@
         .modal-footer
           button.btn.stylish-color-dark data-dismiss="modal" type="button"  Close
           = f.button :submit, class: 'btn unique-color'
-javascript:
-  $(document).ready(function() {
-    $(".spinner").hide();
 
-    $(".modal").on("shown.bs.modal", function(e) {
-      $(document).off(".fetchContacts");
-      $(':input','#new_contact').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
-      $('form[data-validate]').enableClientSideValidations();
-    });
-    $("#fetch-contacts").click(function() {
-      $(document).on("ajaxStart.fetchContacts", function () {
-          $('.spinner').show();
-      });
-      $(document).on("ajaxStop.fetchContacts", function () {
-          $('.spinner').hide();
-          location.reload();
-      });      
-    });
-
-  });
