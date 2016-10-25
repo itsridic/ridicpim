@@ -22,12 +22,3 @@
           button.btn.stylish-color-dark[type="button" data-dismiss="modal"]
             | Close
           = f.button :submit, class: 'btn unique-color'
-script
-  |  $(document).ready(function() { $(".modal").on("shown.bs.modal", function(e) { $(':input','#new_payment').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected'); $('form[data-validate]').enableClientSideValidations(); }); }); 
-javascript:
-  $(document).ready(function() {
-    $(".modal").on("shown.bs.modal", function(e) {
-      $(':input','#new_payment').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
-      $('form[data-validate]').enableClientSideValidations();
-    });
-  });

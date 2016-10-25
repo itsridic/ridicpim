@@ -6,3 +6,26 @@ $ ->
         $('.pagination').html('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>');
         $.getScript(url)
     $(window).scroll()
+
+$('.products.new, .products.edit').ready ->
+  $('.modal').on 'shown.bs.modal', (e) ->
+    $('form[data-validate]').enableClientSideValidations()
+    return
+  return
+$('products.index').ready ->
+  $('.spinner').hide()
+  $('.modal').on 'shown.bs.modal', (e) ->
+    $(document).off '.fetchProducts'
+    $(':input', '#new_product').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr 'selected'
+    $('form[data-validate]').enableClientSideValidations()
+    return
+  $('#fetch-products').click ->
+    $(document).on 'ajaxStart.fetchProducts', ->
+      $('.spinner').show()
+      return
+    $(document).on 'ajaxStop.fetchProducts', ->
+      $('.spinner').hide()
+      location.reload()
+      return
+    return
+  return

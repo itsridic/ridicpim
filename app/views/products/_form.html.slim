@@ -12,13 +12,5 @@
             = f.input :amazon_sku
             = f.input :price
         .modal-footer
-          button.btn.elegant-color[type="button" data-dismiss="modal"]
-            | Close
+          button.btn.elegant-color[type="button" data-dismiss="modal"] Close
           = f.button :submit, class: 'btn unique-color'
-
-javascript:
-  $(document).ready(function() {
-    $(".modal").on("shown.bs.modal", function(e) {
-      $('form[data-validate]').enableClientSideValidations();
-    });
-  });

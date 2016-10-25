@@ -28,24 +28,5 @@
             = f.input :amazon_sku
             = f.input :price
         .modal-footer
-          button.btn.stylish-color-dark[type="button" data-dismiss="modal"]
-            | Close
+          button.btn.stylish-color-dark[type="button" data-dismiss="modal"] Close
           = f.button :submit, class: 'btn unique-color'
-javascript:
-  $(document).ready(function() {
-    $(".spinner").hide();
-    $(".modal").on("shown.bs.modal", function(e) {
-      $(document).off(".fetchProducts")
-      $(':input','#new_product').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
-      $('form[data-validate]').enableClientSideValidations();
-    });
-    $("#fetch-products").click(function() {
-      $(document).on("ajaxStart.fetchProducts", function () {
-          $('.spinner').show();
-      });
-      $(document).on("ajaxStop.fetchProducts", function () {
-          $('.spinner').hide();
-          location.reload();
-      });      
-    }); 
-  });
