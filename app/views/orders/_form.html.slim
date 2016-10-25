@@ -38,23 +38,3 @@
     .links[style="margin-top: 1%; margin-bottom: 1%;"]
       = link_to_add_association(fa_icon('plus lg', text: 'add item'), f, :order_items, class: "btn teal")
   = f.submit 'Save', class: "btn unique-color"
-javascript:
-  $(document).ready(function() {
-    $(".order_user_date").hide();
-    $("#adduserdate").on("click", function() {
-      $(".order_user_date").toggle();
-      if ($("#adduserdate").text() == "Add Date") {
-        $("#adduserdate").text("Hide Date");
-      }
-      else {
-        $("#adduserdate").text("Add Date");
-      }
-    });  
-    $("#order_user_date").datetimepicker({
-      theme: "dark"
-    });
-    $(".modal").on("shown.bs.modal", function(e) {
-      $(':input','#new_product').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
-      $('form[data-validate]').enableClientSideValidations();
-    });    
-  });
