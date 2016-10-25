@@ -20,10 +20,4 @@
         .modal-footer
           button.btn.stylish-color-dark data-dismiss="modal" type="button"  Close
           = f.button :submit, class: 'btn unique-color'
-javascript:
-  $(document).ready(function() {
-    $(".modal").on("shown.bs.modal", function(e) {
-      $(':input','#new_location').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
-      $('form[data-validate]').enableClientSideValidations();
-    });
-  });
+

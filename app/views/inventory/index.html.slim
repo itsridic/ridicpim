@@ -27,15 +27,3 @@ script[type="text/javascript" src="https://cdn.datatables.net/v/dt/pdfmake-0.1.1
                 td = product.on_hand_by_location(location)
               td = product.on_hand
               td = number_to_currency(product.average_cost(Time.now.utc), precision: 4)
-
-javascript:
-  $(document).ready(function() {
-      $('#inventory-table').DataTable({
-        paging: false,
-        fixedHeader: true
-      });
-      $('.paginate_button').addClass('btn btn-primary');
-  $('.dataTable').on('scroll', function () {
-      $('.dataTable').scrollTop($(this).scrollTop());
-  });      
-  } );
