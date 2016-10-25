@@ -1,4 +1,5 @@
 $(".orders.new, .orders.edit").ready(function() {
+  $(".add_fields").click();
   $(".order_user_date").hide();
   $("#adduserdate").on("click", function() {
     $(".order_user_date").toggle();
@@ -31,6 +32,7 @@ $(".orders.new").ready(function() {
           $(".order-quantity").last().focus();
         }
       } else {
+        $(".add_fields").click();
         $(".order-product").select2();
         $(".order-quantity").last().focus();
       }
