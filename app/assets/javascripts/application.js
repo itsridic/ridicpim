@@ -19,4 +19,5 @@
 //= require cocoon
 //= require datetimepicker/datetimepicker
 //= require select2
+//= require jquery-readyselector
 //= require_tree .

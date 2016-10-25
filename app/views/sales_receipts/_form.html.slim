@@ -25,21 +25,3 @@
     .links[style="margin-top: 1%; margin-bottom: 1%;"]
       = link_to_add_association(fa_icon('plus lg', text: 'add item'), f, :sales, class: "btn teal")
   = f.submit "Submit", class: "btn unique-color"
-
-javascript:
-  $(document).ready(function() { 
-    function toggleDate() { 
-      $(".sales_receipt_user_date").toggle(); 
-      if ($("#adduserdate").text() == "Add Date") { 
-        $("#adduserdate").text("Hide Date"); 
-      } else { 
-        $("#adduserdate").text("Add Date"); 
-      } 
-    } 
-    $(".sales_receipt_user_date").hide(); 
-    var addUserDate = document.getElementById('adduserdate'); 
-    addUserDate.addEventListener('click', toggleDate, false); 
-    $("#sales_receipt_user_date").datetimepicker({
-      theme: "dark"
-    });
-  });

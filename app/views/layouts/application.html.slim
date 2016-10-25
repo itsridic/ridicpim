@@ -5,7 +5,7 @@ html
     = csrf_meta_tags
     = stylesheet_link_tag    'application'
     = javascript_include_tag 'application'
-  body
+  body[class="#{controller_name} #{action_name}"]
     header.container
       nav.navbar.navbar-dark.unique-color
         .navbar-header
