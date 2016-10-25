@@ -4,7 +4,7 @@
       .col-md-3
         .form-group
           = f.label :product
-          = f.collection_select :product_id, Product.all.order("name"), :id, :name, { prompt: "Choose a Product!..." }, { class: "form-control validate choose-product" }
+          = f.collection_select :product_id, Product.all.order("name"), :id, :name, { include_blank: "Choose a Product!..." }, { class: "form-control validate choose-product" }
       .col-md-3.sale-description
         .form-group
           = f.label :description
@@ -21,4 +21,3 @@
         .form-group
           p
           = link_to_remove_association(fa_icon("times lg"), f, class: "btn btn-sm cw-red", style: "margin-top: 0.5%;")
-

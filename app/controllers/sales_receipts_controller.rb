@@ -28,23 +28,7 @@ class SalesReceiptsController < ApplicationController
     end
   end
 
-  def create
-    # Clear empty rows
-    params["sales_receipt"]["sales_attributes"].each do |k,v|
-      if params["sales_receipt"]["sales_attributes"][k]["product_id"] == ""
-        params["sales_receipt"]["sales_attributes"].delete(k)
-      else
-        if params["sales_receipt"]["sales_attributes"][k]["product_id"].to_i == 0
-          params["sales_receipt"]["sales_attributes"][k]["description"] = params["sales_receipt"]["sales_attributes"][k]["product_id"]
-          params["sales_receipt"]["sales_attributes"][k]["product_id"] = ""
-        end
-      end
-    end
-
-    p "*" * 100
-    p params
-    p "*" * 100
-    
+  def create  
     @sales_receipt = SalesReceipt.new(sales_receipt_params)
 
     respond_to do |format|
