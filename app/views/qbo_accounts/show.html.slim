@@ -4,8 +4,7 @@
   = link_to(fa_icon("book", text: "All QBO Accounts"), qbo_accounts_path, class: "btn btn-sm unique-color")
   p
   .card
-    .card-header.unique-color.white-text
-      = @qbo_account.name
+    .card-header.unique-color.white-text = @qbo_account.name
     .card-block
       table.table
         thead
@@ -13,7 +12,5 @@
           th Account Type
         tbody
           tr
-            td
-              = @qbo_account.name
-            td
-              = @qbo_account.account_type
+            td = @qbo_account.name
+            td = @qbo_account.account_type
