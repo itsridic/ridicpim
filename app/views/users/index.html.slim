@@ -15,8 +15,7 @@ p
               td = user.name
               td = user.email
               td = user_status(user)
-      h3.extra-margin-top
-        | Invite Users
+      h3.extra-margin-top Invite Users
       = simple_form_for(User.new, url: user_invitation_path, html: { class: 'form-inline' }) do |f|
         = f.input :email, placeholder: 'Email', label: false
         = f.button :submit, 'Invite User', class: 'btn-primary'
