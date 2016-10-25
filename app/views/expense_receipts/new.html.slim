@@ -5,20 +5,3 @@
       h1 New Expense Receipt
       = render 'form'
       = link_to 'Back', expense_receipts_path
-
-javascript:
-  $(document).ready(function() {
-    $(".add_fields").click();
-    $(document).on('change', '.choose-account', function() {
-      var text = $(".choose-account option:selected").text();
-      if(text) {
-        if(text.match(/Choose/)) {
-          if(text.match(/Choose/g).length === 1) {
-            $(".add_fields").click();
-          }
-        } else {
-          $(".add_fields").click();
-        }
-      }
-     });
-  });
