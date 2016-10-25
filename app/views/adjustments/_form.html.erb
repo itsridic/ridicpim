@@ -23,13 +23,3 @@
   </div>
   <% end %>
 </div>
-<script>
-  $(document).ready(function() {
-    $(".modal").on("shown.bs.modal", function(e) {
-      $('form[data-validate]').enableClientSideValidations();
-      $(".edit_adjustment_user_date").datetimepicker({
-        theme: "dark"
-      });
-    });
-  });
-</script>

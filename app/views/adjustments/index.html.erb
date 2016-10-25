@@ -42,38 +42,3 @@
   </div>
   <% end %>
 </div>
-<script>
-  $(document).ready(function() {
-    $(".choose-product option").each(function() { 
-      ttext = $(this).text().slice(0,65); 
-      console.log(ttext);
-      $(this).text(ttext); 
-    });
-    $(".adjustment-type option").each(function() { 
-      ttext = $(this).text().slice(0,35); 
-      $(this).text(ttext); 
-    });    
-    $(".choose-product").select2();
-    $(".adjustment-type").select2();
-    $(".choose-product").change(function() {
-      setTimeout(function(){
-        $('.choose-product').focus();
-      });
-    });
-    $(".adjustment-type").change(function() {
-      setTimeout(function(){
-        $('.adjustment-type').focus();
-      });
-    });
-    $(".modal").on("shown.bs.modal", function(e) {
-      $(':input','#new_adjustment').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
-      $('form[data-validate]').enableClientSideValidations();
-      $("#adjustment_user_date").datetimepicker({
-        theme: "dark"
-      }); 
-    });
-    $(':input','#new-adjustment-form')
-    .not(':button, :submit, :reset, :hidden')
-    .val('')
-  });
-</script>
