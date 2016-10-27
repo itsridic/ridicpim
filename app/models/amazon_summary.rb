@@ -539,7 +539,7 @@ class AmazonSummary
     receipt = SalesReceipt.create!(contact_id: amazon_customer.id, payment_id: payment_method.id, user_date: user_date, location_id: current_account.settings(:default_location_for_amazon).val.to_i)
 
     sales_receipt_methods = [:total_tax, :shipping_total, :total_promotion_shipping, :shipping_tax, :gift_wrap, 
-                             :gift_wrap_tax, :balance_adjustment, :storage_renewal_billing, :fba_transportation_fee]
+                             :gift_wrap_tax, :balance_adjustment]
 
     self.skus.sort.each do |sku|
       sku_description = Product.find_by(amazon_sku: sku).try(:name) || sku      
@@ -630,8 +630,6 @@ class AmazonSummary
              when "gift_wrap" then "FBAGiftWrap"
              when "gift_wrap_tax" then "GiftWrapTax"
              when "balance_adjustment" then "BalanceAdjustment"
-             when "storage_renewal_billing" then "StorageRenewalBilling"
-             when "fba_transportation_fee" then "FBATransportationFee"
              else m.to_s
              end
       puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> prod: #{prod}"
@@ -657,7 +655,8 @@ class AmazonSummary
                        :warehouse_damage_exception, :warehouse_lost_manual,
                        :fba_customer_return_per_order_fee, :fba_customer_return_per_unit_fee, 
                        :fba_customer_return_weight_based_fee, :gift_wrap_charge_back,
-                       :disposal_fee, :reversal_reimbursement, :cs_error_items, :removal_complete]
+                       :disposal_fee, :reversal_reimbursement, :cs_error_items, :removal_complete,
+                       :storage_renewal_billing, :fba_transportation_fee]
     expense_receipt = ExpenseReceipt.create!(description: description, qbo_account: QboAccount.find_by(qbo_id: current_account.settings(:expense_bank_account).val.to_i))
     account_method = nil
     amount = 0

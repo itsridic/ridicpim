@@ -47,18 +47,6 @@
   setting_name: classify_gift_wrap_tax
   id_field: qbo_id
 -
-  question: What account do you want Amazon 'StorageRenewalBilling' to go to?
-  model: QboAccount
-  display: name
-  setting_name: classify_storage_renweal_billing
-  id_field: qbo_id
--
-  question: What account do you want Amazon 'FBATransportationFee' to go to?
-  model: QboAccount
-  display: name
-  setting_name: classify_fba_transportation_fee
-  id_field: qbo_id
--
   question: What account do you want Amazon 'BalanceAdjustment' to go to?
   model: QboAccount
   display: name
@@ -226,6 +214,18 @@
   display: name
   setting_name: removal_complete
   id_field: qbo_id
+-
+  question: When creating an expense receipt, what account should 'StorageRenewalBilling' to go to?
+  model: QboAccount
+  display: name
+  setting_name: storage_renewal_billing
+  id_field: qbo_id
+-
+  question: When creating an expense receipt, what account should 'FBATransportationFee' to go to?
+  model: QboAccount
+  display: name
+  setting_name: fba_transportation_fee
+  id_field: qbo_id  
 -
   question: What item do you want discounts to go to?
   model: Product

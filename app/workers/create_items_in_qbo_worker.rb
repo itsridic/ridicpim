@@ -68,27 +68,20 @@ class CreateItemsInQboWorker
 
   def classify_income_account(prod)
     if prod == 'Shipping'
-      # Use "Shipping Income" account
       @current_account.settings(:classify_shipping).val
     elsif prod == 'SaleTax'
-      # Use "Sale Tax Payable" account
       @current_account.settings(:classify_sale_tax).val
     elsif prod == 'PromotionShipping'
-      # Use "Promo Rebates on Shipping" account
       @current_account.settings(:classify_promotion_shipping).val
     elsif prod == 'ShippingSalesTax'
-      # Use Sale Tax Payable:FBAShippingTax" account
       @current_account.settings(:classify_shipping_sales_tax).val
     elsif prod == 'FBAgiftwrap'
-      # Use "Services" account
       @current_account.settings(:classify_fba_gift_wrap).val
     elsif prod == 'BalanceAdjustment'
-      # Use "Gross Receipts" account
       @current_account.settings(:classify_balance_adjustment).val
     elsif prod == 'GiftWrapTax'
       @current_account.settings(:classify_gift_wrap_tax).val
     else
-      # Use "Service" account
       @current_account.settings(:classify_unknown).val
     end
   end  
