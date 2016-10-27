@@ -47,6 +47,18 @@
   setting_name: classify_gift_wrap_tax
   id_field: qbo_id
 -
+  question: What account do you want Amazon 'StorageRenewalBilling' to go to?
+  model: QboAccount
+  display: name
+  setting_name: classify_storage_renweal_billing
+  id_field: qbo_id
+-
+  question: What account do you want Amazon 'FBATransportationFee' to go to?
+  model: QboAccount
+  display: name
+  setting_name: classify_fba_transportation_fee
+  id_field: qbo_id
+-
   question: What account do you want Amazon 'BalanceAdjustment' to go to?
   model: QboAccount
   display: name

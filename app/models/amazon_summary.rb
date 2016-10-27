@@ -416,6 +416,17 @@ class AmazonSummary
       .map(&:to_f).inject(:+).to_f.round(2)
   end
 
+  def fba_transportation_fee
+    JsonPath.on(@summary_as_array, "$..ShipmentFees..Fee[?(@.Type=='FBATransportationFee')]..Amount..__content__")
+          .map(&:to_f).inject(:+).to_f.round(2)
+  end
+
+  # Returns a sum of the Fee Type 'StorageRenewalBilling'
+  def storage_renewal_billing
+    JsonPath.on(@summary_as_array, "$..OtherTransaction[?(@.TransactionType=='StorageRenewalBilling')]..Amount..__content__")
+      .map(&:to_f).inject(:+).to_f.round(2)
+  end
+
   def balance_adjustment
     JsonPath.on(@summary_as_array, "$..OtherTransaction[?(@.TransactionType=='BalanceAdjustment')]..Amount..__content__")
       .map(&:to_f).inject(:+).to_f.round(2)
@@ -527,7 +538,9 @@ class AmazonSummary
     # Create Sales Receipt
     receipt = SalesReceipt.create!(contact_id: amazon_customer.id, payment_id: payment_method.id, user_date: user_date, location_id: current_account.settings(:default_location_for_amazon).val.to_i)
 
-    sales_receipt_methods = [:total_tax, :shipping_total, :total_promotion_shipping, :shipping_tax, :gift_wrap, :gift_wrap_tax, :balance_adjustment]
+    sales_receipt_methods = [:total_tax, :shipping_total, :total_promotion_shipping, :shipping_tax, :gift_wrap, 
+                             :gift_wrap_tax, :balance_adjustment, :storage_renewal_billing, :fba_transportation_fee]
+
     self.skus.sort.each do |sku|
       sku_description = Product.find_by(amazon_sku: sku).try(:name) || sku      
       # Find / create Product
@@ -617,6 +630,8 @@ class AmazonSummary
              when "gift_wrap" then "FBAGiftWrap"
              when "gift_wrap_tax" then "GiftWrapTax"
              when "balance_adjustment" then "BalanceAdjustment"
+             when "storage_renewal_billing" then "StorageRenewalBilling"
+             when "fba_transportation_fee" then "FBATransportationFee"
              else m.to_s
              end
       puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> prod: #{prod}"
