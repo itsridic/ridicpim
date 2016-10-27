@@ -3,7 +3,7 @@ class SalesReceiptsController < ApplicationController
   after_action :recalculate_average_cost, only: [:create, :update, :destroy]
 
   def index
-    @sales_receipts = SalesReceipt.order(user_date: :desc).paginate(page: params[:page], per_page: 10).includes(:contact, :location, :sales => :product)
+    @sales_receipts = SalesReceipt.order(user_date: :desc).paginate(page: params[:page], per_page: 10).includes(:contact, :location)
   end
 
   def show

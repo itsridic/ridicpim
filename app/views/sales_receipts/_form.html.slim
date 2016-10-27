@@ -18,7 +18,7 @@
     = f.label :location
     = f.collection_select :location_id, Location.order('name'), :id, :name, { prompt: "Choose Location" }, { class: "form-control", tabindex: 4 }    
   h3 Sale Items
-  p.warning-text Choose Product OR Description (not both)
+  p.warning-text Choose Product and/or Description
   #sale-items
     = f.simple_fields_for :sales, class: "form-inline" do |sale|
       = render 'sale_fields', :f => sale
