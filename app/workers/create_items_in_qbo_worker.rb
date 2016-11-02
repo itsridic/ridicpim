@@ -69,7 +69,7 @@ class CreateItemsInQboWorker
   def classify_income_account(prod)
     if prod == 'Shipping'
       @current_account.settings(:classify_shipping).val
-    elsif prod == 'SaleTax'
+    elsif prod == 'SalesTax'
       @current_account.settings(:classify_sale_tax).val
     elsif prod == 'PromotionShipping'
       @current_account.settings(:classify_promotion_shipping).val
