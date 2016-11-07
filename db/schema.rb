@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161019202027) do
+ActiveRecord::Schema.define(version: 20161107204624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,10 +146,13 @@ ActiveRecord::Schema.define(version: 20161019202027) do
     t.string   "name"
     t.string   "amazon_sku"
     t.decimal  "price"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.integer  "qbo_id"
     t.integer  "inventory_asset_account_id"
+    t.integer  "bundle_quantity",            default: 1
+    t.integer  "bundle_product_id"
+    t.index ["bundle_product_id"], name: "index_products_on_bundle_product_id", using: :btree
   end
 
   create_table "qbo_accounts", force: :cascade do |t|

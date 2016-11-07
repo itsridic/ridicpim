@@ -16,3 +16,18 @@
           tr
             td = @product.amazon_sku
             td = number_to_currency(@product.price)
+
+  - if @product.bundle?
+    p
+    .card
+      .card-header.unique-color.white-text Bundle Options
+      .card-block
+        table.table
+          thead
+            th Bundle Quantity
+            th Bundle Product
+            th
+          tbody
+            tr
+              td = @product.bundle_quantity
+              td = link_to @product.bundle_product.name, product_path(@product.bundle_product)

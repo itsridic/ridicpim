@@ -1,6 +1,6 @@
 .col-md-12
   h1 Products
-  = link_to "New Product", "#new_product", data: { toggle: "modal" }, class: "btn btn-sm btn-primary"
+  = link_to "New Product", "#new_product", data: { toggle: "modal" }, class: "btn btna-sm btn-primary"
   table.table.table-striped
     thead
       th
@@ -15,18 +15,4 @@
     i[class="fa fa-refresh fa-spin" aria-hidden="true"]
     small Retrieving Products from QBO, please wait...
 #new_product.modal.fade
-  = simple_form_for Product.new, remote: true, validate: true do |f|
-    .modal-dialog
-      .modal-content
-        .modal-header
-          button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
-          h4.modal-title
-            | New Product
-        .modal-body
-          .form-inputs
-            = f.input :name, autofocus: true
-            = f.input :amazon_sku
-            = f.input :price
-        .modal-footer
-          button.btn.stylish-color-dark[type="button" data-dismiss="modal"] Close
-          = f.button :submit, class: 'btn unique-color'
+  = render 'product_form', name: "New"

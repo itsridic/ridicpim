@@ -22,6 +22,7 @@ class ProductsController < ApplicationController
 
   def index
     @products = Product.all.order("name")
+    @product = Product.new
   end
 
   def show
@@ -73,7 +74,7 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:name, :amazon_sku, :price)
+    params.require(:product).permit(:name, :amazon_sku, :price, :bundle_quantity, :bundle_product_id)
   end
 
   def set_product

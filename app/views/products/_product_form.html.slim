@@ -1,0 +1,19 @@
+= simple_form_for @product, remote: true, validate: true do |f|
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
+        h4.modal-title
+          | #{name} Product
+      .modal-body
+        .form-inputs
+          = f.input :name, autofocus: true
+          = f.input :amazon_sku
+          = f.input :price
+          hr
+          h4.modal-title Bundle Options
+          = f.input :bundle_quantity
+          = f.association :bundle_product, collection: Product.order(:name), prompt: "Choose a bundle product (optional)"
+      .modal-footer
+        button.btn.stylish-color-dark[type="button" data-dismiss="modal"] Close
+        = f.button :submit, class: 'btn unique-color'

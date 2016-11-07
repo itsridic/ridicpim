@@ -543,6 +543,7 @@ class AmazonSummary
 
     self.skus.sort.each do |sku|
       sku_description = Product.find_by(amazon_sku: sku).try(:name) || sku      
+      qty_multipler = 1 # Used for bundles
       # Find / create Product
       product = Product.find_by(amazon_sku: sku)
 
@@ -550,23 +551,28 @@ class AmazonSummary
         product = Product.create!(name: sku_description, amazon_sku: sku, price: median_order_price(sku))
       end
 
+      if product.bundle?
+        qty_multipler = qty_multipler * product.bundle_quantity
+        product = product.bundle_product
+      end
+
       if has_multiple_prices?(sku)
         prices = unique_prices(sku)
         prices.each do |price|
-          order_qty   = self.order_quantity_by_price(sku, price)
+          order_qty   = self.order_quantity_by_price(sku, price) * qty_multipler
           order_amt   = self.order_amount_by_price(sku, price)
-          order_rate  = (order_amt / order_qty).to_f.round(2) if order_qty != 0
+          order_rate  = (order_amt / order_qty).to_f.round(3) if order_qty != 0
           refund_amt  = self.refund_amount(sku)
           product_price = Product.find_by(amazon_sku: sku).price || 0
           if product_price != 0
-            refund_qty  = (refund_amt / product_price).round
+            refund_qty  = (refund_amt / product_price).round * qty_multipler
           else
             refund_qty = 0
           end
           refund_rate = (refund_amt / refund_qty) if refund_qty != 0
           disc_amt    = self.promotion_amount(sku)
           disc_rate   = self.promotion_rate(sku)
-          disc_qty    = (disc_amt / disc_rate).to_f.round(2) if disc_rate != 0
+          disc_qty    = (disc_amt / disc_rate).to_f.round(3) if disc_rate != 0
           description = sku_description
           if order_qty != 0
             unless receipt.sales.find_by(description: description, quantity: order_qty.to_i, amount: order_amt.to_d, rate: order_rate.to_d, product: product).present?
@@ -585,20 +591,20 @@ class AmazonSummary
           end
         end
       else
-        order_qty   = self.order_quantity(sku)
+        order_qty   = self.order_quantity(sku) * qty_multipler
         order_amt   = self.order_amount(sku)
-        order_rate  = (order_amt / order_qty).to_f.round(2) if order_qty != 0
+        order_rate  = (order_amt / order_qty).to_f.round(3) if order_qty != 0
         refund_amt  = self.refund_amount(sku)
         product_price = Product.find_by(amazon_sku: sku).price || 0
         if product_price != 0
-          refund_qty  = (refund_amt / product_price).round
+          refund_qty  = (refund_amt / product_price).round * qty_multipler
         else
           refund_qty = 0
         end
         refund_rate = (refund_amt / refund_qty) if refund_qty != 0
         disc_amt    = self.promotion_amount(sku)
         disc_rate   = self.promotion_rate(sku)
-        disc_qty    = (disc_amt / disc_rate).to_f.round(2) if disc_rate != 0
+        disc_qty    = (disc_amt / disc_rate).to_f.round(3) if disc_rate != 0
         description = sku_description
         goodwillamt = self.goodwill(sku)
         mfi_amt     = self.missing_from_inbound_amount(sku)

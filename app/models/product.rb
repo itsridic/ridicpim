@@ -1,4 +1,6 @@
 class Product < ApplicationRecord
+  belongs_to :bundle_product, class_name: "Product"
+
   validates :name, presence: true
   validates :amazon_sku, presence: true
   validates :price, presence: true
@@ -54,5 +56,9 @@ class Product < ApplicationRecord
     else
       0
     end
+  end
+
+  def bundle?
+    self.bundle_product.present?
   end
 end
