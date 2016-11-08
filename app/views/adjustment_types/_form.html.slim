@@ -1,13 +1,12 @@
-#edit_adjustment_type.modal.fade
-  = simple_form_for @adjustment_type, remote: true, validate: true do |f|
-    .modal-dialog
-      .modal-content
-        .modal-header
-          button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
-          h4.modal-title Edit Adjustment Type
-        .modal-body
-          .form-inputs
-            = f.input :name, autofocus: true
-        .modal-footer
-          button.btn.stylish-color-dark data-dismiss="modal" type="button"  Close
-          = f.button :submit, class: 'btn unique-color'
+= simple_form_for @adjustment_type, remote: true, validate: true do |f|
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
+        h4.modal-title #{name} Adjustment Type
+      .modal-body
+        .form-inputs
+          = f.input :name, autofocus: true
+      .modal-footer
+        button.btn.stylish-color-dark data-dismiss="modal" type="button"  Close
+        = f.button :submit, class: "btn unique-color"

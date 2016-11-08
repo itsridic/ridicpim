@@ -11,16 +11,4 @@
     tbody#adjustment_types
       = render @adjustment_types
 #new_adjustment_type.modal.fade
-  = simple_form_for AdjustmentType.new, remote: true, validate: true do |f|
-    .modal-dialog
-      .modal-content
-        .modal-header
-          button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
-          h4.modal-title New Adjustment Type
-        .modal-body
-          .form-inputs
-            = f.input :name, autofocus: true
-        .modal-footer
-          button.btn.stylish-color-dark data-dismiss="modal" type="button"  Close
-          = f.button :submit, class: 'btn unique-color'
-
+  = render "form", name: "New"

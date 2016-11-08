@@ -3,6 +3,7 @@ class AdjustmentTypesController < ApplicationController
 
   def index
     @adjustment_types = AdjustmentType.order(:name)
+    @adjustment_type = AdjustmentType.new
   end
 
   def show
