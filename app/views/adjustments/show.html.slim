@@ -1,0 +1,8 @@
+.col-md-10.col-md-offset-1
+  .panel.panel-default
+    .panel-heading
+      h3.panel-title= @adjustment.adjustment_type.name
+    .panel-body
+      p Product: #{@adjustment.product.name}
+      p Adjusted Quantity: #{@adjustment.adjusted_quantity}
+  = link_to "All Adjustments", adjustments_path, class: "btn btn-sm btn-primary"

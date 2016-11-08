@@ -1,0 +1,34 @@
+.col-md-12
+  h1
+    | Adjustments
+    small
+      |  #{link_to "Manage Adjustment Types", adjustment_types_path}
+  = link_to "New Adjustment", "#new_adjustment", data: { toggle: "modal" }, class: "btn btn-sm btn-primary"
+  table.table.table-striped
+    thead
+      th
+      th Product
+      th Adjustment Type
+      th Adjusted Quantity
+      th Location
+    tbody#adjustments
+      = render @adjustments
+  h3 Quick Add
+  = render "new_adjustment_form"
+#new_adjustment.modal.fade
+  = simple_form_for Adjustment.new, remote: true, validate: true do |f|
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
+          h4.modal-title New Adjustment
+        .modal-body
+          .form-inputs
+            = f.input :user_date, as: :string, include_blank: true, autofocus: true, class: "form-control-sm"
+            = f.association :location, collection: Location.order(:name), prompt: "Choose a Location"
+            = f.association :product, collection: Product.order(:name), prompt: "Choose a Product"
+            = f.association :adjustment_type, collection: AdjustmentType.order(:name), prompt: "Choose an Adjustment Type"
+            = f.input :adjusted_quantity
+        .modal-footer
+          button.btn.stylish-color-dark data-dismiss="modal" type="button"  Close
+          = f.button :submit, class: 'btn unique-color'

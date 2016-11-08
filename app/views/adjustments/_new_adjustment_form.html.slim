@@ -1,0 +1,7 @@
+.new-product
+  = simple_form_for(@adjustment, remote: true, html: { class: "form-inline", id: "new-adjustment-form" }) do |f|
+    = f.association :product, collection: Product.all.order(:name), prompt: "Choose a Product", input_html: { class: "form-control choose-product", style: "width: 250px;", tabindex: 1 }, label: false
+    = f.association :adjustment_type, collection: AdjustmentType.all.order(:name), prompt: "Choose Adjustment Type", input_html: { class: "adjustment-type",style: "width: 200px;", tabindex: 2 }, label: false
+    = f.association :location, collection: Location.all.order(:name), prompt: "Choose a Location", input_html: { class: "adjustment-location", style: "width: 200px;", tabindex: 3 }, label: false
+    = f.input :adjusted_quantity, label: false, placeholder: "Adjusted Quantity", input_html: { tabindex: 4 }
+    = f.submit "Submit", class: "btn btn-primary"

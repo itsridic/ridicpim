@@ -1,0 +1,17 @@
+#edit_adjustment.modal.fade
+  = simple_form_for @adjustment, remote: true, validate: true do |f|
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
+          h4.modal-title Edit Adjustment
+        .modal-body
+          .form-inputs
+            = f.input :user_date, as: :string, autofocus: true, input_html: { class: "edit_adjustment_user_date" }
+            = f.association :location, collection: Location.order(:name), prompt: "Choose a Location"
+            = f.association :product
+            = f.association :adjustment_type
+            = f.input :adjusted_quantity
+        .modal-footer
+          button.btn.stylish-color-dark data-dismiss="modal" type="button"  Close
+          = f.button :submit, class: 'btn unique-color'
