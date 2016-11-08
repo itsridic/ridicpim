@@ -1,0 +1,6 @@
+.col-md-3.col-xs-6
+  .card
+    .card-header.unique-color.white-text #{title}
+    .card-block
+      = link_to link, class: "btn unique-color" do
+        = fa_icon icon, text: body ||= title

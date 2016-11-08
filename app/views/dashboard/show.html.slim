@@ -3,87 +3,16 @@
   script[type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"]
   script intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '#{authenticate_quick_books_url}'});
 p
-.col-md-3.col-xs-6
-  .card
-    .card-header.unique-color.white-text Products
-    .card-block
-      = link_to products_path, class: "btn unique-color" do
-        = fa_icon "barcode", text: "Products"
-.col-md-3.col-xs-6
-  .card
-    .card-header.unique-color.white-text Contacts
-    .card-block
-      = link_to contacts_path, class: "btn unique-color" do
-        = fa_icon "users", text: "Contacts"
-.col-md-3.col-xs-6
-  .card
-    .card-header.unique-color.white-text Orders
-    .card-block
-      = link_to orders_path, class: "btn unique-color" do
-        = fa_icon "book", text: "Orders"
-.col-md-3.col-xs-6
-  .card
-    .card-header.unique-color.white-text Payments
-    .card-block
-      = link_to payments_path, class: "btn unique-color" do
-        = fa_icon "money", text: "Payments"
-.col-md-3.col-xs-6
-  .card
-    .card-header.unique-color.white-text Sales
-    .card-block
-      = link_to sales_receipts_path, class: "btn unique-color" do
-        = fa_icon "shopping-cart", text: "Sales"
-.col-md-3.col-xs-6
-  .card
-    .card-header.unique-color.white-text Adjustments
-    .card-block
-      = link_to adjustments_path, class: "btn unique-color" do
-        = fa_icon "balance-scale", text: "Adjustments"
-.col-md-3.col-xs-6
-  .card
-    .card-header.unique-color.white-text Credentials
-    .card-block
-      = link_to credentials_path, class: "btn unique-color" do
-        = fa_icon "key", text: "Credentials"
-.col-md-3.col-xs-6
-  .card
-    .card-header.unique-color.white-text Inventory
-    .card-block
-      = link_to inventory_index_path, class: "btn unique-color" do
-        = fa_icon "dashboard", text: "Inventory"
-.col-md-3.col-xs-6
-  .card
-    .card-header.unique-color.white-text QBO Accounts
-    .card-block
-      = link_to qbo_accounts_path, class: "btn unique-color" do
-        = fa_icon "calculator", text: "QBO Accounts"
-.col-md-3.col-xs-6
-  .card
-    .card-header.unique-color.white-text Expenses
-    .card-block
-      = link_to expense_receipts_path, class: "btn unique-color" do
-        = fa_icon "credit-card", text: "Expenses"
-.col-md-3.col-xs-6
-  .card
-    .card-header.unique-color.white-text Amazon Statements
-    .card-block
-      = link_to amazon_statements_path, class: "btn unique-color" do
-        = fa_icon "file-text-o", text: "Statements"
-.col-md-3.col-xs-6
-  .card
-    .card-header.unique-color.white-text Settings
-    .card-block
-      = link_to settings_path, class: "btn unique-color" do
-        = fa_icon "cogs", text: "Settings"
-.col-md-3.col-xs-6
-  .card
-    .card-header.unique-color.white-text Locations
-    .card-block
-      = link_to locations_path, class: "btn unique-color" do
-        = fa_icon "university", text: "Locations"
-.col-md-3.col-xs-6
-  .card
-    .card-header.unique-color.white-text Transfers
-    .card-block
-      = link_to transfers_path, class: "btn unique-color" do
-        = fa_icon "exchange", text: "Transfers"        
+= render "card", title: "Products", link: products_path, icon: "barcode"
+= render "card", title: "Contacts", link: contacts_path, icon: "users"
+= render "card", title: "Orders", link: orders_path, icon: "book"
+= render "card", title: "Payments", link: payments_path, icon: "money"
+= render "card", title: "Adjustments", link: adjustments_path, icon: "balance-scale"
+= render "card", title: "Credentials", link: credentials_path, icon: "key"
+= render "card", title: "Inventory", link: inventory_index_path, icon: "dashboard"
+= render "card", title: "QBO Accounts", link: qbo_accounts_path, icon: "calculator"
+= render "card", title: "Expenses", link: expense_receipts_path, icon: "credit-card"
+= render "card", title: "Amazon Statements", body: "Statements", link: amazon_statements_path, icon: "file-text-o"
+= render "card", title: "Settings", link: settings_path, icon: "cogs"
+= render "card", title: "Locations", link: locations_path, icon: "university"
+= render "card", title: "Transfers", link: transfers_path, icon: "exchange"
