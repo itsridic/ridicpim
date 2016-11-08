@@ -1,0 +1,19 @@
+= simple_form_for contact, remote: true, validate: true do |f|
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
+        h4.modal-title #{name} Contact
+      .modal-body
+        .form-inputs
+          = f.input :name, autofocus: true
+          = f.input :address
+          = f.input :city
+          = f.input :state
+          = f.input :postal_code
+          = f.input :country, selected: ["US"]
+          = f.input :email_address
+          = f.input :phone_number
+      .modal-footer
+        button.btn.stylish-color-dark data-dismiss="modal" type="button"  Close
+        = f.button :submit, class: "btn unique-color"
