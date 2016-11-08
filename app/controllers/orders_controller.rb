@@ -10,6 +10,7 @@ class OrdersController < ApplicationController
 
   def new
     @order = Order.new
+    @product = Product.new
   end
 
   def edit
