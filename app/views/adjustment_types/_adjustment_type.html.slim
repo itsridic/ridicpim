@@ -1,0 +1,6 @@
+tr id="#{adjustment_type.id}" 
+  td
+    => link_to fa_icon("search"), adjustment_type
+    => link_to fa_icon("pencil"), edit_adjustment_type_path(adjustment_type), remote: true
+    => link_to fa_icon("trash" ), adjustment_type, method: :delete, data: { confirm: "Are you sure?" }, remote: true
+  td= adjustment_type.name

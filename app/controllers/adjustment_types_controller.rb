@@ -2,7 +2,7 @@ class AdjustmentTypesController < ApplicationController
   before_action :set_adjustment_type, only: [:show, :edit, :update, :destroy]
 
   def index
-    @adjustment_types = AdjustmentType.all
+    @adjustment_types = AdjustmentType.order(:name)
   end
 
   def show
