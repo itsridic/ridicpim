@@ -1,4 +1,4 @@
-= simple_form_for @product, remote: true, validate: true do |f|
+= simple_form_for @product ||= Product.new, remote: true, validate: true do |f|
   .modal-dialog
     .modal-content
       .modal-header
