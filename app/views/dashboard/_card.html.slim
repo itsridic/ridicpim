@@ -2,5 +2,5 @@
   .card
     .card-header.unique-color.white-text #{title}
     .card-block
-      = link_to link, class: "btn unique-color" do
+      = link_to link, class: "btn unique-color", id: button_id do
         = fa_icon icon, text: body ||= title
