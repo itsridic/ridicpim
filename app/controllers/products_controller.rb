@@ -10,6 +10,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
+        create_update_product_in_qbo(@product)
         format.html { redirect_to @product, flash: { success: 'Product was successfully created.' } }
         format.js {}
         format.json { render :show, status: :created, location: @product }
@@ -34,6 +35,7 @@ class ProductsController < ApplicationController
   def update
     respond_to do |format|
       if @product.update(product_params)
+        create_update_product_in_qbo(@product)
         format.html { redirect_to products_path, flash: { success: 'Product was successfully updated.' } }
         format.js {}
         format.json { render :show, status: :ok, location: @product }
@@ -65,6 +67,9 @@ class ProductsController < ApplicationController
         product_sku = product_name if product_sku.blank?
         if Product.where(amazon_sku: product_sku).count == 0
           Product.create!(name: product_name, amazon_sku: product_sku, price: product_price, qbo_id: product.id)
+        else
+          pr = Product.find_by(amazon_sku: product_sku)
+          pr.update(qbo_id: product.id) if pr
         end
       end
     end
@@ -74,10 +79,22 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:name, :amazon_sku, :price, :bundle_quantity, :bundle_product_id)
+    params.require(:product).permit(:name, :amazon_sku, :price, :qbo_id, :bundle_quantity, :bundle_product_id)
   end
 
   def set_product
     @product = Product.find(params[:id])
+  end
+
+  def create_update_product_in_qbo(product)
+    qbo_rails = QboRails.new(QboConfig.last, :item)
+    item = qbo_rails.base.qr_model(:item)
+    item.income_account_id = current_account.settings(:sales_receipt_income_account).val
+    item.type = "NonInventory"
+    item.name = product.amazon_sku
+    item.description = product.name
+    item.unit_price = product.price
+    item.sku = product.amazon_sku
+    qbo_rails.create_or_update(product, item)
   end
 end

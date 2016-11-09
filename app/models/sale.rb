@@ -20,9 +20,7 @@ class Sale < ApplicationRecord
   end
 
   def set_rate
-    if self.rate.blank?
-      self.update_column(:rate, amount.to_f / quantity.to_f)
-    end
+    self.update_column(:rate, amount.to_f / quantity.to_f)
   end
 
   def create_inventory_movement
