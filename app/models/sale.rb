@@ -32,7 +32,7 @@ class Sale < ApplicationRecord
       unless prod.nil?
         loc = self.sales_receipt.location
         qty = self.quantity * -1
-        inventory_movement.update(location: loc, product: prod, quantity: qty, movement_type: "SALE")
+        inventory_movement.update(location: loc, product: prod, quantity: qty, movement_type: "SALE", reference_id: self.id)
       end
     else
       prod = self.product

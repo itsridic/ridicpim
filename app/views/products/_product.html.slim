@@ -1,7 +1,7 @@
 <tr id="#{product.id}">
   td
     => link_to fa_icon("search"), product
-    => link_to fa_icon("pencil"), edit_product_path(product), remote: true
+    => link_to fa_icon("pencil"), edit_product_path(product), remote: true, id: "edit_product_#{product.id}"
     => link_to fa_icon("trash" ), product, method: :delete, data: { confirm: "Are you sure?" }, remote: true
   td = truncate(product.name, length: 55, separator: ' ')
   td = truncate(product.amazon_sku, length: 35, separator: ' ')

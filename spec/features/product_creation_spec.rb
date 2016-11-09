@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'user creates product' do
+feature 'product CRUD' do
   let(:user) { build(:user) }
   let(:account) { create(:account_with_schema, owner: user) }
 
@@ -8,18 +8,24 @@ feature 'user creates product' do
     set_host("lvh.me:31234")
   end
 
-  scenario 'successfully', :js do
-    product = build_stubbed(:product, name: 'Test Product', amazon_sku: 'test_sku', price: 9.99)
+  scenario 'creation', :js do
     sign_user_in(user, subdomain: account.subdomain)
     click_on 'Products'
     click_on 'New Product'
-    fill_in 'product[name]', with: product.name
-    fill_in 'product[amazon_sku]', with: product.amazon_sku
-    fill_in 'product[price]', with: product.price
+    fill_in 'product[name]', with: "Test Product"
+    fill_in 'product[amazon_sku]', with: "test_sku"
+    fill_in 'product[price]', with: 9.99
     click_on 'Create Product'
     
     expect(page).to have_content('Test Product')
   end
+
+  # scenario 'update', :js do
+  #   sign_user_in(user, subdomain: account.subdomain)
+  #   product = create(:product, name: "XXX")
+  #   click_link('products')
+  # end
+
 end
 
 def set_host(host)

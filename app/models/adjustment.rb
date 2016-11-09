@@ -24,12 +24,12 @@ class Adjustment < ApplicationRecord
       loc = self.location
       prod = self.product
       qty = self.adjusted_quantity
-      inventory_movement.update(location: loc, product: prod, quantity: qty, movement_type: "ADJUSTMENT")
+      inventory_movement.update(location: loc, product: prod, quantity: qty, movement_type: "ADJUSTMENT", reference_id: self.id)
     else
       loc = self.location
       prod = self.product
       qty = self.adjusted_quantity
-      InventoryMovement.create!(location: loc, product: prod, quantity: qty, movement_type: "ADJUSTMENT")      
+      InventoryMovement.create!(location: loc, product: prod, quantity: qty, movement_type: "ADJUSTMENT", reference_id: self.id)
     end
   end
 
