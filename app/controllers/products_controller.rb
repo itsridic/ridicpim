@@ -10,7 +10,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        create_update_product_in_qbo(@product)
+        create_update_product_in_qbo(@product) if QboConfig.exists?
         format.html { redirect_to @product, flash: { success: 'Product was successfully created.' } }
         format.js {}
         format.json { render :show, status: :created, location: @product }
@@ -35,7 +35,7 @@ class ProductsController < ApplicationController
   def update
     respond_to do |format|
       if @product.update(product_params)
-        create_update_product_in_qbo(@product)
+        create_update_product_in_qbo(@product) if QboConfig.exists?
         format.html { redirect_to products_path, flash: { success: 'Product was successfully updated.' } }
         format.js {}
         format.json { render :show, status: :ok, location: @product }
