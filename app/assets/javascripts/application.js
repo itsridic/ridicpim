@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require tether
 //= require bootstrap-sprockets
+//= require gritter
 //= require mdb/mdb
 //= require local_time
 //= require cocoon

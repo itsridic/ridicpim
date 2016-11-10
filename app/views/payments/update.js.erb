@@ -2,3 +2,4 @@ $('.modal').each(function(index, element) {
   $(element).modal('hide');
 });
 $('#<%= @payment.id %>').replaceWith('<%= j render @payment %>');
+<%= add_gritter("Payment was successfully updated.", title: "Retail Merge", sticky: false, image: :success) %>

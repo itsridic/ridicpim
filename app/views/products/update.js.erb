@@ -2,3 +2,4 @@ $('.modal').each(function(index, element) {
   $(element).modal('hide');
 });
 $('#<%= @product.id %>').replaceWith('<%= j render @product %>');
+<%= add_gritter("Product was successfully updated.", title: "Retail Merge", sticky: false, image: :success) %>

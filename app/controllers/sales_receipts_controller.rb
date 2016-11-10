@@ -53,7 +53,7 @@ class SalesReceiptsController < ApplicationController
 
     @sales_receipt.destroy
     respond_to do |format|
-      format.html { redirect_to sales_receipts_path, alert: 'Sales Receipt was successfully destroyed.' }
+      format.html { redirect_to sales_receipts_path, error: 'Sales Receipt was successfully deleted.' }
       format.js   {}
       format.json { head :no_content }
     end

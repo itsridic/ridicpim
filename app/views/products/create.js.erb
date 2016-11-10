@@ -11,3 +11,4 @@ $tbody.find('tr').sort(function(a,b){
 $(".order-product").prepend($("<option>", { value: "<%= @product.id %>", text: "<%= @product.name %>" }));
 $(".order-product").last().val("<%= @product.name %>");
 $("#new_product").modal("hide");
+<%= add_gritter("Product was successfully created.", title: "Retail Merge", sticky: false, image: :success) %>

@@ -1,11 +1,8 @@
 = simple_form_for(@sales_receipt) do |f|
   - if @sales_receipt.errors.any?
-    = f.error_notification
-    .container
-      .error
-        ul
-        - @sales_receipt.errors.full_messages.each do |error|
-          li = error
+    - @sales_receipt.errors.full_messages.each do |error|
+      = js add_gritter(error, title: "Retail Merge", sticky: false, image: :error)
+
   = link_to "Add Date", "#", id: "adduserdate"
   = f.input :user_date, as: :text, include_blank: true, input_html: { tabindex: 1 }
   .form-group
