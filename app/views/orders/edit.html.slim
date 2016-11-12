@@ -4,3 +4,6 @@
       h1 Edit Order
       = render "form", order: @order
       = link_to "Back", orders_path
+
+#new_product.modal.fade
+  = render 'products/product_form', name: "New"      

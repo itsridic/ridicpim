@@ -19,14 +19,14 @@
           = link_to_remove_association(fa_icon("times lg"), f, class: "btn btn-sm cw-red", style: "margin-top: 0.5%;")
 javascript:
   $(document).ready(function() {
-    if ( $("this option[value=9999]").length == 0 ) {
-      $(".order-product").prepend($("<option>", { value: 9999, text:"Add Product..." })); 
+    if ( $("this option[value=-1]").length == 0 ) {
+      $(".order-product").prepend($("<option>", { value: -1, text:"Add Product..." })); 
       $(".order-product option").each(function(){
         $(this).siblings("[value='"+ this.value+"']").remove();
       });
     }
     $(".order-product").change(function(){ 
-      if($(this).val() == 9999) {
+      if($(this).val() == -1) {
         $('#new_product').modal('show'); 
       }
     });
