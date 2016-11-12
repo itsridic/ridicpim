@@ -1,5 +1,5 @@
 // Sales Receipts New
-$(".sales_receipts.new").ready(function() {
+$(".sales_receipts.new, .sales_receipts.edit").ready(function() {
   $(".add_fields").click();
   $(".choose-product").select2();
   $(document).on('change', '.choose-product', function() {
