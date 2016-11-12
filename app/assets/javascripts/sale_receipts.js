@@ -1,5 +1,5 @@
 // Sales Receipts New
-$(".sales_receipts.new, .sales_receipts.edit").ready(function() {
+$(".sales_receipts.new, .sales_receipts.edit, .sales_receipts.create").ready(function() {
   $(".add_fields").click();
   $(".choose-product").select2();
   $(document).on('change', '.choose-product', function() {
@@ -23,7 +23,7 @@ $(".sales_receipts.new, .sales_receipts.edit").ready(function() {
   })
 });
 // Sales Receipts _form
-$(".sales_receipts.new, .sales_receipts.edit").ready(function() { 
+$(".sales_receipts.new, .sales_receipts.edit, .sales_receipts.create").ready(function() { 
   function toggleDate() { 
     $(".sales_receipt_user_date").toggle(); 
     if ($("#adduserdate").text() == "Add Date") { 
