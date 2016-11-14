@@ -83,6 +83,19 @@ class SalesReceiptsController < ApplicationController
     end
   end
 
+  def add_existing_product_to_qbo(product)
+    qbo_rails = QboRails.new(QboConfig.last, :sales_receipt)
+    qbo_rails_item = QboRails.new(QboConfig.last, :item)
+    qb_item = qbo_rails.base.qr_model(:item)
+    qb_item.income_account_id = current_account.settings(:sales_receipt_income_account).val
+    qb_item.type = "NonInventory"
+    qb_item.name = product.name
+    qb_item.description = product.name
+    qb_item.unit_price = product.price
+    qb_item.sku = product.amazon_sku
+    qbo_rails_item.create_or_update(product, qb_item)
+  end
+
   def create_update_sales_receipt_in_qbo(sales_receipt)
     qbo_rails = QboRails.new(QboConfig.last, :sales_receipt)
     qbo_receipt = qbo_rails.base.qr_model(:sales_receipt)
@@ -94,6 +107,11 @@ class SalesReceiptsController < ApplicationController
     qbo_receipt.payment_ref_number = date_time
 
     sales_receipt.sales.each do |sale|
+
+      if sale.product and sale.product.qbo_id.nil?
+        add_existing_product_to_qbo(sale.product)
+      end
+
       line_item = qbo_rails.base.qr_model(:line)
       line_item.amount = sale.amount.to_f
       line_item.description = sale.description
