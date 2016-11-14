@@ -5,7 +5,7 @@
         .form-group
           = f.label :product
           = f.collection_select :product_id, Product.all.order("name"), :id, :name, { include_blank: "Choose a Product!..." }, { class: "form-control validate choose-product" }
-      .col-md-3.sale-description
+      .col-md-2.sale-description
         .form-group
           = f.label :description
           = f.text_field :description
@@ -15,9 +15,22 @@
           = f.number_field :quantity, class: "form-control-sm sale-quantity"
       .col-md-2
         .form-group
-          = f.label :amount
-          = f.number_field :amount, class: "form-control-sm"
+          = label_tag 'Unit Price'
+          = number_field_tag 'Unit Price', nil, onblur: "computeAmount( $(this).parent().parent() );", class: "unit-price"
       .col-md-2
+        .form-group
+          = f.label :amount
+          = f.number_field :amount, class: "form-control-sm sale-amount"
+      .col-md-1
         .form-group
           p
           = link_to_remove_association(fa_icon("times lg"), f, class: "btn btn-sm cw-red", style: "margin-top: 0.5%;")
+
+javascript:
+  function computeAmount(current_row) {
+    var test = current_row[0].parentElement;
+    var quantity = $(test).find(".sale-quantity").val();
+    var unitPrice = $(test).find(".unit-price").val();
+    $(test).find(".sale-amount").val(quantity * unitPrice);
+    //$(".sale-amount").eq(-2).val(quantity * unit_price)
+  }

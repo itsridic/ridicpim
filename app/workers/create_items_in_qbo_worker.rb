@@ -51,7 +51,10 @@ class CreateItemsInQboWorker
           item.description = prod
           item.unit_price = sale.rate
           begin
-            created_item = qbo_rails.create(:item)
+            created_item = qbo_rails.create(item)
+            p created_item
+            sale.qbo_id = created_item.id
+            sale.save
           rescue Exception => e
             puts "**************** QBO ERROR 2 *******************"
             p e
