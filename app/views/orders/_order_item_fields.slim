@@ -1,6 +1,6 @@
 .container
   .nested-fields
-    .row
+    .row.order-row
       .col-md-2
         .form-group
           = f.label :quantity
@@ -8,26 +8,58 @@
       .col-md-2
         .form-group
           = f.label :cost
-          = f.number_field :cost, class: "form-control-sm"
-      .col-md-6
+          = f.number_field :cost, class: "form-control-sm order-cost"
+      .col-md-5
         .form-group
           = f.label :product
           = f.collection_select :product_id, Product.all.order("name"), :id, :name, { prompt: "Choose a Product..." }, { class: "form-control order-product" }
+      .col-md-1
+        .form-group
+          br
+          span $
+          span.subtotal
       .col-md-2
         .form-group
           br
-          = link_to_remove_association(fa_icon("times lg"), f, class: "btn btn-sm cw-red", style: "margin-top: 0.5%;")
+          = link_to_remove_association(fa_icon("times lg"), f, class: "btn btn-sm cw-red remove-association", style: "margin-top: 0.5%;")
 javascript:
   $(document).ready(function() {
+    function calculateSubtotal() {
+      var currentRow = $(this).closest(".row")[0];
+      var currentQuantity = $(currentRow).find(".order-cost").val();
+      var currentCost = $(currentRow).find(".order-quantity").val();
+      if( (currentQuantity === undefined) || (currentCost === undefined)) {
+        return;
+      }
+      var subtotal = currentQuantity * currentCost;
+      $(currentRow).find(".subtotal").text(subtotal);
+      calculateTotal();
+    }
+    function calculateTotal() {
+      setTimeout(function() {
+        var total = 0;
+        $(".order-row").each(function() {
+          var quantity = $(this).find(".order-quantity").val();
+          var cost = $(this).find(".order-cost").val();
+          console.log(quantity);
+          console.log(cost);
+          total += (quantity * cost);
+          console.log("Total: " + total);
+        });
+        $("#total").text(total);
+      }, 100);
+    }
+    $(".order-cost, .order-quantity").on("change", calculateSubtotal);
+    $(".remove-association").on("click", calculateTotal);
     if ( $("this option[value=-1]").length == 0 ) {
-      $(".order-product").prepend($("<option>", { value: -1, text:"Add Product..." })); 
+      $(".order-product").prepend($("<option>", { value: -1, text:"Add Product..." }));
       $(".order-product option").each(function(){
         $(this).siblings("[value='"+ this.value+"']").remove();
       });
     }
-    $(".order-product").change(function(){ 
+    $(".order-product").change(function(){
       if($(this).val() == -1) {
-        $('#new_product').modal('show'); 
+        $('#new_product').modal('show');
       }
     });
   })

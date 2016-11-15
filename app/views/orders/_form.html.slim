@@ -14,10 +14,24 @@
   .contactSelectAdd.form-group[style="display: none;"]
     a#cancel-contact[style="color:black" href="javascript:cancelContact()"] Cancel
     input#order_contact_name[placeholder="Enter name" type="text" name="order[contact_name]"]
-  h3 Order Items
+  div
+    h3
+      | Order Items
+      small
+        |  $
+        span#total 0
   #order-items
     = f.simple_fields_for :order_items do |oi|
       = render 'order_item_fields', :f => oi
     .links[style="margin-top: 1%; margin-bottom: 1%;"]
       = link_to_add_association(fa_icon('plus lg', text: 'add item'), f, :order_items, class: "btn teal")
+  #calculated-costs
+    .row
+      .col-md-2
   = f.submit 'Save', class: "btn unique-color"
+javascript:
+  $("#subtotal-calculate").on("click", function(e) {
+    e.preventDefault();
+    var subtotalAmount = $("#subtotal-amount").val();
+
+  });
