@@ -49,7 +49,7 @@ javascript:
         $("#total").text(total);
       }, 100);
     }
-    $(".order-cost, .order-quantity").on("change", calculateSubtotal);
+    $(".order-cost, .order-quantity").on("input", calculateSubtotal);
     $(".remove-association").on("click", calculateTotal);
     if ( $("this option[value=-1]").length == 0 ) {
       $(".order-product").prepend($("<option>", { value: -1, text:"Add Product..." }));
