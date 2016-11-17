@@ -28,10 +28,18 @@
   #calculated-costs
     .row
       .col-md-2
+        = label_tag("Shipping/Fees")
+        = number_field_tag("Shipping", 0, id: "shipping-total")
+        = link_to "Recalculate", "#", class: "btn btn-success", id: "calculate-shipping"
+      .col-md-2
+        = label_tag("Discounts")
+        = number_field_tag("Discount", 0, id: "discount-total")
+        = link_to "Recalculate", "#", class: "btn btn-success", id: "calculate-discount"
   = f.submit 'Save', class: "btn unique-color"
+h4.calculated-heading Calculated Amounts:
+ul.calculated-amounts
 javascript:
-  $("#subtotal-calculate").on("click", function(e) {
-    e.preventDefault();
-    var subtotalAmount = $("#subtotal-amount").val();
-
-  });
+  console.log($(".calculated-amounts").size());
+  if ( $(".calculated-amounts").size() < 2 )  {
+    $(".calculated-heading").hide();
+  }

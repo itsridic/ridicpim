@@ -17,40 +17,107 @@
         .form-group
           br
           span $
-          span.subtotal
+          span.unitprice
       .col-md-2
         .form-group
           br
           = link_to_remove_association(fa_icon("times lg"), f, class: "btn btn-sm cw-red remove-association", style: "margin-top: 0.5%;")
 javascript:
   $(document).ready(function() {
-    function calculateSubtotal() {
+    function calculateDiscount(e) {
+      e.preventDefault();
+      $(".calculated-heading").show();
+      $(".calculated-amounts").append("<li>-$" + $("#discount-total").val() + "</li>");
+      var discountTotal = Number($("#discount-total").val());
+      var orderTotal = Number($("#total").text());
+      var orderWithDiscount = orderTotal - discountTotal;
+      var totalQty = totalQuantity();
+      var costPercent = orderWithDiscount / orderTotal;
+      setTimeout(function() {
+        $(".order-row").each(function() {
+          var quantity = Number($(this).find(".order-quantity").val());
+          var cost = Number($(this).find(".order-cost").val());
+          var updatedCost = cost * costPercent;
+          if ( (quantity == 0) || (cost == 0) ) {
+            return;
+          }
+          $(this).find(".order-cost").val(updatedCost);
+          $(this).find(".unitprice").text(updatedCost / quantity);
+        });
+      }, 100);
+      $("#discount-total").val(0);
+      $("#total").text(orderWithDiscount);
+    }
+
+    function calculateUnitPrice() {
       var currentRow = $(this).closest(".row")[0];
-      var currentQuantity = $(currentRow).find(".order-cost").val();
-      var currentCost = $(currentRow).find(".order-quantity").val();
+      var currentQuantity = $(currentRow).find(".order-quantity").val();
+      var currentCost = $(currentRow).find(".order-cost").val();
       if( (currentQuantity === undefined) || (currentCost === undefined)) {
         return;
       }
-      var subtotal = currentQuantity * currentCost;
-      $(currentRow).find(".subtotal").text(subtotal);
+      var unitprice = currentCost / currentQuantity;
+      $(currentRow).find(".unitprice").text(unitprice);
       calculateTotal();
     }
+
     function calculateTotal() {
       setTimeout(function() {
-        var total = 0;
+        var total = Number($("#shipping-total").val());
         $(".order-row").each(function() {
+          var unitprice = Number($(this).find(".unitprice").text());
           var quantity = $(this).find(".order-quantity").val();
-          var cost = $(this).find(".order-cost").val();
-          console.log(quantity);
-          console.log(cost);
-          total += (quantity * cost);
-          console.log("Total: " + total);
+          total += (quantity * unitprice);
         });
         $("#total").text(total);
       }, 100);
     }
-    $(".order-cost, .order-quantity").on("input", calculateSubtotal);
+
+    function totalQuantity() {
+      var quantity = 0
+      $(".order-row").each(function() {
+        var qty = Number($(this).find(".order-quantity").val());
+        quantity = quantity + qty;
+      });
+      return quantity;
+    }
+
+    function calculateShipping(e) {
+      e.preventDefault();
+      $(".calculated-heading").show();
+      $(".calculated-amounts").append("<li>$" + $("#shipping-total").val() + "</li>");
+      var totalQty = totalQuantity();
+      var shipping = parseFloat($("#shipping-total").val());
+      console.log("shipping = " + shipping);
+      var addedCost = shipping / totalQty;
+      setTimeout(function() {
+        $(".order-row").each(function() {
+          var quantity = parseFloat($(this).find(".order-quantity").val());
+          var cost = parseFloat($(this).find(".order-cost").val());
+          console.log("quantity = " + quantity);
+          console.log("cost = " + cost);
+          if ( isNaN(quantity ) || isNaN(cost) ) {
+            return;
+          }
+          var unitprice = parseFloat($(this).find(".unitprice").text());
+          var totalCost = parseFloat(cost) + parseFloat(addedCost);
+          var newUnitPrice = unitprice + addedCost;
+          var newCost = newUnitPrice * quantity;
+          $(this).find(".order-cost").val(newCost);
+          $(this).find(".unitprice").text(unitprice + addedCost);
+        });
+          $("#shipping-total").val(0);
+      }, 100);
+    }
+
+    $(".order-cost, .order-quantity").on("input", calculateUnitPrice);
     $(".remove-association").on("click", calculateTotal);
+    $("#shipping-total").on("input", calculateTotal);
+    $("#calculate-shipping").unbind("click");
+    $("#calculate-shipping").on("click", calculateShipping);
+    $("#calculate-discount").unbind("click");
+    $("#calculate-discount").on("click", calculateDiscount);
+
     if ( $("this option[value=-1]").length == 0 ) {
       $(".order-product").prepend($("<option>", { value: -1, text:"Add Product..." }));
       $(".order-product option").each(function(){
