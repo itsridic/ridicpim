@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
       aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
       auth_token: Credential.last.auth_token
     )
-  end 
+  end
 
   protected
 
@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
 
   def set_mailer_host
     subdomain = current_account ? "#{current_account.subdomain}." : ""
-    ActionMailer::Base.default_url_options[:host] = "#{subdomain}lvh.me:3000"
+    ActionMailer::Base.default_url_options[:host] = "#{subdomain}retailmerge.com"
   end
 
   def after_sign_out_path_for(resource_or_scope)
