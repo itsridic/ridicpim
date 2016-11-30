@@ -24,6 +24,7 @@ class AccountsController < ApplicationController
         )
         subscription = Stripe::Subscription.create(
           customer: customer.id,
+          trial_period_days: @plan.trial_period_days,
           plan: @plan.stripe_id
         )
         Apartment::Tenant.create(@account.subdomain)
