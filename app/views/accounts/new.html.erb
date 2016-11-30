@@ -1,10 +1,14 @@
 <div class="col-md-6 offset-md-3 account">
-	<div class="account">
-		<h2>Create an Account</h2>
-
-		<%= simple_form_for @account do |f| %>
-			<%= f.fields_for :owner do |o| %>
-				<%= o.input :name %>
+  <div class="account">
+    <h2>Create an Account</h2>
+    <% if flash[:error].present? %>
+      <div id="error_explanation">
+        <p><%= flash[:error] %></p>
+      </div>
+    <% end %>
+    <%= simple_form_for @account do |f| %>
+      <%= f.fields_for :owner do |o| %>
+        <%= o.input :name %>
 				<%= o.input :email %>
 				<%= o.input :password %>
 				<%= o.input :password_confirmation %>
@@ -15,8 +19,12 @@
 					<%= f.input_field :subdomain, class: 'form-control-sm' %>
 					<span class="input-group-addon">.retailmerge.com</span>
 				</div>
-			<% end %>
-			<%= f.button :submit, class: 'btn btn-primary' %>
+      <% end %>
+      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                                            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                                                            data-description="<%= @plan.name %>"
+                                                            data-amount="<%= @plan.price %>"
+                                                            data-locale="auto"></script>
 		<% end %>
 	</div>
 </div>

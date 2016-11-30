@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   before_action :load_schema, :authenticate_user!, :set_mailer_host
   before_action :configure_permitted_parameters, if: :devise_controller?
-  #before_action :set_quickbooks_base_config
+  before_action :check_active_status, unless: :devise_controller?
 
   def set_client
     MWS::Reports::Client.new(
@@ -52,11 +52,9 @@ class ApplicationController < ActionController::Base
     users_path
   end
 
-  # def set_quickbooks_base_config
-  #   Quickbooks::Base.configure do |c|
-  #     c.persistent_token = 'token'
-  #     c.persistent_secret = 'secret'
-  #     c.persistent_company_id = 'realm_id'
-  #   end
-  # end
+  def check_active_status
+    if current_account.inactive?
+      redirect_to inactive_accounts_path, notice: "This account has been cancelled"
+    end
+  end
 end

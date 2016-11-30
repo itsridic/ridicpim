@@ -1,0 +1,19 @@
+<div class="container">
+  <h1>Account Information</h1>
+  <div>
+    <h2>Plan information</h2>
+    <table class="table">
+      <thead>
+        <th>Plan Name</th>
+        <th>Monthly Charge</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= @plan.name %></td>
+          <td><%= number_to_currency(@plan.price / 100.0) %></td>
+        </tr>
+      </tbody>
+    </table>
+    <%= link_to "Cancel Account", new_accounts_cancellation_path, class: "btn btn-primary" %>
+  </div>
+</div>

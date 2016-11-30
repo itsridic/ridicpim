@@ -1,0 +1,7 @@
+.container
+  p Are you sure you want to cancel your Retail Merge subscription?  You will lose access to all of the data stored in your account.
+
+  = form_for @cancellation, url: accounts_cancellation_path do |f|
+    = f.label "Why have you decided to leave?"
+    = f.text_area :reason, class: "indigo lighten-5"
+    = f.submit 'Cancel My Account', class: "btn btn-danger", data: { confirm: "Are You Sure?" }

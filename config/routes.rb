@@ -34,7 +34,7 @@ Rails.application.routes.draw do
       collection do
         get :fetch
       end
-    end    
+    end
     resources :settings, only: [:index] do
       collection do
         put :change
@@ -56,8 +56,13 @@ Rails.application.routes.draw do
         get :oauth_callback
       end
     end
+    resource :accounts, only: [:edit] do
+      get :inactive
+      post :reactivate
+      resource :cancellation, only: [:new, :create]
+    end
   end
-  
+
   constraints(SubdomainBlank) do
     root 'welcome#index'
 	  resources :accounts, only: [:new, :create]
