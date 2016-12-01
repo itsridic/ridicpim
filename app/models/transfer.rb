@@ -29,6 +29,6 @@ class Transfer < ApplicationRecord
 
   def remove_inventory_movement
     inventory_movements = InventoryMovement.where("movement_type = ? AND reference_id = ?", "TRANSFER", self.id).order("id")
-    inventory_movements.destory_all
+    inventory_movements.destroy_all
   end
 end
