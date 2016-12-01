@@ -13,22 +13,39 @@
     <%= simple_form_for @account do |f| %>
       <%= f.fields_for :owner do |o| %>
         <%= o.input :name %>
-				<%= o.input :email %>
-				<%= o.input :password %>
-				<%= o.input :password_confirmation %>
-			<% end %>
-
-			<%= f.input :subdomain do %>
-				<div class="input-group">
-					<%= f.input_field :subdomain, class: 'form-control-sm' %>
-					<span class="input-group-addon">.retailmerge.com</span>
-				</div>
+        <%= o.input :email %>
+        <%= o.input :password %>
+        <%= o.input :password_confirmation %>
       <% end %>
+
+      <%= f.input :subdomain do %>
+        <div class="input-group">
+          <%= f.input_field :subdomain, class: 'form-control-sm' %>
+          <span class="input-group-addon">.retailmerge.com</span>
+        </div>
+      <% end %>
+      <div>
+        <%= f.check_box :accept_terms %>
+        <span>I agree to the <%= link_to "terms of service", tos_path, data: { toggle: "modal", target: "#termsOfService" } %></span>
+      </div>
       <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                                             data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
                                                             data-description="<%= @plan.name %>"
                                                             data-amount="<%= @plan.price %>"
                                                             data-locale="auto"></script>
-		<% end %>
-	</div>
+    <% end %>
+  </div>
+  <div class="tosmodal modal fade" id="termsOfService" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Terms of Service</h4>
+        </div>
+        <div class="tosmodal modal-body">
+          <%= render 'welcome/tos', style: "color: black" %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -11,6 +11,7 @@ class SubdomainBlank
 end
 
 Rails.application.routes.draw do
+  get '/tos' => 'welcome#tos'
   constraints(SubdomainPresent) do
     root 'dashboard#show', as: :subdomain_root
     devise_for :users

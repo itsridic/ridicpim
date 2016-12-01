@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161130182714) do
+ActiveRecord::Schema.define(version: 20161201211803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,10 +18,11 @@ ActiveRecord::Schema.define(version: 20161130182714) do
   create_table "accounts", force: :cascade do |t|
     t.string   "subdomain"
     t.integer  "owner_id"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.boolean  "active",     default: true
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "active",       default: true
     t.string   "sub_token"
+    t.boolean  "accept_terms"
   end
 
   create_table "adjustment_types", force: :cascade do |t|
