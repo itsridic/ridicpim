@@ -1,6 +1,10 @@
 p
 .col-md-10.offset-md-1
   h1 Amazon Statements
+  = link_to "Fetch", fetch_amazon_statements_path, remote: true, class: "btn btn-sm teal"
+  .spinner
+    i.fa.fa-refresh.fa-spin aria-hidden="true"
+    small Retrieving data from Amazon, please wait...
   table.table.statements
     thead
       th Settlement ID
@@ -17,7 +21,3 @@ p
             = as.period
           td= number_to_currency(as.deposit_total)
           td.status= show_status(as)
-  = link_to "Fetch", fetch_amazon_statements_path, remote: true, class: "btn btn-sm teal"
-  .spinner
-    i.fa.fa-refresh.fa-spin aria-hidden="true" 
-    small Retrieving data from Amazon, please wait...

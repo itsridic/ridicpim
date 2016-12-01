@@ -2,7 +2,7 @@ class CreateCostOfGoodsSoldInQboWorker
   include Sidekiq::Worker
 
   def perform(amazon_statement_id, receipt_id, current_account_id)
-    current_account = Account.find(current_account_id)    
+    current_account = Account.find(current_account_id)
     amazon_statement = AmazonStatement.find(amazon_statement_id)
     receipt = SalesReceipt.find(receipt_id)
     txn_date = Date.parse(receipt.user_date.to_s)
@@ -53,37 +53,58 @@ class CreateCostOfGoodsSoldInQboWorker
     receipt.sales.each do |sale|
       next if sale.product == discount_item
       if sale.product and sale.quantity != 0
-        sale_or_refund = ""
-        if sale.quantity > 0
-          sale_or_refund = "Sale"
-        elsif sale.quantity < 0
-          sale_or_refund = "Refund"
+        sale_or_refund = sale.quantity < 0 ? "refund" : "sale"
+        if sale_or_refund == "sale"
+          # Create Credit Line
+          average_cost = sale.product.average_cost(receipt.user_date)
+          description = "#{sale_or_refund} of #{sale.quantity} at #{average_cost} (#{sale.product.amazon_sku})"
+          line_item_credit = qbo_rails.base.qr_model(:line)
+          line_item_credit.description = description
+          line_item_credit.amount      = (average_cost * sale.quantity).abs
+          line_item_credit.detail_type = 'JournalEntryLineDetail'
+          jel = qbo_rails.base.qr_model(:journal_entry_line_detail)
+          jel.posting_type = 'Credit'
+          jel.account_id = sale.product.inventory_asset_account_id
+          line_item_credit.journal_entry_line_detail = jel
+          journal_entry.line_items << line_item_credit
+          # Create Debit Line
+          line_item_debit = qbo_rails.base.qr_model(:line)
+          average_cost = sale.product.average_cost(receipt.user_date)
+          description = "#{sale_or_refund} of #{sale.quantity} at #{average_cost} (#{sale.product.amazon_sku})"
+          line_item_debit.description = description
+          line_item_debit.amount      = (average_cost * sale.quantity).abs
+          line_item_debit.detail_type = 'JournalEntryLineDetail'
+          jel = qbo_rails.base.qr_model(:journal_entry_line_detail)
+          jel.posting_type = 'Debit'
+          jel.account_id = current_account.settings(:cost_of_goods_sold_account).val
+          line_item_debit.journal_entry_line_detail = jel
+          journal_entry.line_items << line_item_debit
+        elsif sale_or_refund == "refund"
+          # Create Credit Line
+          average_cost = sale.product.average_cost(receipt.user_date)
+          description = "#{sale_or_refund} of #{sale.quantity} at #{average_cost} (#{sale.product.amazon_sku})"
+          line_item_credit = qbo_rails.base.qr_model(:line)
+          line_item_credit.description = description
+          line_item_credit.amount      = (average_cost * sale.quantity).abs
+          line_item_credit.detail_type = 'JournalEntryLineDetail'
+          jel = qbo_rails.base.qr_model(:journal_entry_line_detail)
+          jel.posting_type = 'Debit'
+          jel.account_id = sale.product.inventory_asset_account_id
+          line_item_credit.journal_entry_line_detail = jel
+          journal_entry.line_items << line_item_credit
+          # Create Debit Line
+          line_item_debit = qbo_rails.base.qr_model(:line)
+          average_cost = sale.product.average_cost(receipt.user_date)
+          description = "#{sale_or_refund} of #{sale.quantity} at #{average_cost} (#{sale.product.amazon_sku})"
+          line_item_debit.description = description
+          line_item_debit.amount      = (average_cost * sale.quantity).abs
+          line_item_debit.detail_type = 'JournalEntryLineDetail'
+          jel = qbo_rails.base.qr_model(:journal_entry_line_detail)
+          jel.posting_type = 'Credit'
+          jel.account_id = current_account.settings(:cost_of_goods_sold_account).val
+          line_item_debit.journal_entry_line_detail = jel
+          journal_entry.line_items << line_item_debit
         end
-        # Create Credit Line
-        average_cost = sale.product.average_cost(receipt.user_date)
-        description = "#{sale_or_refund} of #{sale.quantity} at #{average_cost} (#{sale.product.amazon_sku})"
-        line_item_credit = qbo_rails.base.qr_model(:line)
-        line_item_credit.description = description
-        line_item_credit.amount      = (average_cost * sale.quantity).abs
-        line_item_credit.detail_type = 'JournalEntryLineDetail'
-        jel = qbo_rails.base.qr_model(:journal_entry_line_detail)
-        jel.posting_type = 'Credit'
-        jel.account_id = sale.product.inventory_asset_account_id
-        line_item_credit.journal_entry_line_detail = jel
-        journal_entry.line_items << line_item_credit
-
-        # Create Debit Line
-        line_item_debit = qbo_rails.base.qr_model(:line)
-        average_cost = sale.product.average_cost(receipt.user_date)
-        description = "#{sale_or_refund} of #{sale.quantity} at #{average_cost} (#{sale.product.amazon_sku})"
-        line_item_debit.description = description
-        line_item_debit.amount      = (average_cost * sale.quantity).abs
-        line_item_debit.detail_type = 'JournalEntryLineDetail'
-        jel = qbo_rails.base.qr_model(:journal_entry_line_detail)
-        jel.posting_type = 'Debit'
-        jel.account_id = current_account.settings(:cost_of_goods_sold_account).val
-        line_item_debit.journal_entry_line_detail = jel
-        journal_entry.line_items << line_item_debit
       end
     end
     result = qbo_rails.create(journal_entry)
