@@ -56,7 +56,7 @@ Rails.application.routes.draw do
         get :oauth_callback
       end
     end
-    resource :accounts, only: [:edit] do
+    resource :accounts, only: [:show, :edit, :update] do
       get :inactive
       post :reactivate
       resource :cancellation, only: [:new, :create]

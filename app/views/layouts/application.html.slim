@@ -18,7 +18,7 @@ html
               => link_to users_path, class: 'nav-link pull-right' do
                 => fa_icon("users", text: "Users")
             li
-              => link_to edit_accounts_path, class: 'nav-link pull-right' do
+              => link_to accounts_path, class: 'nav-link pull-right' do
                 => fa_icon("briefcase", text: "Account")
     .container
       - if flash[:notice]

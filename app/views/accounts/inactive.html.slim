@@ -2,11 +2,16 @@
   h1 This account has been cancelled!
   p If you would like to reactive your account, please email #{mail_to "info@itsridic.com", "info@itsridic.com"}
   h2 Reactive account?
+  .errors
+    - if @account.errors.any?
+      ul
+        - @account.errors.full_messages.each do |msg|
+          li.error = msg
   = form_tag(reactivate_accounts_path) do
 
     script[src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                                                 data-key="#{Rails.configuration.stripe[:publishable_key]}"
                                                                 data-description="#{@plan.name}"
                                                                 data-amount="#{@plan.price}"
-                                                                data-email="#{@user.email}"
+                                                                data-email="#{@account.owner.email}"
                                                                 data-locale="auto"]

@@ -1,11 +1,15 @@
 <div class="col-md-6 offset-md-3 account">
   <div class="account">
     <h2>Create an Account</h2>
-    <% if flash[:error].present? %>
-      <div id="error_explanation">
-        <p><%= flash[:error] %></p>
-      </div>
-    <% end %>
+    <div class="errors">
+      <% if @account.errors.any? %>
+        <ul>
+          <% @account.errors.full_messages.each do |msg| %>
+            <li class="error"><%= msg %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
     <%= simple_form_for @account do |f| %>
       <%= f.fields_for :owner do |o| %>
         <%= o.input :name %>

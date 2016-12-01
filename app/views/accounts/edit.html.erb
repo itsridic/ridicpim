@@ -1,19 +1,20 @@
 <div class="container">
-  <h1>Account Information</h1>
-  <div>
-    <h2>Plan information</h2>
-    <table class="table">
-      <thead>
-        <th>Plan Name</th>
-        <th>Monthly Charge</th>
-      </thead>
-      <tbody>
-        <tr>
-          <td><%= @plan.name %></td>
-          <td><%= number_to_currency(@plan.price / 100.0) %></td>
-        </tr>
-      </tbody>
-    </table>
-    <%= link_to "Cancel Account", new_accounts_cancellation_path, class: "btn btn-primary" %>
-  </div>
+  <h1>Update Card Information</h1>
+  <p>Clicking the below button will update your card information.</p>
+  <%= form_tag(accounts_path, method: :put) do %>
+    <div class="errors">
+      <% if @account.errors.any? %>
+        <ul>
+          <% @account.errors.full_messages.each do |msg| %>
+            <li class="error"><%= msg %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                                          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                                                          data-description="<%= Plan.first.name %>"
+                                                          data-email="<%= @account.owner.email %>"
+                                                          data-locale="auto"></script>
+  <% end %>
 </div>
