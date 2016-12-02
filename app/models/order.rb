@@ -20,7 +20,11 @@ class Order < ApplicationRecord
   def update_inventory_movement
     loc = self.location
     self.order_items.each do |order_item|
-      InventoryMovement.find_by(movement_type: "ORDER", reference_id: order_item.id).update(location: loc)
+      begin
+        InventoryMovement.find_by(movement_type: "ORDER", reference_id: order_item.id).update(location: loc)
+      rescue Exception => e
+        puts "Could not update!"
+      end
     end
   end
 end
