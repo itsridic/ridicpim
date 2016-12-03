@@ -1,6 +1,6 @@
 class AmazonStatementsController < ApplicationController
   before_action :set_qb_service, only: [:show]
-  
+
   def index
     @amazon_statements = AmazonStatement.all.order("period DESC")
   end
@@ -9,20 +9,16 @@ class AmazonStatementsController < ApplicationController
     @amazon_statement = AmazonStatement.find(params[:id])
     @amazon_statement.status = "PROCESSING..."
     @amazon_statement.save
-    #redirect_to amazon_statements_path unless @amazon_statement.status == 'NOT_PROCESSED'
-      # @amazon_statement.status = "PROCESSING..."
-      # @amazon_statement.save
-    SyncWithQBOWorker.perform_async(current_account.id, @amazon_statement.id)
-      #create_expense_receipt(@amazon_statement.period)
-      # Create Journal Entries in QBO
-      #create_journal_entry(receipt, Date.parse(receipt.user_date.to_s))
+    #SyncWithQBOWorker.perform_async(current_account.id, @amazon_statement.id)
+    CreateExpenseReceiptWorker.perform_async_(@amazon_statement.id, current_account.id, nil)
+  def perform(amazon_statement_id, current_account_id, receipt_id)
     redirect_to amazon_statements_path
   end
 
   def fetch
     client  = set_client
     begin
-      reports = client.get_report_list(available_from_date: 91.days.ago.iso8601, report_type_list: "_GET_V2_SETTLEMENT_REPORT_DATA_XML_", max_count: 100) 
+      reports = client.get_report_list(available_from_date: 91.days.ago.iso8601, report_type_list: "_GET_V2_SETTLEMENT_REPORT_DATA_XML_", max_count: 100)
     rescue Excon::Errors::BadRequest => e
       puts "*" * 50
       logger.warn e.response.message
