@@ -11,7 +11,6 @@ class AmazonStatementsController < ApplicationController
     @amazon_statement.save
     #SyncWithQBOWorker.perform_async(current_account.id, @amazon_statement.id)
     CreateExpenseReceiptWorker.perform_async_(@amazon_statement.id, current_account.id, nil)
-  def perform(amazon_statement_id, current_account_id, receipt_id)
     redirect_to amazon_statements_path
   end
 
