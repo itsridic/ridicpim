@@ -8,7 +8,7 @@ $qb_oauth_consumer = OAuth::Consumer.new(QB_KEY, QB_SECRET, {
   :access_token_path    => "/oauth/v1/get_access_token"
 })
 
-Quickbooks.sandbox_mode = true
+Quickbooks.sandbox_mode = false
 Quickbooks.log = true
 Quickbooks.logger = Rails.logger
 
