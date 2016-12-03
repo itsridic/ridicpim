@@ -9,8 +9,7 @@ class AmazonStatementsController < ApplicationController
     @amazon_statement = AmazonStatement.find(params[:id])
     @amazon_statement.status = "PROCESSING..."
     @amazon_statement.save
-    #SyncWithQBOWorker.perform_async(current_account.id, @amazon_statement.id)
-    CreateExpenseReceiptWorker.perform_async(@amazon_statement.id, current_account.id, nil)
+    SyncWithQBOWorker.perform_async(current_account.id, @amazon_statement.id)
     redirect_to amazon_statements_path
   end
 
