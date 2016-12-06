@@ -28,7 +28,7 @@ class AccountsController < ApplicationController
   def create
     @account = Account.new(account_params)
     if @account.save_with_payment(@plan, params[:stripeToken], params[:stripeEmail])
-      redirect_to new_user_session_url(subdomain: @account.subdomain)
+      redirect_to new_user_session_url(subdomain: @account.subdomain), notice: "Your account was created successfully"
     else
       render :new
     end

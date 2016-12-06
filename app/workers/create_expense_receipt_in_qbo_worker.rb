@@ -19,7 +19,6 @@ class CreateExpenseReceiptInQBOWorker
       line_item.description = expense.description
       line_item.account_based_expense! do |detail|
         detail.account_id = expense.qbo_account.qbo_id
-        detail.customer_id = current_account.settings(:expense_customer).val
       end
       purchase.line_items << line_item
     end
