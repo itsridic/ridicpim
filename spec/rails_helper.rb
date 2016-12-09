@@ -19,6 +19,14 @@ Capybara.server_port = 31234
 Capybara.javascript_driver = :webkit
 
 RSpec.configure do |config|
+  config.backtrace_exclusion_patterns = [
+    /\/lib\d*\/ruby\//,
+    /org\/jruby\//,
+    /bin\//,
+    /lib\/rspec\/(core|expectations|matchers|mocks)/,
+    /gems\/ruby.+\/gems/
+  ]
+
   config.use_transactional_fixtures = false
   config.include Rails.application.routes.url_helpers
   config.include FactoryGirl::Syntax::Methods
@@ -40,7 +48,7 @@ RSpec.configure do |config|
       MSG
     end
     DatabaseCleaner.clean_with(:truncation)
-  end  
+  end
 
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
@@ -69,9 +77,9 @@ RSpec.configure do |config|
   config.append_after(:each) do
     DatabaseCleaner.clean
   end
-  
+
   config.include(Shoulda::Matchers::ActiveModel, type: :model)
-  config.include(Shoulda::Matchers::ActiveRecord, type: :model)  
+  config.include(Shoulda::Matchers::ActiveRecord, type: :model)
 end
 
 Shoulda::Matchers.configure do |config|

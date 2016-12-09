@@ -29,14 +29,15 @@ feature 'account creation' do
 	end
 
 	def sign_up(subdomain)
+    @plan = FactoryGirl.create(:plan)
 		visit root_path(subdomain: false)
 		click_link 'Create Account'
-
+    sleep(2)
 		fill_in 'Name', with: 'Nate'
 		fill_in 'Email', with: 'nate@itsridic.com'
 		fill_in 'Password', with: 'password'
 		fill_in 'Password confirmation', with: 'password'
 		fill_in 'Subdomain', with: subdomain
-		click_button 'Create Account'
+    first(:button).click
 	end
 end
