@@ -5,6 +5,8 @@ class Product < ApplicationRecord
   validates :amazon_sku, presence: true
   validates :price, presence: true
 
+  scope :needs_inventory_asset, -> { where(bundle_product_id: nil, inventory_asset_account_id: nil) }
+
   def quantity_ordered
     OrderItem.where("product_id = ?", self.id).sum(:quantity)
   end
@@ -35,7 +37,7 @@ class Product < ApplicationRecord
 
   def last_cost
     if item_ordered?
-      OrderItem.where("product_id = ?", self.id).last.cost / 
+      OrderItem.where("product_id = ?", self.id).last.cost /
         OrderItem.where("product_id = ?", self.id).last.quantity
     else
       0

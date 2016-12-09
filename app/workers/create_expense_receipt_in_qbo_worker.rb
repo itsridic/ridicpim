@@ -23,6 +23,7 @@ class CreateExpenseReceiptInQBOWorker
       purchase.line_items << line_item
     end
     result = qbo_rails.create(purchase)
-    CreateCostOfGoodsSoldInQboWorker.perform_async(amazon_statement_id, receipt_id, current_account_id)
+    puts "Starting CreateInventoryAssetInQboWorker..."
+    CreateInventoryAssetInQboWorker.perform_async(amazon_statement_id, receipt_id, current_account_id)
   end
 end

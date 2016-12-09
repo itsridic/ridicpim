@@ -225,7 +225,7 @@
   model: QboAccount
   display: name
   setting_name: fba_transportation_fee
-  id_field: qbo_id  
+  id_field: qbo_id
 -
   question: What item do you want discounts to go to?
   model: Product
@@ -244,3 +244,9 @@
   display: name
   setting_name: default_location_for_amazon
   id_field: id
+-
+  question: What is your Inventory Asset account (usually called Inventory Asset)
+  model: QboAccount
+  display: name
+  setting_name: inventory_asset
+  id_field: qbo_id

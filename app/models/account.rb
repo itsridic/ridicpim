@@ -22,7 +22,7 @@ class Account < ApplicationRecord
     :shipping_chargeback_refund, :warehouse_damage, :warehouse_damage_exception, :warehouse_lost_manual,
     :fba_customer_return_per_order_fee, :fba_customer_return_per_unit_fee, :fba_customer_return_weight_based_fee, :gift_wrap_charge_back,
     :disposal_fee, :reversal_reimbursement, :cs_error_items, :removal_complete, :default_location_for_amazon,
-    :storage_renewal_billing, :fba_transportation_fee
+    :storage_renewal_billing, :fba_transportation_fee, :inventory_asset
 
   def inactive?
     active == false
