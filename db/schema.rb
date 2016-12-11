@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161201211803) do
+ActiveRecord::Schema.define(version: 20161209233700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,12 +141,14 @@ ActiveRecord::Schema.define(version: 20161201211803) do
   create_table "orders", force: :cascade do |t|
     t.string   "name"
     t.integer  "contact_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.datetime "user_date"
     t.integer  "location_id"
+    t.integer  "qbo_account_id"
     t.index ["contact_id"], name: "index_orders_on_contact_id", using: :btree
     t.index ["location_id"], name: "index_orders_on_location_id", using: :btree
+    t.index ["qbo_account_id"], name: "index_orders_on_qbo_account_id", using: :btree
   end
 
   create_table "payments", force: :cascade do |t|
@@ -389,6 +391,7 @@ ActiveRecord::Schema.define(version: 20161201211803) do
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "contacts"
   add_foreign_key "orders", "locations"
+  add_foreign_key "orders", "qbo_accounts"
   add_foreign_key "sales", "products"
   add_foreign_key "sales", "sales_receipts"
   add_foreign_key "sales_receipts", "contacts"
