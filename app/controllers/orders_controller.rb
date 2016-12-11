@@ -23,6 +23,8 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
+        expense_receipt = CreateExpenseReceipt.in_app_from_order(@order)
+        CreateExpenseReceipt.in_qbo(expense_receipt, @order.qbo_account_id)
         format.html { redirect_to @order, notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }
       else
@@ -61,11 +63,34 @@ class OrdersController < ApplicationController
 
 
   def order_params
-    params.require(:order).permit(:name, :contact_id, :location_id, :user_date, :contact_name, order_items_attributes: [:id, :cost, :quantity, :product_id, :order_id, :_destroy]).except(:contact_name)
+    params.require(:order).permit(:name, :contact_id, :location_id, :user_date, :qbo_account_id, :contact_name,
+                                  order_items_attributes: [:id, :cost, :quantity, :product_id, :order_id, :_destroy]).except(:contact_name)
   end
 
   def create_new_contact(name)
     c = Contact.create!(name: name)
     c.id
+  end
+
+  def create_expense
+    expense_receipt = ExpenseReceipt.new
+  end
+
+  def create_expense_in_qbo
+    qbo_rails = QboRails.new(QboConfig.last, :purchase)
+    purchase = qbo_rails.base.qr_model(:purchase)
+    purchase.txn_date = @order.user_date
+    purchase.account_id = QboAccount.find(@order.qbo_account_id).qbo_id
+    purchase.line_items = []
+    @order.order_items.each do |oi|
+      line_item = qbo_rails.base.qr_model(:purchase_line_item)
+      line_item.amount = oi.cost
+      line_item.description = @order.name
+      line_item.account_based_expense! do |detail|
+        detail.account_id = expense.qbo_account.qbo_id ########??????????????
+      end
+      purchase.line_items << line_item
+    end
+    result = qbo_rails.create(purchase)
   end
 end
