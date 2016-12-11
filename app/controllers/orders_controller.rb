@@ -2,7 +2,9 @@ class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
 
   def index
-    @orders = Order.order(user_date: :desc).paginate(page: params[:page], per_page: 3).includes(:contact, :order_items => :product)
+    @orders = Order.order(user_date: :desc)
+                   .paginate(page: params[:page], per_page: 3)
+                   .includes(:contact, order_items: :product)
   end
 
   def show() end
@@ -15,9 +17,12 @@ class OrdersController < ApplicationController
   def edit() end
 
   def create
-    contact_name = params["order"]["contact_name"]
+    contact_name = params['order']['contact_name']
     @order = Order.new(order_params)
-    @order.contact_id = create_new_contact(contact_name) if !contact_name.blank?
+
+    unless contact_name.blank?
+      @order.contact_id = create_new_contact(contact_name)
+    end
 
     if @order.save
       expense_receipt = CreateExpenseReceipt.in_app_from_order(@order)
@@ -48,12 +53,12 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order).
-      permit(:name, :contact_id, :location_id, :user_date, :qbo_account_id,
-             :contact_name,
-             order_items_attributes: [:id, :cost, :quantity,
-                                      :product_id, :order_id,
-                                      :_destroy]).except(:contact_name)
+    params.require(:order)
+          .permit(:name, :contact_id, :location_id, :user_date, :qbo_account_id,
+                  :contact_name,
+                  order_items_attributes: [:id, :cost, :quantity,
+                                           :product_id, :order_id,
+                                           :_destroy]).except(:contact_name)
   end
 
   def create_new_contact(name)
@@ -72,10 +77,10 @@ class OrdersController < ApplicationController
       line_item.amount = oi.cost
       line_item.description = @order.name
       line_item.account_based_expense! do |detail|
-        detail.account_id = expense.qbo_account.qbo_id ########??????????????
+        detail.account_id = expense.qbo_account.qbo_id
       end
       purchase.line_items << line_item
     end
-    result = qbo_rails.create(purchase)
+    qbo_rails.create(purchase)
   end
 end

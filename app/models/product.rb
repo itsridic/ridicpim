@@ -6,6 +6,7 @@ class Product < ApplicationRecord
   validates :price, presence: true
 
   scope :needs_inventory_asset, -> { where(bundle_product_id: nil, inventory_asset_account_id: nil) }
+  scope :find_by_amazon_sku, ->(sku) { where("amazon_sku = ?", sku) }
 
   def quantity_ordered
     OrderItem.where("product_id = ?", self.id).sum(:quantity)
