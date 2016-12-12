@@ -4,8 +4,7 @@
   table.table.table-striped
     thead
       th
-      th
-        | Name
+      th Name
     tbody#payments
       = render @payments
 #new_payment.modal.fade
@@ -19,6 +18,5 @@
           .form-inputs
             = f.input :name, autofocus: true
         .modal-footer
-          button.btn.stylish-color-dark[type="button" data-dismiss="modal"]
-            | Close
+          button.btn.stylish-color-dark[type="button" data-dismiss="modal"] Close
           = f.button :submit, class: 'btn unique-color'
