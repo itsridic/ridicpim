@@ -34,7 +34,7 @@ class PaymentsController < ApplicationController
   def payment_params
     payment_params = params[:payment]
     if payment_params
-      params.require(:payment).permit(:name)
+      payment_params.require(:payment).permit(:name)
     else
       {}
     end

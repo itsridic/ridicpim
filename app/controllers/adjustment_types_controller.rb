@@ -1,65 +1,72 @@
 class AdjustmentTypesController < ApplicationController
-  before_action :set_adjustment_type, only: [:show, :edit, :update, :destroy]
+  respond_to :json, only: [:create, :edit, :update, :destroy]
 
   def index
-    @adjustment_types = AdjustmentType.order(:name)
-    @adjustment_type = AdjustmentType.new
+    load_adjustment_types
+    build_adjustment_type
   end
 
   def show
+    load_adjustment_type
   end
 
   def new
-    @adjustment_type = AdjustmentType.new
+    build_adjustment_type
   end
 
   def edit
+    load_adjustment_type
   end
 
   def create
-    @adjustment_type = AdjustmentType.new(adjustment_type_params)
-
-    respond_to do |format|
-      if @adjustment_type.save
-        format.html { redirect_to @adjustment_type, notice: 'Adjustment type was successfully created.' }
-        format.js {}
-        format.json { render :show, status: :created, location: @adjustment_type }
-      else
-        format.html { render :new }
-        format.json { render json: @adjustment_type.errors, status: :unprocessable_entity }
-      end
-    end
+    build_adjustment_type
+    save_adjustment_type
   end
 
   def update
-    respond_to do |format|
-      if @adjustment_type.update(adjustment_type_params)
-        format.html { redirect_to @adjustment_type, notice: 'Adjustment type was successfully updated.' }
-        format.js {}
-        format.json { render :show, status: :ok, location: @adjustment_type }
-      else
-        format.html { render :edit }
-        format.json { render json: @adjustment_type.errors, status: :unprocessable_entity }
-      end
-    end
+    load_adjustment_type
+    build_adjustment_type
+    save_adjustment_type
   end
 
   def destroy
+    load_adjustment_type
     @adjustment_type.destroy
-    respond_to do |format|
-      format.html { redirect_to adjustment_types_url, notice: 'Adjustment type was successfully destroyed.' }
-      format.js {}
-      format.json { head :no_content }
-    end
   end
 
   private
-  
+
   def set_adjustment_type
     @adjustment_type = AdjustmentType.find(params[:id])
   end
 
   def adjustment_type_params
-    params.require(:adjustment_type).permit(:name)
+    adjustment_type_params = params[:adjustment_type]
+    if adjustment_type_params
+      adjustment_type_params.permit(:name)
+    else
+      {}
+    end
+  end
+
+  def load_adjustment_types
+    @adjustment_types ||= adjustment_type_scope
+  end
+
+  def load_adjustment_type
+    @adjustment_type ||= adjustment_type_scope.find(params[:id])
+  end
+
+  def build_adjustment_type
+    @adjustment_type ||= adjustment_type_scope.build
+    @adjustment_type.attributes = adjustment_type_params
+  end
+
+  def save_adjustment_type
+    render action: 'failure' unless @adjustment_type.save
+  end
+
+  def adjustment_type_scope
+    AdjustmentType.all
   end
 end
