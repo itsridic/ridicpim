@@ -10,12 +10,14 @@ class Adjustment < ApplicationRecord
   validates :adjusted_quantity, presence: true
   validates :location, presence: true
 
+  default_scope -> { order("created_at DESC") }
+
   private
 
   def set_user_date
     if user_date.blank?
       self.update_column(:user_date, self.created_at)
-    end    
+    end
   end
 
   def create_inventory_movement

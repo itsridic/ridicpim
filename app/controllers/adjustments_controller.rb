@@ -1,67 +1,69 @@
 class AdjustmentsController < ApplicationController
-  before_action :set_adjustment, only: [:show, :edit, :update, :destroy]
+  respond_to :json, only: [:create, :edit, :update, :destroy]
   #after_action :recalculate_average_cost, only: [:create, :update, :destroy]
 
   def index
-    @adjustments = Adjustment.all.includes(:product, :adjustment_type, :location).order("created_at DESC")
-    @adjustment = Adjustment.new
+    load_adjustments
+    build_adjustment
   end
 
   def show
-  end
-
-  def new
-    @adjustment = Adjustment.new
+    load_adjustment
   end
 
   def edit
+    load_adjustment
   end
 
   def create
-    @adjustment = Adjustment.new(adjustment_params)
-
-    respond_to do |format|
-      if @adjustment.save
-        format.html { redirect_to @adjustment, notice: 'Adjustment was successfully created.' }
-        format.js {}
-        format.json { render :show, status: :created, location: @adjustment }
-      else
-        format.html { render :new }
-        format.json { render json: @adjustment.errors, status: :unprocessable_entity }
-      end
-    end
+    build_adjustment
+    save_adjustment
   end
 
   def update
-    respond_to do |format|
-      if @adjustment.update(adjustment_params)
-        format.html { redirect_to @adjustment, notice: 'Adjustment was successfully updated.' }
-        format.js {}
-        format.json { render :show, status: :ok, location: @adjustment }
-      else
-        format.html { render :edit }
-        format.json { render json: @adjustment.errors, status: :unprocessable_entity }
-      end
-    end
+    load_adjustment
+    build_adjustment
+    save_adjustment
   end
 
   def destroy
+    load_adjustment
     @adjustment.destroy
-    respond_to do |format|
-      format.html { redirect_to adjustments_url, notice: 'Adjustment was successfully destroyed.' }
-      format.js {}
-      format.json { head :no_content }
-    end
   end
 
   private
 
-  def set_adjustment
-    @adjustment = Adjustment.find(params[:id])
+  def adjustment_params
+    adjustment_params = params[:adjustment]
+    if adjustment_params
+      adjustment_params.permit(:product_id, :adjustment_type_id,
+                               :adjusted_quantity, :user_date, :location_id)
+    else
+      {}
+    end
   end
 
-  def adjustment_params
-    params.require(:adjustment).permit(:product_id, :adjustment_type_id, :adjusted_quantity, :user_date, :location_id)
+  def load_adjustments
+    @adjustments ||= adjustment_scope
+  end
+
+  def load_adjustment
+    @adjustment ||= adjustment_scope.find(params[:id])
+  end
+
+  def build_adjustment
+    @adjustment ||= adjustment_scope.build
+    @adjustment.attributes = adjustment_params
+  end
+
+  def save_adjustment
+    unless @adjustment.save
+      render action: 'failure'
+    end
+  end
+
+  def adjustment_scope
+    Adjustment.all.includes(:product, :adjustment_type, :location)
   end
 
   # def recalculate_average_cost
@@ -76,5 +78,5 @@ class AdjustmentsController < ApplicationController
   #       end
   #     end
   #   end
-  # end 
+  # end
 end
