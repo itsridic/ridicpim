@@ -2,9 +2,10 @@ class Product < ApplicationRecord
   belongs_to :bundle_product, class_name: "Product"
 
   validates :name, presence: true
-  validates :amazon_sku, presence: true
+  validates :amazon_sku, presence: true, uniqueness: true
   validates :price, presence: true
 
+  default_scope -> { order(:name) }
   scope :needs_inventory_asset, -> { where(bundle_product_id: nil, inventory_asset_account_id: nil) }
   scope :find_by_amazon_sku, ->(sku) { where("amazon_sku = ?", sku) }
 

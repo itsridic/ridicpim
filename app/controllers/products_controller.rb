@@ -1,45 +1,37 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  respond_to :json, only: [:create, :edit, :update, :destroy]
 
-  def new
-    @product = Product.new
+  def index
+    load_products
+    build_product
+  end
+
+  def edit
+    load_product
+  end
+
+  def show
+    load_product
   end
 
   def create
-    @product = Product.new(product_params)
-    respond_to do |format|
-      if @product.save
-        create_update_product_in_qbo(@product) if QboConfig.exists?
-        format.js {}
-      end
-    end
+    build_product
+    save_product
   end
-
-  def index
-    @products = Product.all.order('name')
-    @product = Product.new
-  end
-
-  def show() end
 
   def update
-    respond_to do |format|
-      if @product.update(product_params)
-        create_update_product_in_qbo(@product) if QboConfig.exists?
-        format.js {}
-      end
-    end
+    load_product
+    build_product
+    save_product
   end
 
   def destroy
+    load_product
     @product.destroy
-    respond_to do |format|
-      format.js {}
-    end
   end
 
   def fetch
-    product_service = create_product_service
+    product_service = QuickbooksServiceFactory.new.item_service
     query = "SELECT * FROM Item WHERE active = true AND type = 'NonInventory'"
     product_service.query_in_batches(query, per_page: 1000) do |batch|
       create_products_from_batch(batch)
@@ -50,8 +42,39 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:name, :amazon_sku, :price, :qbo_id,
-                                    :bundle_quantity, :bundle_product_id)
+    product_params = params[:product]
+    if product_params
+      product_params.permit(:name, :amazon_sku, :price, :qbo_id,
+                            :bundle_quantity, :bundle_product_id)
+    else
+      {}
+    end
+  end
+
+  def load_products
+    @products ||= product_scope
+  end
+
+  def load_product
+    @product ||= product_scope.find(params[:id])
+  end
+
+  def product_scope
+    Product.all
+  end
+
+  def build_product
+    @product ||= product_scope.build
+    @product.attributes = product_params
+  end
+
+  def save_product
+    if @product.save
+      p @product
+      create_update_product_in_qbo(@product) if QboConfig.exists?
+    else
+      render action: "failure"
+    end
   end
 
   def set_product
@@ -64,26 +87,11 @@ class ProductsController < ApplicationController
     item.income_account_id =
       current_account.settings(:sales_receipt_income_account).val
     item.type = 'NonInventory'
-    item.name = product.amazon_sku
+    item.name = product.name
     item.description = product.name
     item.unit_price = product.price
     item.sku = product.amazon_sku
     qbo_rails.create_or_update(product, item)
-  end
-
-  def set_oauth_client
-    OAuth::AccessToken.new(
-      $qb_oauth_consumer, QboConfig.first.token,
-      QboConfig.first.secret
-    )
-  end
-
-  def create_product_service
-    oauth_client = set_oauth_client
-    Quickbooks::Service::Item.new(
-      access_token:  oauth_client,
-      company_id: QboConfig.realm_id
-    )
   end
 
   def create_product(product_name, product_sku, product_price, id)
@@ -112,7 +120,7 @@ class ProductsController < ApplicationController
 
   def product_details(product)
     details = {}
-    details[:product_sku] = product.name
+    details[:product_sku] = product.sku
     details[:product_name] = product.name || product.description
     details[:product_price] = product.unit_price || 0
     if details[:product_sku].blank?
