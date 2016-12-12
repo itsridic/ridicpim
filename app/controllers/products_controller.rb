@@ -69,12 +69,8 @@ class ProductsController < ApplicationController
   end
 
   def save_product
-    if @product.save
-      p @product
-      create_update_product_in_qbo(@product) if QboConfig.exists?
-    else
-      render action: "failure"
-    end
+    render action: 'failure' unless @product.save
+    create_update_product_in_qbo(@product) if QboConfig.exists?
   end
 
   def set_product
@@ -95,10 +91,8 @@ class ProductsController < ApplicationController
   end
 
   def create_product(product_name, product_sku, product_price, id)
-    Product.create!(name: product_name,
-                    amazon_sku: product_sku,
-                    price: product_price,
-                    qbo_id: id)
+    Product.create!(name: product_name, amazon_sku: product_sku,
+                    price: product_price, qbo_id: id)
   end
 
   def update_product(product_sku, product_id)
