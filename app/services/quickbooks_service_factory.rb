@@ -21,4 +21,11 @@ class QuickbooksServiceFactory
       company_id: QboConfig.realm_id
     )
   end
+
+  def customer_service
+    Quickbooks::Service::Customer.new(
+      access_token: oauth_client,
+      company_id: QboConfig.realm_id
+    )
+  end
 end
