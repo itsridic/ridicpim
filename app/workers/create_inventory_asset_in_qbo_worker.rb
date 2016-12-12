@@ -2,7 +2,7 @@ class CreateInventoryAssetInQboWorker
   include Sidekiq::Worker
 
   def perform(amazon_statement_id, receipt_id, current_account_id)
-    unless Product.needs_inventory_asset.count == 0
+    unless Product.needs_inventory_asset.count.zero?
       oauth_client = OAuth::AccessToken.new(
         $qb_oauth_consumer,
         QboConfig.first.token,

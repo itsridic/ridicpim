@@ -25,7 +25,8 @@ class OrdersController < ApplicationController
     end
 
     if @order.save
-      expense_receipt = CreateExpenseReceipt.in_app_from_order(@order)
+      qbo_service_account = QuickbooksServiceFactory.new.account_service
+      expense_receipt = CreateExpenseReceipt.in_app_from_order(current_account, qbo_service_account, @order)
       CreateExpenseReceipt.in_qbo(expense_receipt, @order.qbo_account_id)
       redirect_to @order, notice: 'Order was successfully created.'
     end
@@ -82,5 +83,18 @@ class OrdersController < ApplicationController
       purchase.line_items << line_item
     end
     qbo_rails.create(purchase)
+  end
+
+  def create_service_account
+    oauth_client = OAuth::AccessToken.new(
+      $qb_oauth_consumer,
+      QboConfig.first.token,
+      QboConfig.first.secret
+    )
+    qbo_service_account = QuickBooks::Service::Account.new(
+      access_token: oauth_client,
+      company_id: QboConfig.realm_id
+    )
+    qbo_service_account
   end
 end

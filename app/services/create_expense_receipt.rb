@@ -1,13 +1,10 @@
 class CreateExpenseReceipt
-  def self.in_app_from_order(order)
-    expense_receipt = ExpenseReceipt.new(description: "Expense for '#{order.name}'",
-                                         qbo_account_id: order.qbo_account_id,
-                                         user_date: order.user_date)
+  def self.in_app_from_order(current_account, qbo_service_account, order)
+    expense_receipt = build_expense_receipt(order)
+
     order.order_items.each do |item|
-      expense = Expense.new(qbo_account: QboAccount.find_by(qbo_id: item.product.inventory_asset_account_id),
-                            description: order.name,
-                            amount: item.cost
-                           )
+      product = Product.create_inventory_asset_account(current_account, qbo_service_account, item.product)
+      expense = create_expense_line(order, item, product)
       expense_receipt.expenses << expense
     end
     expense_receipt.save
@@ -15,7 +12,6 @@ class CreateExpenseReceipt
   end
 
   def self.in_qbo(expense_receipt, qbo_account_id)
-    p expense_receipt
     qbo_rails = QboRails.new(QboConfig.last, :purchase)
     purchase = qbo_rails.base.qr_model(:purchase)
     purchase.txn_date = expense_receipt.user_date
@@ -33,5 +29,22 @@ class CreateExpenseReceipt
       purchase.line_items << line_item
     end
     result = qbo_rails.create(purchase)
+  end
+
+  def self.build_expense_receipt(order)
+    ExpenseReceipt.new(description: "Expense for '#{order.name}'",
+                       qbo_account_id: order.qbo_account_id,
+                       user_date: order.user_date)
+  end
+
+  def self.create_expense_line(order, item, product)
+    expense = Expense.new(
+      qbo_account: QboAccount.find_by(qbo_id: product.inventory_asset_account_id),
+      description: order.name,
+      amount: item.cost
+    )
+    p "$$" * 50
+    p expense
+    expense
   end
 end

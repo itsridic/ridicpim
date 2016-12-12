@@ -87,5 +87,5 @@ class CreateItemsInQboWorker
     else
       @current_account.settings(:classify_unknown).val
     end
-  end  
+  end
 end

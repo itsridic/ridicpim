@@ -39,6 +39,7 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_account
 
+
   def set_mailer_host
     subdomain = current_account ? "#{current_account.subdomain}." : ""
     ActionMailer::Base.default_url_options[:host] = "#{subdomain}retailmerge.com"
