@@ -3,7 +3,11 @@ class CreateExpenseReceipt
     expense_receipt = build_expense_receipt(order)
 
     order.order_items.each do |item|
-      product = Product.create_inventory_asset_account(current_account, qbo_service_account, item.product)
+      product = Product.create_inventory_asset_account(
+        current_account,
+        qbo_service_account,
+        item.product
+      )
       expense = create_expense_line(order, item, product)
       expense_receipt.expenses << expense
     end
@@ -18,7 +22,6 @@ class CreateExpenseReceipt
     purchase.payment_type = 'Cash'
     purchase.account_id = QboAccount.find_by(id: qbo_account_id).qbo_id
     purchase.line_items = []
-    # Loop through all expenses and create new model for it.
     expense_receipt.expenses.each do |expense|
       line_item = qbo_rails.base.qr_model(:purchase_line_item)
       line_item.amount = expense.amount
@@ -28,7 +31,7 @@ class CreateExpenseReceipt
       end
       purchase.line_items << line_item
     end
-    result = qbo_rails.create(purchase)
+    qbo_rails.create(purchase)
   end
 
   def self.build_expense_receipt(order)
@@ -38,13 +41,12 @@ class CreateExpenseReceipt
   end
 
   def self.create_expense_line(order, item, product)
-    expense = Expense.new(
-      qbo_account: QboAccount.find_by(qbo_id: product.inventory_asset_account_id),
+    Expense.new(
+      qbo_account: QboAccount.find_by(
+        qbo_id: product.inventory_asset_account_id
+      ),
       description: order.name,
       amount: item.cost
     )
-    p "$$" * 50
-    p expense
-    expense
   end
 end
