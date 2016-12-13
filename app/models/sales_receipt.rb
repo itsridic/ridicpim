@@ -10,6 +10,8 @@ class SalesReceipt < ApplicationRecord
   validates :payment, presence: true
   validates :location, presence: true
 
+  default_scope { order("created_at DESC") }
+
   def total
     self.sales.sum(:amount)
   end
@@ -21,4 +23,4 @@ class SalesReceipt < ApplicationRecord
       self.update_column(:user_date, self.created_at)
     end
   end
-end  
+end
