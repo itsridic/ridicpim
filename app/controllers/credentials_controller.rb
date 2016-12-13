@@ -1,67 +1,70 @@
 class CredentialsController < ApplicationController
-  before_action :set_credential, only: [:show, :edit, :update, :destroy]
+  respond_to :json, only: [:create, :edit, :update, :destroy]
 
   def index
-    @credentials = Credential.all
+    load_credentials
+    build_credential
   end
 
   def show
-  end
-
-  def new
-    @credential = Credential.new
+    load_credential
   end
 
   def edit
+    load_credential
   end
 
   def create
-    @credential = Credential.new(credential_params)
-    # Only one set of credentials should exist
-    if Credential.count > 0
-      Credential.destroy_all
-    end
-    respond_to do |format|
-      if @credential.save
-        #format.html { redirect_to @credential, notice: 'Credential was successfully created.' }
-        format.js {}
-        format.json { render :show, status: :created, location: @credential }
-      else
-        format.html { render :new }
-        format.json { render json: @credential.errors, status: :unprocessable_entity }
-      end
-    end
+    build_credential
+    destroy_old_credentials
+    save_credential
   end
 
   def update
-    respond_to do |format|
-      if @credential.update(credential_params)
-        #format.html { redirect_to @credential, notice: 'Credential was successfully updated.' }
-        format.js {}
-        format.json { render :show, status: :ok, location: @credential }
-      else
-        #format.html { render :edit }
-        format.json { render json: @credential.errors, status: :unprocessable_entity }
-      end
-    end
+    load_credential
+    build_credential
+    save_credential
   end
 
   def destroy
-    respond_to do |format|
-      format.js do
-        Rails.logger.info "in JS handler"
-        @credential.destroy
-      end
-    end
+    load_credential
+    @credential.destroy
   end
 
   private
 
-  def set_credential
-    @credential = Credential.find(params[:id])
+  def credential_params
+    credential_params = params[:credential]
+    if credential_params
+      credential_params.permit(:primary_marketplace_id, :auth_token,
+                               :merchant_id)
+    else
+      {}
+    end
   end
 
-  def credential_params
-    params.require(:credential).permit(:primary_marketplace_id, :merchant_id, :auth_token)
+  def build_credential
+    @credential ||= credential_scope.build
+    @credential.attributes = credential_params
+  end
+
+  def load_credentials
+    @credentials ||= credential_scope
+  end
+
+  def load_credential
+    @credential ||= credential_scope.find(params[:id])
+  end
+
+  def save_credential
+    render action: 'failure' unless @credential.save
+  end
+
+  def credential_scope
+    Credential.all
+  end
+
+  def destroy_old_credentials
+    credential_scope.destroy_all unless credential_scope.count.zero?
   end
 end
