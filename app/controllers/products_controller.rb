@@ -73,10 +73,6 @@ class ProductsController < ApplicationController
     create_update_product_in_qbo(@product) if QboConfig.exists?
   end
 
-  def set_product
-    @product = Product.find(params[:id])
-  end
-
   def create_update_product_in_qbo(product)
     qbo_rails = QboRails.new(QboConfig.last, :item)
     item = qbo_rails.base.qr_model(:item)
