@@ -9,7 +9,8 @@
       th Account Sub Type
       th qbo_id
     tbody#qbo_accounts
-      = render @qbo_accounts
+      - cache 'qbo_accounts' do
+        = render @qbo_accounts, cached: true
   = link_to "Fetch", fetch_qbo_accounts_path, remote: true, class: "btn btn-sm success-color-dark", id: "fetch-accounts"
   .spinner
     i[class="fa fa-refresh fa-spin" aria-hidden="true"]
