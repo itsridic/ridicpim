@@ -36,10 +36,6 @@ class AdjustmentTypesController < ApplicationController
 
   private
 
-  def set_adjustment_type
-    @adjustment_type = AdjustmentType.find(params[:id])
-  end
-
   def adjustment_type_params
     adjustment_type_params = params[:adjustment_type]
     if adjustment_type_params
