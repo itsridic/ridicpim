@@ -3,13 +3,13 @@
     .panel-body
       .page-header
         h1 Contacts
-        = link_to(fa_icon("user-plus", text: "New Contact"), "#new_contact", data: { toggle: "modal" }, class: "btn btn-primary")
-        = link_to "Fetch Contacts From QBO", fetch_contacts_path, remote: true, class: "btn btn-sm success-color-dark", id: "fetch-contacts"
+        = link_to(fa_icon('user-plus', text: 'New Contact'), '#new_contact', data: { toggle: 'modal' }, class: 'btn btn-primary')
+        = link_to 'Fetch Contacts From QBO', fetch_contacts_path, remote: true, class: 'btn btn-sm success-color-dark', id: 'fetch-contacts'
         .spinner
-          i[class="fa fa-refresh fa-spin" aria-hidden="true"]
+          i[class='fa fa-refresh fa-spin' aria-hidden='true']
           small Retrieving Contacts from QBO, please wait...
         #contacts
           - cache 'contacts' do
             = render @contacts, cached: true
 #new_contact.modal.fade
-  = render "form", name: "New", contact: Contact.new
+  = render 'form', name: 'New', contact: Contact.new

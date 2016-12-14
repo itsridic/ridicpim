@@ -8,12 +8,21 @@
         .form-inputs
           = f.input :name, autofocus: true
           = f.input :address
-          = f.input :city
-          = f.input :state
-          = f.input :postal_code
-          = f.input :country, selected: ["US"]
-          = f.input :email_address
-          = f.input :phone_number
+          .row
+            .col-md-6
+              = f.input :city
+            .col-md-6
+              = f.input :state
+          .row
+            .col-md-6
+              = f.input :postal_code
+            .col-md-6
+              = f.input :country, selected: ["US"], input_html: { class: 'modal-dropdown' }
+          .row
+            .col-md-6
+              = f.input :email_address
+            .col-md-6
+              = f.input :phone_number
       .modal-footer
         button.btn.stylish-color-dark data-dismiss="modal" type="button"  Close
         = f.button :submit, class: "btn unique-color"
