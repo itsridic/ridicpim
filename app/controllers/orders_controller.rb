@@ -29,6 +29,8 @@ class OrdersController < ApplicationController
       expense_receipt = CreateExpenseReceipt.in_app_from_order(current_account, qbo_service_account, @order)
       CreateExpenseReceipt.in_qbo(expense_receipt, @order.qbo_account_id)
       redirect_to @order, notice: 'Order was successfully created.'
+    else
+      render :new
     end
   end
 
