@@ -7,9 +7,9 @@
       = link_to(fa_icon("search", text: "View"), expense_receipt, class: "btn btn-sm blue")
       = link_to(fa_icon("pencil", text: "Edit"), edit_expense_receipt_path(expense_receipt), class: "btn btn-sm teal")
       = link_to(fa_icon("trash", text: "Delete"), expense_receipt, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm cw-red")
-    p 
-      | Total: 
-      = number_to_currency(expense_receipt.expenses.sum(:amount))      
+    p
+      | Total:
+      = number_to_currency(expense_receipt.expenses.sum(:amount))
   .card-block
     table.table.table-striped
       thead
@@ -17,4 +17,5 @@
         th Amount
         th Account
       tbody
-        = render expense_receipt.expenses
+        - cache 'expenses' do
+          = render expense_receipt.expenses, cached: true

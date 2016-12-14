@@ -10,7 +10,8 @@
       th Quantity
       th Description
     tbody#transfers
-      = render @transfers
+      - cache 'transfers' do
+        = render @transfers, cached: true
 #new_transfer.modal.fade
   = simple_form_for Transfer.new, remote: true, validate: true do |f|
     .modal-dialog

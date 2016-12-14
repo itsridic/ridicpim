@@ -5,5 +5,6 @@
         h1 Orders
         = link_to(fa_icon("tasks", text: "New Order"), new_order_path, class: "btn indigo")
         #all-orders
-          = render @orders
+          - cache 'orders' do
+            = render @orders, cached: true
 = will_paginate(@orders)

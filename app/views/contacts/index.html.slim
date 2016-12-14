@@ -9,6 +9,7 @@
           i[class="fa fa-refresh fa-spin" aria-hidden="true"]
           small Retrieving Contacts from QBO, please wait...
         #contacts
-          = render @contacts
+          - cache 'contacts' do
+            = render @contacts, cached: true
 #new_contact.modal.fade
   = render "form", name: "New", contact: Contact.new

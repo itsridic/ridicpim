@@ -12,7 +12,8 @@
       th Adjusted Quantity
       th Location
     tbody#adjustments
-      = render @adjustments
+      - cache 'adjustments' do
+        = render @adjustments, cached: true
   h3 Quick Add
   = render "new_adjustment_form"
 #new_adjustment.modal.fade

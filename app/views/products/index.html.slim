@@ -13,6 +13,7 @@
       th Price
       th qbo_id
     tbody#products
-      = render @products
+      - cache 'products' do
+        = render @products, cached: true
 #new_product.modal.fade
   = render 'product_form', name: "New"

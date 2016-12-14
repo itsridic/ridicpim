@@ -25,5 +25,6 @@
         th Cost
         th Average Cost
       tbody
-        = render order.order_items
+        - cache 'order_items' do
+          = render order.order_items, cached: true
 </div>

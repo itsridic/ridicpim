@@ -6,11 +6,11 @@
       = link_to(fa_icon("search", text: "View"), sales_receipt, class: "btn btn-sm blue")
       = link_to(fa_icon("pencil", text: "Edit"), edit_sales_receipt_path(sales_receipt), class: "btn btn-sm teal")
       = link_to(fa_icon("trash", text: "Delete"), sales_receipt, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm cw-red")
-    p 
-      | Total: 
+    p
+      | Total:
       = number_to_currency(sales_receipt.sales.sum(:amount))
       br
-      | Location: 
+      | Location:
       = sale_location(sales_receipt)
   .card-block
     table.table.table-striped
@@ -21,4 +21,5 @@
         th Rate
         th Amount
       tbody
-        = render sales_receipt.sales.order("id")
+        - cache 'sales' do
+          = render sales_receipt.sales.order("id"), cached: true

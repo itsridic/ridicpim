@@ -19,11 +19,15 @@ script[type="text/javascript" src="https://cdn.datatables.net/v/dt/pdfmake-0.1.1
         tbody
           - @products.each do |product|
             tr
-              td[style="width: 1% !important;"] = product.name
-              td = product.quantity_ordered
-              td = product.quantity_sold
-              td = product.quantity_adjusted
-              - @locations.each do |location|
-                td = product.on_hand_by_location(location)
-              td = product.on_hand
-              td = number_to_currency(product.average_cost(Time.now.utc), precision: 4)
+              - cache product do
+                td[style="width: 1% !important;"] = product.name
+                - cache product.quantity_adjusted do
+                  td = product.quantity_ordered
+                - cache product.quantity_ordered do
+                  td = product.quantity_sold
+                - cache product.quantity_adjusted do
+                  td = product.quantity_adjusted
+                - @locations.each do |location|
+                  td = product.on_hand_by_location(location)
+                td = product.on_hand
+                td = number_to_currency(product.average_cost(Time.now.utc), precision: 4)
