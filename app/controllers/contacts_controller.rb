@@ -55,10 +55,6 @@ class ContactsController < ApplicationController
     end
   end
 
-  def set_contact
-    @contact = Contact.find(params[:id])
-  end
-
   def build_contact
     @contact ||= contact_scope.build
     @contact.attributes = contact_params
