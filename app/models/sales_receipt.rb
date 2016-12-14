@@ -10,7 +10,7 @@ class SalesReceipt < ApplicationRecord
   validates :payment, presence: true
   validates :location, presence: true
 
-  default_scope { order("created_at DESC") }
+  default_scope { order("user_date DESC") }
 
   def total
     self.sales.sum(:amount)

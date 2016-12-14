@@ -9,6 +9,8 @@ class Order < ApplicationRecord
   validates :contact, presence: true
   validates :location, presence: true
 
+  scope :by_date, ->(date) { where('user_date > ?', date).order('user_date') }
+
   private
 
   def set_user_date
