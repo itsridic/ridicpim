@@ -1,66 +1,58 @@
 class AmazonStatementsController < ApplicationController
-  before_action :set_qb_service, only: [:show]
-
   def index
-    @amazon_statements = AmazonStatement.all.order("period DESC")
+    @amazon_statements = AmazonStatement.all.order('period DESC')
   end
 
   def show
     @amazon_statement = AmazonStatement.find(params[:id])
-    @amazon_statement.status = "PROCESSING..."
+    @amazon_statement.status = 'PROCESSING...'
     @amazon_statement.save
     SyncWithQBOWorker.perform_async(current_account.id, @amazon_statement.id)
     redirect_to amazon_statements_path
   end
 
   def fetch
-    client  = set_client
+    client = set_client
     begin
-      reports = client.get_report_list(available_from_date: 91.days.ago.iso8601, report_type_list: "_GET_V2_SETTLEMENT_REPORT_DATA_XML_", max_count: 100)
+      reports = client.get_report_list(
+        available_from_date: 91.days.ago.iso8601,
+        report_type_list: '_GET_V2_SETTLEMENT_REPORT_DATA_XML_',
+        max_count: 100
+      )
     rescue Excon::Errors::BadRequest => e
-      puts "*" * 50
+      puts '*' * 50
       logger.warn e.response.message
-      puts "*" * 50
+      puts '*' * 50
     end
     next_token = reports.next_token
-    reports.xml["GetReportListResponse"]["GetReportListResult"]['ReportInfo'].each do |report|
-      type = report['ReportType']
-      if type.include?('_GET_V2_SETTLEMENT_REPORT_DATA_XML_')
-        begin
-          report_id = report['ReportId']
-          puts report_id
-          item_to_add = client.get_report(report_id).xml['AmazonEnvelope']['Message']['SettlementReport']
-          add_statement_to_db(item_to_add, report_id)
-        rescue => e
-          p e
-          next
-        end
-      else
+    reports.xml['GetReportListResponse']['GetReportListResult']['ReportInfo'].each do |report|
+      begin
+        report_id = report['ReportId']
+        puts report_id
+        item_to_add = client.get_report(report_id).xml['AmazonEnvelope']['Message']['SettlementReport']
+        add_statement_to_db(item_to_add, report_id)
+      rescue => e
+        p e
         next
       end
     end
 
-    while(next_token)
+    while next_token
       begin
         reports    = client.get_report_list_by_next_token(next_token)
         next_token = reports.next_token
-        reports.xml["GetReportListByNextTokenResponse"]["GetReportListByNextTokenResult"]["ReportInfo"].each do |report|
-          type = report['ReportType']
-          if type.include?('_GET_V2_SETTLEMENT_REPORT_DATA_XML_')
-              report_id = report['ReportId']
-              puts report_id
-              item_to_add = client.get_report(report_id).xml['AmazonEnvelope']['Message']['SettlementReport']
-              add_statement_to_db(item_to_add, report_id)
-          else
-            next
-          end
+        reports.xml['GetReportListByNextTokenResponse']['GetReportListByNextTokenResult']['ReportInfo'].each do |report|
+          report_id = report['ReportId']
+          puts report_id
+          item_to_add = client.get_report(report_id).xml['AmazonEnvelope']['Message']['SettlementReport']
+          add_statement_to_db(item_to_add, report_id)
           break if next_token == false
         end
         break if next_token == false
       rescue Excon::Errors::BadRequest => e
-        puts "%" * 50
+        puts '%' * 50
         logger.warn e.response.message
-        puts "%" * 50
+        puts '%' * 50
         next
       end
     end
@@ -78,9 +70,5 @@ class AmazonStatementsController < ApplicationController
       settlement_id = item_to_add['SettlementData']['AmazonSettlementID']
       AmazonStatement.create!(period: period, deposit_total: deposit_total, status: status, summary: summary, settlement_id: settlement_id, report_id: report_id)
     end
-  end
-
-  def set_qb_service
-    @oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, QboConfig.first.token, QboConfig.first.secret)
   end
 end
