@@ -3,17 +3,9 @@ class CreateInventoryAssetInQboWorker
 
   def perform(amazon_statement_id, receipt_id, current_account_id)
     unless Product.needs_inventory_asset.count.zero?
-      oauth_client = OAuth::AccessToken.new(
-        $qb_oauth_consumer,
-        QboConfig.first.token,
-        QboConfig.first.secret
-      )
-      account_service = QuickBooks::Service::Account.new(
-        access_token: oauth_client,
-        company_id: QboConfig.realm_id
-      )
+      account_service = QuickbooksServiceFactory.new.account_service
+      current_account = Account.find(current_account_id)
       inventory_asset_account_id = current_account.settings(:inventory_asset).val
-
       Product.needs_inventory_asset.each do |prod|
         account = account_service.query("SELECT * FROM Account WHERE name = 'Inventory - #{prod.amazon_sku}'")
         if account.entries == 0
