@@ -1,5 +1,5 @@
-tr id="#{adjustment.id}" 
-  td
+tr id="#{adjustment.id}"
+  td.nowrap
     => link_to fa_icon("search"), adjustment
     => link_to fa_icon("pencil"), edit_adjustment_path(adjustment), remote: true
     => link_to fa_icon("trash" ), adjustment, method: :delete, data: { confirm: "Are you sure?" }, remote: true

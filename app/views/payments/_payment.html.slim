@@ -1,5 +1,5 @@
 <tr id="#{payment.id}">
-  td
+  td.nowrap
     => link_to fa_icon("search"), payment, class: "blue-text"
     => link_to fa_icon("pencil"), edit_payment_path(payment), remote: true, class: "teal-text"
     => link_to fa_icon("trash" ), payment, method: :delete, data: { confirm: "Are you sure?" }, remote: true, class: "cw-red-text"

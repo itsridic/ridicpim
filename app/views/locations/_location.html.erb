@@ -1,5 +1,5 @@
 <tr id="<%= location.id %>">
-  <td>
+  <td class="nowrap">
     <%= link_to fa_icon("search"), location %>
     <%= link_to fa_icon("pencil"), edit_location_path(location), remote: true %>
     <%= link_to fa_icon("trash" ), location, method: :delete, data: { confirm: "Are you sure?" }, remote: true %>
