@@ -5,6 +5,5 @@
         h1 Sales Receipts
         = link_to(fa_icon("file-text-o", text: "New Sales Receipt"), new_sales_receipt_path, class: "btn indigo")
         #all-sales_receipts
-          - cache 'sales_receipts' do
-            = render @sales_receipts, cached: true
+          = render @sales_receipts
 = will_paginate(@sales_receipts)
