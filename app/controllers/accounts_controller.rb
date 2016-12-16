@@ -48,7 +48,7 @@ class AccountsController < ApplicationController
   private
 
   def set_plan
-    @plan = Plan.first
+    @plan = Plan.first || Plan.new(stripe_id: 1000, name: "Standard Plan", price: 1999, trial_period_days: 30)
   end
 
   def set_account

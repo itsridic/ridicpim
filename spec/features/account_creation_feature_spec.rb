@@ -1,43 +1,58 @@
 require 'rails_helper'
 
 feature 'account creation' do
-	let(:subdomain) { FactoryGirl.generate(:subdomain) }
-	before(:each) { sign_up(subdomain) }
+	before(:each) do
+    set_host("lvh.me:31234")
+  end
 
-	it 'allows user to create account' do
+	it 'allows user to create account', :js do
+    subdomain = "subdomain"
+    sign_up(subdomain)
 		expect(page.current_url).to include(subdomain)
 		expect(Account.all.count).to eq(1)
 	end
 
-	it 'allows access of subdomain' do
+	it 'allows access of subdomain', :js do
+    subdomain = "subdomain"
+    sign_up(subdomain)
 		visit root_url(subdomain: subdomain)
 		expect(page.current_url).to include(subdomain)
 	end
 
-	it 'allows account followup creation' do
-		subdomain2 = "#{subdomain}2"
+	it 'allows account followup creation', :js do
+    subdomain = "subdomain"
+    sign_up(subdomain)
+		subdomain2 = "subdomain2"
 		sign_up(subdomain2)
 		expect(page.current_url).to include(subdomain2)
 		expect(Account.all.count).to eq(2)
 	end
 
-	it 'does not allow account creation on subdomain' do
-		user = User.first
-		subdomain = Account.first.subdomain
-		sign_user_in(user, subdomain: subdomain)
-		expect { visit new_account_url(subdomain: subdomain) }.to raise_error ActionController::RoutingError
-	end
-
 	def sign_up(subdomain)
-    @plan = FactoryGirl.create(:plan)
-		visit root_path(subdomain: false)
-		click_link 'Create Account'
-    sleep(2)
-		fill_in 'Name', with: 'Nate'
-		fill_in 'Email', with: 'nate@itsridic.com'
-		fill_in 'Password', with: 'password'
-		fill_in 'Password confirmation', with: 'password'
+    plan = FactoryGirl.create(:plan)
+    user = FactoryGirl.build_stubbed(:user, name: "Nate", email: "nate@itsridic.com", password: "password", password_confirmation: "password")
+    visit root_path(subdomain: false)
+    click_link 'Create Account'
+    fill_in 'Name', with: user.name
+    fill_in 'Email', with: user.email
+		fill_in 'Password', with: user.password
+		fill_in 'Password confirmation', with: user.password_confirmation
 		fill_in 'Subdomain', with: subdomain
-    first(:button).click
-	end
+		check 'account_accept_terms'
+		token = Stripe::Token.create(
+			:card => {
+				:number => "4242424242424242",
+				:exp_month => 7,
+				:exp_year => 2019,
+				:cvc => "314",
+			}
+		)
+		page.execute_script("$('#payment_token').val('#{token.id}');")
+		page.execute_script("$('#new_account').submit();")
+  end
+end
+
+def set_host(host)
+	default_url_options[:host] = host
+	Capybara.app_host = "http://" + host
 end
