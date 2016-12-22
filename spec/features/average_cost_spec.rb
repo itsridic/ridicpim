@@ -3,7 +3,7 @@ include ActiveSupport::Testing::TimeHelpers
 
 describe "Average Cost" do
   scenario "with no orders" do
-    product = FactoryGirl.create(:product)
+    product = FactoryGirl.create(:product, name: "Black Gloves")
     order = FactoryGirl.create(:order)
     order_item = FactoryGirl.create(:order_item, order: order, product: product, quantity: 500, cost: 500.00)
     expect(order_item.reload.average_cost).to eq(1.00)
@@ -34,7 +34,7 @@ describe "Average Cost" do
 
     # Create a sale for yesterday (1 day ago)
     travel_to(1.day.ago) do
-      @sales_receipt2 = FactoryGirl.create(:sales_receipt)
+      @sales_receipt2 = FactoryGirl.build_stubbed(:sales_receipt)
       @sale2 = FactoryGirl.create(:sale, sales_receipt: @sales_receipt2, product: @product, quantity: 200, amount: 2000.00)
     end
 
@@ -97,7 +97,7 @@ describe "Average Cost" do
 
     @order2 = FactoryGirl.create(:order, user_date: 1.day.ago)
     @order_item2 = FactoryGirl.create(:order_item, order: @order2, product: @product, quantity: 200, cost: 250.00)
-    
+
     expect(@order_item2.average_cost).to be_within(0.01).of(1.07)
 
     @order3 = FactoryGirl.create(:order, user_date: 2.days.ago)

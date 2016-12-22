@@ -49,6 +49,7 @@ Rails.application.routes.draw do
     resources :products do
       collection do
         get :fetch
+        get :fetch_mws
       end
     end
     resources :quick_books, only: [] do

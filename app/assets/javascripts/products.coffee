@@ -3,7 +3,7 @@ $ ->
     $(window).scroll ->
       url = $('.pagination .next_page').attr('href')
       if url && $(window).scrollTop() > $(document).height() - $(window).height() - 50
-        $('.pagination').html('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>');
+        $('.pagination').html('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>')
         $.getScript(url)
     $(window).scroll()
 
@@ -13,6 +13,7 @@ $('.products.new, .products.edit').ready ->
 
 $('.products.index').ready ->
   $('.spinner').hide()
+  $('.spinner-mws').hide()
   $('.modal').on 'shown.bs.modal', (e) ->
     $(document).off '.fetchProducts'
     $(':input', '#new_product').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr 'selected'

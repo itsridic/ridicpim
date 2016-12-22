@@ -1,4 +1,5 @@
 .col-md-12
+  = link_to "Fetch Products from Amazon", fetch_mws_products_path, remote: true, class: "btn btn-sm success-color-dark", id: "fetch-mws-products"
   = link_to "Fetch Products from QBO", fetch_products_path, remote: true, class: "btn btn-sm success-color-dark", id: "fetch-products"
   .spinner
     i[class="fa fa-refresh fa-spin" aria-hidden="true"]

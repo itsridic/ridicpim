@@ -39,6 +39,14 @@ class ProductsController < ApplicationController
     redirect_to products_path
   end
 
+  def fetch_mws
+    respond_to do |format|
+      format.js do
+        ProductsFromAmazonWorker.perform_async(current_account.id)
+      end
+    end
+  end
+
   private
 
   def product_params
