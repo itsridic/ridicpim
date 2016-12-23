@@ -55,7 +55,6 @@ group :development, :test do
   gem 'shoulda-matchers', '~> 3.1', '>= 3.1.1'
   gem 'letter_opener', '~> 1.4', '>= 1.4.1'
   gem 'email_spec', '~> 2.1'
-  gem 'capybara-webkit', '~> 1.11', '>= 1.11.1'
   gem 'selenium-webdriver', '~> 2.48', '>= 2.48.1'
 end
 
