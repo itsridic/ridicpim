@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161209233700) do
+ActiveRecord::Schema.define(version: 20161223023032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -341,6 +341,16 @@ ActiveRecord::Schema.define(version: 20161209233700) do
     t.index ["target_type", "target_id"], name: "index_settings_on_target_type_and_target_id", using: :btree
   end
 
+  create_table "transfer_items", force: :cascade do |t|
+    t.integer  "transfer_id"
+    t.integer  "product_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "quantity"
+    t.index ["product_id"], name: "index_transfer_items_on_product_id", using: :btree
+    t.index ["transfer_id"], name: "index_transfer_items_on_transfer_id", using: :btree
+  end
+
   create_table "transfers", force: :cascade do |t|
     t.integer  "from_location_id"
     t.integer  "to_location_id"
@@ -397,5 +407,7 @@ ActiveRecord::Schema.define(version: 20161209233700) do
   add_foreign_key "sales_receipts", "contacts"
   add_foreign_key "sales_receipts", "locations"
   add_foreign_key "sales_receipts", "payments"
+  add_foreign_key "transfer_items", "products"
+  add_foreign_key "transfer_items", "transfers"
   add_foreign_key "transfers", "products"
 end
