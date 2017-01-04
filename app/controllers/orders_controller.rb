@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
 
   def index
     @orders = Order.order(user_date: :desc)
-                   .paginate(page: params[:page], per_page: 3)
+                   .paginate(page: params[:page], per_page: 30)
                    .includes(:contact)
   end
 
