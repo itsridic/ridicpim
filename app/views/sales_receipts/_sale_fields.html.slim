@@ -1,7 +1,7 @@
-.container
+.container-fluid
   .nested-fields
     .row
-      .col-md-3
+      .col-md-4
         .form-group
           = f.label :product
           = f.collection_select :product_id, Product.all.order("name"), :id, :name, { include_blank: "Choose a Product!..." }, { class: "form-control validate choose-product" }
@@ -13,7 +13,7 @@
         .form-group
           = f.label :quantity
           = f.number_field :quantity, class: "form-control-sm sale-quantity"
-      .col-md-2
+      .col-md-1
         .form-group
           = label_tag 'Unit Price'
           = number_field_tag 'Unit Price', nil, onblur: "computeAmount( $(this).parent().parent() );", class: "unit-price"
